@@ -1,0 +1,9 @@
+.venv-host/
+firmware/build*/
+firmware/managed_components/
+firmware/sdkconfig
+firmware/sdkconfig.old
+__pycache__/
+*.pyc
+# Raw audio is large; runs are kept on disk and indexed in docs/EVIDENCE_LEDGER.md.
+evidence/runs/**/*.wav

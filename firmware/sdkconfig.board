@@ -1,0 +1,5 @@
+# Physical wiring record. MUST match the assembled hardware (see docs/PROJECT_STATE.md §Hardware).
+# Values below are the architecture §B5 defaults and are UNCONFIRMED until the user reports the real pins.
+CONFIG_PS_I2S_BCK_GPIO=4
+CONFIG_PS_I2S_WS_GPIO=5
+CONFIG_PS_I2S_SD_GPIO=6

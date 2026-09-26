@@ -1,0 +1,26 @@
+menu "PS26172 configuration"
+
+    config PS_I2S_BCK_GPIO
+        int "INMP441 SCK (I2S BCK) GPIO"
+        range 0 48
+        default 4
+
+    config PS_I2S_WS_GPIO
+        int "INMP441 WS GPIO"
+        range 0 48
+        default 5
+
+    config PS_I2S_SD_GPIO
+        int "INMP441 SD (data in) GPIO"
+        range 0 48
+        default 6
+
+    config PS_SAMPLE_RATE_HZ
+        int "Sample rate (Hz) — frontend.json sample_rate_hz"
+        default 16000
+
+    config PS_MIC_SETTLE_MS
+        int "MIC_SETTLE duration after I2S clock start (ms) — P-19 power-up blanking"
+        default 300
+
+endmenu

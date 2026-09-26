@@ -1,0 +1,95 @@
+# PS26172 — Project State Record
+
+**Last updated:** 2026-09-26 ~21:00 (local) · **Internal deadline:** 2026-09-29 EOD · **Official:** 2026-09-30 (contingency only)
+
+This file is operational memory. It never overrides the source documents in §1.
+
+## 1. Sources
+
+| Source | Location | Version / SHA-256 prefix | Status |
+|---|---|---|---|
+| SIH PS 26172 (problem statement) | `D:\sih final\sih 2026  (1).pdf` | 1 page · `c1a641b99c977b2e` | Read in full — **binding** |
+| Track C hardware architecture | `D:\sih final\PS26172_TRACK_C_HARDWARE_ARCHITECTURE.md` | dated 2026-09-12 · 1 811 lines · `3855643469453cef` | Read in full — **primary technical direction** |
+| Master Spec, Track A, Track B | referenced throughout the architecture | — | **NOT PROVIDED.** Their IDs (AMB-/NFR-/ASM-/F-/I-) are used only as the architecture quotes them. |
+| Official SIH submission guidelines / PPT template | — | — | **NOT PROVIDED.** Needed before fixing PPT format, video length, naming. |
+
+## 2. Mandatory requirements (from the PS only)
+
+| ID | Requirement [SIH] |
+|---|---|
+| R1 | Lightweight, accurate KWS model running **locally** on a low-power device |
+| R2 | On detection, stream the **subsequent audio** to a **remote ASR server** with minimal data overhead and latency |
+| R3 | Judged on: efficiency (model RAM/flash, idle CPU), accuracy (high TPR, near-zero false activations), latency (keyword end → cloud ASR receiving the stream) |
+| R4 | Open-source only; proprietary / closed / commercial **voice-activation SDKs prohibited** |
+| R5 | KWS pipeline built on open-source ML/TinyML frameworks (e.g. TFLite Micro) |
+| R6 | No models pre-trained on generic assistant keywords; training on a **custom keyword** |
+| R7 | Edge software **< 256 KB RAM** and **< 10 % CPU** while idling in continuous listening |
+| R8 | Heavy/uncompressed pre-trained transformers disqualified |
+| R9 | Evaluated on a physical low-power microcontroller (e.g. Raspberry Pi, ESP32) |
+| R10 | Model must work for the given custom keyword |
+
+## 3. Locked technical direction (architecture "ARCHITECTURE DECISION" — not re-litigated)
+
+Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, PSRAM disabled · INMP441 on I2S0, 16 kHz, 32-bit × 2 slots, BCK 1.024 MHz (Path α) · int16 from bits 23:8 · microfrontend 30 ms / 10 ms / 40 mel / 125–6 500 Hz / NR + PCAN / int8 · 1D DS-CNN streaming INT8, TFLM + esp-nn, random init · inference every 30 ms, window-5 mean, threshold 0.95, 2 s refractory · 1.0 s unified ring, 3 cursors · warm TCP from boot, PCM16, 20 ms frames, 8-byte header · self-hosted ingest + Vosk/Kaldi · **no ESP-SR anywhere** (X25).
+
+## 4. Implementation decisions (this project)
+
+| ID | Decision | Evidence / reason |
+|---|---|---|
+| DEC-01 | Toolchain = **ESP-IDF v5.5.5** (native, git tag), tools in `D:\esp`. Not PlatformIO `espressif32 7.1.1`, which pins IDF 6.1 + GCC 15. | esp-tflite-micro v1.4.1 manifest requires IDF ≥ 5.1 [LIB, read 2026-09-26]; the IDF 5.x line is what the architecture's reference deployments ran on. Installed OK 2026-09-26 20:37. |
+| DEC-02 | Repository at `D:\ps26172` | ESP-IDF does not support spaces in project paths; `D:\sih final` has one. |
+| DEC-03 | M1 debug/data link = CRC-framed USB serial, not TCP | Isolates mic/I2S faults from Wi-Fi faults; the same tool records training and held-out audio through the real mic (X16/X17). Product streaming remains TCP (M5). |
+| DEC-04 | M1 capture carries the full 24-bit sample; the host derives int16 with the identical shift (I2S word >> 16) | Keeps the int16 level decision (C-07) open until speech level is measured. |
+| DEC-05 | Unified ring (§8.4) built at M2, not M1 | Its first consumer is the front end. |
+
+## 5. Conflicts and open issues
+
+| ID | Issue | Practical effect / proposed handling |
+|---|---|---|
+| C-01 | Architecture programme is 3 weeks (§B10) + 12 experiments; ~3 days remain | Compressed plan (§7) with explicit descoping; descoped items stay PROPOSED in the PPT roadmap. |
+| C-02 | §7.2/§B3 specify microfrontend **and** an esp-dsp float real-FFT. Upstream TFLM microfrontend computes its FFT internally with fixed-point KissFFT (`kiss_fft_int16`) [LIB, verified 2026-09-26] | The two cannot both hold without breaking §7.3 bit-exact parity. Proposed at M2: keep microfrontend unmodified (parity wins) and measure its CPU; defer the esp-dsp FFT. |
+| C-03 | esp-tflite-micro v1.3.3.1 / v1.3.8 / v1.4.0 / v1.4.1 contain **no** microfrontend sources (the CMake glob hits an absent directory) [LIB, verified] | Vendor microfrontend from upstream tflite-micro (Apache-2.0), pinned by commit, at M2. |
+| C-04 | Mel upper edge 6 500 Hz (O1) vs 7 500 Hz in the microWakeWord/ESPHome reference pipeline [to verify at M2] | If mWW training code is reused, its feature generation must be set to the same `frontend.json`. |
+| C-05 | §B5 pin map (GPIO 4/5/6) vs the existing, working wiring | Firmware follows the real wiring via `firmware/sdkconfig.board`; no rewiring. Pins **pending**. |
+| C-06 | GPIO duty-cycle (I-1) needs a logic analyser; IN-1 playback rig needs a host GPIO | If unavailable: systimer (I-2) + FreeRTOS run-time stats (I-3) become the primary CPU evidence and are labelled as such. |
+| C-07 | **Level risk (new).** §2.4 fixes int16 = bits 23:8; its own estimate (speech @1 m ≈ −60 dBFS [EST]) implies ~30 LSB RMS in int16, while TTS/public training audio sits near −20…−30 dBFS | Measure the real speech level at M1. Fix the shift/gain **before** training (changing it later forces a retrain). |
+| C-08 | Board variant unknown | §3.7 already covers PSRAM-equipped modules (PSRAM disabled). Octal PSRAM (R8) makes IO35–37 unavailable. |
+| C-09 | Keyword not chosen (PS: "the given custom keyword") | Blocks positive-data recording and M3. Does not block M1. |
+| C-10 | **IRAM code is missing from the §3.4 SRAM budget (new, measured).** The M1 build already places **60 015 B of code in internal SRAM** (DIRAM `.text`, linker report `evidence/m0/size_uart_m1build.txt`). Wi-Fi/lwIP add more IRAM code by default. Under the strictest S4 reading ("total device SRAM occupancy") this counts. | At EXP-1, report S4 both with and without IRAM code. Apply IDF flash-placement options (Wi-Fi/lwIP IRAM optimisations off, FreeRTOS/ringbuf/heap functions into flash) and measure their CPU cost. This could move the §3.5 headroom (29.7 KiB [EST]) to negative. It is the most important thing EXP-1 must settle. |
+
+## 6. Hardware and host
+
+| Item | State |
+|---|---|
+| ESP32-S3 board | Model / flash / PSRAM / USB bridge **unknown**; not connected at 20:30 (only legacy COM1 present) |
+| INMP441 | Assembled. SCK/WS/SD GPIOs, L/R, pull-down **unknown**. M1 stereo probe will measure the active slot and the empty-slot behaviour. |
+| Logic analyser · 2.4 GHz AP for demo | **unknown** |
+| Host PC | i3-8100 (4 cores), 15.9 GB RAM, no GPU, Windows 11, Python 3.11/3.12/3.13/3.14, WSL2 Ubuntu available |
+| Host tools | `.venv-host` (Python 3.12): numpy 2.5.3, scipy 1.18.1, matplotlib 3.11.2, pyserial 3.5 |
+
+## 7. Compressed plan
+
+| When | Milestones | Exit evidence |
+|---|---|---|
+| 26 Sep night | M0 toolchain + X25 gate · **M1 physical audio** · start overnight ambient recording through the INMP441 | build log · WAV + PSD + level + DIAG · capture integrity |
+| 27 Sep | Keyword positives (TTS + real speakers) · M2 front end + parity test · M3 train + deploy | parity PASS · posterior rises on the keyword |
+| 28 Sep | M4 trigger / refractory / instrumentation · M5 warm-TCP streaming + ingest · M6 Vosk · EXP-1 memory · EXP-2 CPU · latency · overnight false-activation exposure | logs, CSVs, plots from saved data |
+| 29 Sep | Evidence pack → PPT → demo video | — |
+
+**Descoped for submission (stay PROPOSED):** Architecture-B promotion and 3-model DET comparison (EXP-8), EXP-3/3b/4/9/12, ADPCM (EXP-6), IN-1 hardware playback rig, Architecture C (speculative streaming, UDP), bounded-heap *enforcement* (reporting kept).
+
+## 8. Milestone status
+
+| Milestone | Status |
+|---|---|
+| M0 toolchain, pinned build, X25 gate | **DONE** 2026-09-26 — ESP-IDF v5.5.5; `tools/idf.ps1 -Console uart build` green, gate PASS, image 241 095 B |
+| M1 physical audio | IN PROGRESS — firmware compiles; host capture/analysis written; **not flashed (no board connected)** |
+| M2–M6 | NOT STARTED |
+
+## 9. Blockers
+
+B-1 board not connected · B-2 wiring pins unknown · B-3 keyword not chosen (blocks M3 only)
+
+## 10. Next task
+
+Flash M1, run Session A (20 s scripted capture) and Session B (10 min integrity), analyse, update the ledger.
