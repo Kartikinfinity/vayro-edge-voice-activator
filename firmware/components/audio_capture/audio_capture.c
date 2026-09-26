@@ -23,16 +23,18 @@ esp_err_t ac_open(const ac_config_t *cfg, i2s_slot_mode_t mode, i2s_std_slot_mas
     cc.dma_frame_num = cfg->dma_frame_num;
     ESP_RETURN_ON_ERROR(i2s_new_channel(&cc, NULL, &s_rx), TAG, "i2s_new_channel");
 
+    const i2s_std_slot_config_t philips = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_32BIT, mode);
+    const i2s_std_slot_config_t msb = I2S_STD_MSB_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_32BIT, mode);
     i2s_std_config_t sc = {
         .clk_cfg = I2S_STD_CLK_DEFAULT_CONFIG(cfg->sample_rate_hz),
-        .slot_cfg = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_32BIT, mode),
+        .slot_cfg = (cfg->format == AC_FMT_MSB) ? msb : philips,
         .gpio_cfg = {
             .mclk = I2S_GPIO_UNUSED,
             .bclk = (gpio_num_t)cfg->bck_gpio,
             .ws = (gpio_num_t)cfg->ws_gpio,
             .dout = I2S_GPIO_UNUSED,
             .din = (gpio_num_t)cfg->sd_gpio,
-            .invert_flags = {.mclk_inv = false, .bclk_inv = false, .ws_inv = false},
+            .invert_flags = {.mclk_inv = false, .bclk_inv = cfg->bclk_inv, .ws_inv = false},
         },
     };
     sc.slot_cfg.slot_mask = mask;

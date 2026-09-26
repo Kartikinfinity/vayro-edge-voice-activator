@@ -1,0 +1,20 @@
+    0.054 @BOOT idf=v5.5.5 elf_sha=9ffa2c529 built=Sep 26 2026_21:48:13 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+    0.054 @SYNC host_waited_ms=1120
+    0.054 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+    0.054 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+    1.334 @DIAG phase=stereo bytes_per_s=127963
+    1.334 @DIAG phase=stereo slot=0 n=16000 dc=-638873.2 rms24=686952.7 rms_dbfs=-18.72 peak_dbfs=-16.53 lowbyte_nz_frac=0.0000 lsb1_frac=0.5019 zero_frac=0.0000 first_nz_ms=0.56
+    1.334 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+    1.645 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.37 s0_dc=2498344.3 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0290 s1_zero_frac=0.9710
+    1.956 @ALIGN cfg=MSB s0_rms_dbfs=-11.33 s0_dc=1234961.8 s0_lsb1_frac=0.5072 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    2.267 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.31 s0_dc=2526309.8 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0270 s1_zero_frac=0.9730
+    2.578 @ALIGN cfg=MSB_INV s0_rms_dbfs=-21.15 s0_dc=-487443.0 s0_lsb1_frac=0.5020 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    3.137 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.03 zero_frac=0.0000
+    3.137 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=4.69
+    3.322 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+    4.316 @STATS t_ms=5381 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.5 peak16=14378 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    5.309 @STATS t_ms=6381 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-31.0 peak16=1681 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    6.297 @STATS t_ms=7381 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.6 peak16=847 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    7.298 @STATS t_ms=8381 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-36.1 peak16=1624 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    8.288 @STATS t_ms=9381 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-37.7 peak16=1003 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    9.340 @STATS t_ms=10381 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-34.8 peak16=2175 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304

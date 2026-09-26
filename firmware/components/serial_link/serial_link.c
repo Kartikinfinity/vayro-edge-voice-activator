@@ -7,6 +7,7 @@
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
+#include "freertos/task.h"
 #include "sdkconfig.h"
 
 #if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
@@ -61,7 +62,8 @@ static esp_err_t raw_write(const uint8_t *p, size_t n)
     }
     size_t off = 0;
     while (off < n) {
-        int w = usb_serial_jtag_write_bytes(p + off, n - off, pdMS_TO_TICKS(100));
+        /* 1 s: rides out host-side USB scheduling stalls (a 100 ms limit lost a frame, run 20260926_214931). */
+        int w = usb_serial_jtag_write_bytes(p + off, n - off, pdMS_TO_TICKS(1000));
         if (w <= 0) {
             return ESP_FAIL;
         }
@@ -132,6 +134,28 @@ esp_err_t link_init(void)
 #endif
     esp_log_set_vprintf(log_to_link);
     return ESP_OK;
+}
+
+int32_t link_wait_host(uint32_t timeout_ms)
+{
+    const TickType_t t0 = xTaskGetTickCount();
+    uint8_t c;
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    int n = usb_serial_jtag_read_bytes(&c, 1, pdMS_TO_TICKS(timeout_ms));
+#else
+    int n = uart_read_bytes(CONFIG_ESP_CONSOLE_UART_NUM, &c, 1, pdMS_TO_TICKS(timeout_ms));
+#endif
+    if (n <= 0) {
+        return -1;
+    }
+    vTaskDelay(pdMS_TO_TICKS(20)); /* swallow the rest of the host's start burst */
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    while (usb_serial_jtag_read_bytes(&c, 1, 0) > 0) {
+    }
+#else
+    uart_flush_input(CONFIG_ESP_CONSOLE_UART_NUM);
+#endif
+    return (int32_t)pdTICKS_TO_MS(xTaskGetTickCount() - t0);
 }
 
 uint32_t link_dropped_frames(void)

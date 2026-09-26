@@ -1,0 +1,71 @@
+{
+  "file": "audio_24bit.wav",
+  "fs_hz": 16000,
+  "whole": {
+    "samples": 128640,
+    "seconds": 8.04,
+    "dc_lsb24": -37255.01,
+    "rms_dbfs": -16.19,
+    "peak_dbfs": -0.0,
+    "int16_rms_lsb": 3592.12,
+    "int16_peak_lsb": 32766,
+    "clip_samples_24": 0,
+    "clip_samples_16": 0,
+    "level_100ms_dbfs": {
+      "p10_noise_floor": -31.31,
+      "p50": -25.88,
+      "p90": -18.03,
+      "max": 1.05
+    },
+    "zero_run_longest_samples": 9,
+    "zero_runs_ge_1ms": 0,
+    "band_db": {
+      "1-4k": 66.18172952462399,
+      "5.5-6.5k": 55.705048468659314,
+      "7.0-7.5k": 57.890286592903884,
+      "7.6-7.95k": 56.37627373680939
+    },
+    "rolloff_db": 0.67
+  },
+  "segments": {
+    "steady": {
+      "t0_s": 1.0,
+      "t1_s": 8.0,
+      "samples": 112000,
+      "seconds": 7.0,
+      "dc_lsb24": -46849.56,
+      "rms_dbfs": -24.83,
+      "peak_dbfs": -14.61,
+      "int16_rms_lsb": 1329.05,
+      "int16_peak_lsb": 6097,
+      "clip_samples_24": 0,
+      "clip_samples_16": 0,
+      "level_100ms_dbfs": {
+        "p10_noise_floor": -31.32,
+        "p50": -26.73,
+        "p90": -20.87,
+        "max": -18.11
+      },
+      "zero_run_longest_samples": 1,
+      "zero_runs_ge_1ms": 0,
+      "band_db": {
+        "1-4k": 54.86714287053714,
+        "5.5-6.5k": 39.28901292015192,
+        "7.0-7.5k": 33.82446329586878,
+        "7.6-7.95k": 33.4186225859891
+      },
+      "rolloff_db": -5.87
+    }
+  },
+  "zero_runs_ge_1ms_located_first20": [],
+  "definitions": {
+    "rms_dbfs": "AES17: 20*log10(RMS*sqrt(2)/2^23); a full-scale sine reads 0 dBFS",
+    "peak_dbfs": "20*log10(max|x|/2^23), sample peak",
+    "clip_samples_24": "samples with |x| >= 2^23-1",
+    "clip_samples_16": "int16-domain samples (x>>8) with value 32767 or -32768",
+    "noise_floor_dbfs": "10th percentile of 100 ms RMS values",
+    "zero_run": "run of consecutive samples exactly equal to 0 (24-bit); live mic self-noise makes long runs implausible",
+    "band_db": "mean Welch PSD (dB re 1 LSB24^2/Hz) over the band",
+    "rolloff_db": "band 7.6-7.95 kHz minus band 5.5-6.5 kHz; INMP441 DS: passband edge 0.423*fs=6768 Hz, -6 dB at 0.5*fs"
+  }
+}

@@ -15,6 +15,19 @@ menu "PS26172 configuration"
         range 0 48
         default 6
 
+    choice PS_I2S_FORMAT
+        prompt "I2S RX framing used for capture (decided by the M1 alignment sweep)"
+        default PS_I2S_FORMAT_PHILIPS
+        config PS_I2S_FORMAT_PHILIPS
+            bool "Philips (MSB one BCK after WS edge)"
+        config PS_I2S_FORMAT_MSB
+            bool "MSB-justified (MSB on the WS edge)"
+    endchoice
+
+    config PS_I2S_BCLK_INV
+        bool "Invert BCK"
+        default n
+
     config PS_SAMPLE_RATE_HZ
         int "Sample rate (Hz) — frontend.json sample_rate_hz"
         default 16000

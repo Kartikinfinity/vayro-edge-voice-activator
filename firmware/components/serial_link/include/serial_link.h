@@ -22,6 +22,11 @@
 
 esp_err_t link_init(void);
 
+/* Blocks until the host sends any byte (host/capture.py sends 'S' after opening the port) or
+ * the timeout expires. On native USB the host only drains data once it has the port open, so
+ * boot diagnostics sent earlier would be lost. Returns the ms waited, or -1 on timeout. */
+int32_t link_wait_host(uint32_t timeout_ms);
+
 /* Writes header + CRC around a payload that may already sit at out + LINK_HDR_BYTES.
  * Returns the total frame length. */
 size_t link_build_frame(uint8_t *out, uint8_t type, const void *payload, uint16_t len);

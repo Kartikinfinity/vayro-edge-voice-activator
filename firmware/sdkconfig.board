@@ -1,5 +1,10 @@
-# Physical wiring record. MUST match the assembled hardware (see docs/PROJECT_STATE.md §Hardware).
-# Values below are the architecture §B5 defaults and are UNCONFIRMED until the user reports the real pins.
-CONFIG_PS_I2S_BCK_GPIO=4
+# Physical wiring record — MUST match the assembled hardware (docs/PROJECT_STATE.md §6).
+# Reported by the user 2026-09-26. Differs from architecture §B5 (BCK/SD swapped); firmware follows the wiring.
+# INMP441: VDD -> 3V3, GND -> GND, L/R -> GND (left slot). Board: ESP32-S3 N16R8 (16 MB flash, 8 MB octal PSRAM, PSRAM disabled).
+CONFIG_PS_I2S_BCK_GPIO=6
 CONFIG_PS_I2S_WS_GPIO=5
-CONFIG_PS_I2S_SD_GPIO=6
+CONFIG_PS_I2S_SD_GPIO=4
+# RX framing decided by measurement (M1 alignment sweep, evidence/runs/20260926_214456_m1_align_sweep_warm):
+# PHILIPS captures one bit late (24-bit LSB always 0, sign bits leak into the empty slot);
+# MSB gives LSB=1 in 50.85 % of samples and a fully empty right slot.
+CONFIG_PS_I2S_FORMAT_MSB=y

@@ -38,12 +38,48 @@ def crc16_ccitt(data: bytes) -> int:
     return binascii.crc_hqx(data, 0xFFFF)
 
 
+def esp_ports():
+    return [p for p in list_ports.comports() if p.vid in ESP_VIDS]
+
+
 def find_port():
-    hits = [p for p in list_ports.comports() if p.vid in ESP_VIDS]
+    hits = esp_ports()
     if len(hits) != 1:
         found = ", ".join(f"{p.device} ({p.description}, VID={p.vid})" for p in list_ports.comports())
         sys.exit(f"Expected exactly one ESP32 serial port, found: {found or 'none'}. Use --port.")
     return hits[0].device, ESP_VIDS[hits[0].vid]
+
+
+def port_present(port):
+    return any(p.device == port for p in list_ports.comports())
+
+
+def open_port(port, baud, timeout_s=10.0):
+    """Open without asserting DTR/RTS (which would hold the chip in reset); retry while Windows
+    finishes enumerating a freshly (re)connected USB device."""
+    t0 = time.time()
+    while True:
+        try:
+            ser = serial.Serial()
+            ser.port, ser.baudrate, ser.timeout = port, baud, 0.05
+            ser.dtr = False
+            ser.rts = False
+            ser.open()
+            if hasattr(ser, "set_buffer_size"):
+                ser.set_buffer_size(rx_size=1 << 20)  # Windows driver buffer: absorb host scheduling stalls
+            return ser
+        except serial.SerialException:
+            if time.time() - t0 > timeout_s:
+                raise
+            time.sleep(0.2)
+
+
+def wait_until(pred, timeout_s, msg):
+    t0 = time.time()
+    while not pred():
+        if time.time() - t0 > timeout_s:
+            sys.exit(f"Timed out: {msg}")
+        time.sleep(0.1)
 
 
 def parse_kv(line: str):
@@ -108,28 +144,57 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port")
     ap.add_argument("--baud", type=int, default=921600)
-    ap.add_argument("--seconds", type=float, required=True, help="audio seconds to record")
+    ap.add_argument("--seconds", type=float, help="audio seconds to record (implied by --script)")
+    ap.add_argument("--script", default="",
+                    help='timed prompts "name:seconds,..." e.g. "silence:5,count 1 to 10 at 50 cm:7"; '
+                         "boundaries are recorded in capture_summary.json")
+    ap.add_argument("--settle-s", type=float, default=3.0,
+                    help="with --script: seconds of audio recorded before the first prompt (mic settling)")
     ap.add_argument("--label", required=True)
     ap.add_argument("--note", default="", help="free-text test conditions, stored in the summary")
-    ap.add_argument("--reset", action="store_true", help="pulse RTS to reset the board and capture boot diagnostics")
+    ap.add_argument("--reset", action="store_true", help="pulse RTS to reset the board (warm boot) and capture boot diagnostics")
+    ap.add_argument("--cold", action="store_true", help="guide an unplug/replug power cycle (cold boot) before capturing")
     ap.add_argument("--fs", type=int, default=16000)
     ap.add_argument("--out-root", default=str(ROOT / "evidence" / "runs"))
     args = ap.parse_args()
+
+    script, starts, t = [], [], args.settle_s
+    for item in filter(None, (s.strip() for s in args.script.split(","))):
+        name, _, dur = item.rpartition(":")
+        script.append((name.strip(), float(dur)))
+        starts.append(t)
+        t += float(dur)
+    if script:
+        args.seconds = t + 0.5
+    if not args.seconds:
+        sys.exit("Give --seconds or --script")
 
     port, port_kind = (args.port, "user-specified") if args.port else find_port()
     stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
     out = pathlib.Path(args.out_root) / f"{stamp}_{args.label}"
     out.mkdir(parents=True, exist_ok=True)
 
-    ser = serial.Serial()
-    ser.port, ser.baudrate, ser.timeout = port, args.baud, 0.05
-    ser.dtr = False
-    ser.rts = False
-    ser.open()
-    if args.reset:
-        ser.rts = True
-        time.sleep(0.2)
-        ser.rts = False
+    boot_kind = "already running"
+    if args.cold:
+        print(f">>> UNPLUG the ESP32-S3 USB cable now ({port}) ...")
+        wait_until(lambda: not port_present(port), 120, "board was not unplugged")
+        print(">>> Unplugged. Wait ~2 s, then PLUG it back in ...")
+        time.sleep(1.0)
+        wait_until(lambda: port_present(port), 120, "board did not reappear")
+        boot_kind = "cold (USB power cycle observed by host)"
+        ser = open_port(port, args.baud)
+    else:
+        ser = open_port(port, args.baud)
+        if args.reset:
+            ser.rts = True
+            time.sleep(0.2)
+            ser.rts = False
+            ser.close()
+            time.sleep(0.5)  # native USB re-enumerates on reset
+            wait_until(lambda: port_present(port), 10, "port did not come back after reset")
+            ser = open_port(port, args.baud)
+            boot_kind = "warm (RTS reset)"
+    print(f"Port {port} open ({port_kind}); boot: {boot_kind}")
 
     buf = bytearray()
     boot_raw = bytearray()
@@ -142,9 +207,25 @@ def main():
     last_print = 0.0
     target = int(args.seconds * args.fs)
 
+    got_frame = False
+    last_kick = 0.0
+    port_losses = 0
+    prompt_i, script_done = -1, False
     try:
         while True:
-            chunk = ser.read(8192)
+            if not got_frame and time.time() - last_kick > 0.25:
+                ser.write(b"S")  # firmware holds the mic clock off until it hears from the host
+                last_kick = time.time()
+            try:
+                chunk = ser.read(8192)
+            except serial.SerialException:
+                port_losses += 1
+                print("\n  !! serial port lost (device reset or unplugged) — reopening")
+                ser.close()
+                wait_until(lambda: port_present(port), 30, "port did not come back")
+                ser = open_port(port, args.baud)
+                got_frame = False
+                continue
             if chunk:
                 buf += chunk
             while True:
@@ -175,6 +256,7 @@ def main():
                     continue
                 payload = body[4:]
                 del buf[:HDR + length + CRC_LEN]
+                got_frame = True
 
                 if ftype == T_AUDIO:
                     first_idx, bps, _slot, n = struct.unpack_from("<IBBH", payload, 0)
@@ -202,7 +284,19 @@ def main():
                             print("\n" + text.strip(), end="")
 
             now = time.time()
-            if last_stats and now - last_print >= 1.0:
+            rec_s = sessions[0].samples / args.fs
+            if script and t_first_audio is not None:
+                if prompt_i == -1:
+                    print(f"\n\n>>> Stay QUIET — mic settling ({args.settle_s:.0f} s)", flush=True)
+                    prompt_i = 0
+                while prompt_i < len(script) and rec_s >= starts[prompt_i]:
+                    name, dur = script[prompt_i]
+                    print(f"\n>>> NOW ({dur:.0f} s):  {name.upper()}", flush=True)
+                    prompt_i += 1
+                if prompt_i == len(script) and rec_s >= starts[-1] + script[-1][1] and not script_done:
+                    print("\n>>> DONE — you can stop.", flush=True)
+                    script_done = True
+            elif last_stats and now - last_print >= 1.0:
                 last_print = now
                 got = sum(s.samples for s in sessions)
                 print(f"\r  recorded {got / args.fs:8.1f}/{args.seconds:.0f} s   level {last_stats.get('level_dbfs')} dBFS"
@@ -234,11 +328,17 @@ def main():
         "port": port,
         "port_kind": port_kind,
         "baud": args.baud,
-        "reset_by_host": args.reset,
+        "boot": boot_kind,
+        "port_losses": port_losses,
         "fs_hz": args.fs,
         "sessions": [{"samples": s.samples, "seconds": round(s.samples / args.fs, 3), "audio_frames": s.frames,
                       "host_gap_count": len(s.gaps), "host_gap_samples": sum(g[1] for g in s.gaps),
                       "host_gaps_first50": s.gaps[:50]} for s in sessions],
+        "settle_s": args.settle_s if script else None,
+        "script_segments": [{"name": n, "t0_s": round(s0, 3), "t1_s": round(s0 + d, 3)}
+                            for (n, d), s0 in zip(script, starts)],
+        "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); "
+                              "speaker reaction lag is not compensated — analysis trims segment starts",
         "crc_errors": crc_errors,
         "bad_length_frames": bad_len,
         "device_last_stats": last_stats,

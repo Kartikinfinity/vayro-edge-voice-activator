@@ -41,6 +41,8 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | DEC-03 | M1 debug/data link = CRC-framed USB serial, not TCP | Isolates mic/I2S faults from Wi-Fi faults; the same tool records training and held-out audio through the real mic (X16/X17). Product streaming remains TCP (M5). |
 | DEC-04 | M1 capture carries the full 24-bit sample; the host derives int16 with the identical shift (I2S word >> 16) | Keeps the int16 level decision (C-07) open until speech level is measured. |
 | DEC-05 | Unified ring (§8.4) built at M2, not M1 | Its first consumer is the front end. |
+| DEC-06 | **I2S RX framing = MSB-justified** (not Philips as in §2.2/P-02), normal BCK edge | Measured (E-18): Philips captures one bit late (LSB never set, sign bits leak into the empty slot); MSB is bit-aligned. Locked in `firmware/sdkconfig.board`. |
+| DEC-07 | Console/capture link = native USB-Serial-JTAG (COM7); firmware waits for a host start byte before starting I2S | The board's USB port is the native one (VID 303A:1001). Without the start byte, boot diagnostics are lost before the host opens the port. |
 
 ## 5. Conflicts and open issues
 
@@ -57,12 +59,16 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | C-09 | Keyword not chosen (PS: "the given custom keyword") | Blocks positive-data recording and M3. Does not block M1. |
 | C-10 | **IRAM code is missing from the §3.4 SRAM budget (new, measured).** The M1 build already places **60 015 B of code in internal SRAM** (DIRAM `.text`, linker report `evidence/m0/size_uart_m1build.txt`). Wi-Fi/lwIP add more IRAM code by default. Under the strictest S4 reading ("total device SRAM occupancy") this counts. | At EXP-1, report S4 both with and without IRAM code. Apply IDF flash-placement options (Wi-Fi/lwIP IRAM optimisations off, FreeRTOS/ringbuf/heap functions into flash) and measure their CPU cost. This could move the §3.5 headroom (29.7 KiB [EST]) to negative. It is the most important thing EXP-1 must settle. |
 
+| C-11 | **MIC_SETTLE = 300 ms (from P-19) is too short on this hardware.** After every I2S clock start the output carries a DC/LF transient of up to 27 % FS that takes ~1–2 s to settle (E-19, warm boots) | Proposed: set MIC_SETTLE from the measured settle time (cold boot pending), roughly 2–3 s, once per boot. The clock never stops afterwards, so this costs nothing at runtime. |
+| C-12 | Room LF energy: steady 0–125 Hz ≈ −30 dBFS (peak lines 61–70 Hz); speech band −47 dBFS with nobody speaking to the mic | Likely airflow (fan) plus background sound; room conditions not yet recorded. It uses headroom, so it constrains the int16 gain decision (C-07); the 125 Hz mel floor keeps it mostly out of the features. |
+
 ## 6. Hardware and host
 
 | Item | State |
 |---|---|
-| ESP32-S3 board | Model / flash / PSRAM / USB bridge **unknown**; not connected at 20:30 (only legacy COM1 present) |
-| INMP441 | Assembled. SCK/WS/SD GPIOs, L/R, pull-down **unknown**. M1 stereo probe will measure the active slot and the empty-slot behaviour. |
+| ESP32-S3 board | ESP32-S3 (QFN56) **rev v0.2**, **embedded 8 MB PSRAM (AP_3v3)**, **16 MB quad flash**, MAC e0:72:a1:xx:xx:xx — from esptool eFuse/flash read (`evidence/m1/esptool_flash_id.txt`). Native USB-Serial-JTAG on **COM7**. PSRAM disabled in sdkconfig (§3.7). Firmware `esp_chip_info()` reports `emb_psram=0` and `flash_bytes` = the configured 4 MB; the esptool read is authoritative. |
+| Pre-existing firmware | Arduino-ESP32 sketch (IDF v4.4.7, built 2024-03-05, 16 MB OTA layout), backed up in full: `D:\ps26172_backup\preexisting_flash_16MB.bin`, SHA-256 `56a88cea8d0d8f7d…` |
+| INMP441 | SCK→GPIO6, WS→GPIO5, SD→GPIO4, L/R→GND, VDD→3V3 (user-reported). Measured: mic on the LEFT slot; empty slot reads 100 % zero (SD held low, consistent with P-07). |
 | Logic analyser · 2.4 GHz AP for demo | **unknown** |
 | Host PC | i3-8100 (4 cores), 15.9 GB RAM, no GPU, Windows 11, Python 3.11/3.12/3.13/3.14, WSL2 Ubuntu available |
 | Host tools | `.venv-host` (Python 3.12): numpy 2.5.3, scipy 1.18.1, matplotlib 3.11.2, pyserial 3.5 |
@@ -83,13 +89,13 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | Milestone | Status |
 |---|---|
 | M0 toolchain, pinned build, X25 gate | **DONE** 2026-09-26 — ESP-IDF v5.5.5; `tools/idf.ps1 -Console uart build` green, gate PASS, image 241 095 B |
-| M1 physical audio | IN PROGRESS — firmware compiles; host capture/analysis written; **not flashed (no board connected)** |
+| M1 physical audio | IN PROGRESS — flashed and running; alignment fixed (DEC-06); EXP-10 done; **scripted cold-boot Session A (user) and 10 min integrity run pending** |
 | M2–M6 | NOT STARTED |
 
 ## 9. Blockers
 
-B-1 board not connected · B-2 wiring pins unknown · B-3 keyword not chosen (blocks M3 only)
+B-3 keyword not chosen (blocks M3) · room conditions not recorded (C-12)
 
 ## 10. Next task
 
-Flash M1, run Session A (20 s scripted capture) and Session B (10 min integrity), analyse, update the ledger.
+User runs Session A (cold boot, scripted, ~25 s). Then: analyse → fix MIC_SETTLE (C-11) and the int16 shift/gain (C-07) → start the overnight ambient recording → M2.

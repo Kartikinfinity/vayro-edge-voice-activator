@@ -1,0 +1,17 @@
+    0.063 @BOOT idf=v5.5.5 elf_sha=c686fafcb built=Sep 26 2026_21:33:38 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+    0.063 @SYNC host_waited_ms=9880
+    0.063 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+    0.063 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+    1.374 @DIAG phase=stereo bytes_per_s=127965
+    1.374 @DIAG phase=stereo slot=0 n=16000 dc=-1226757.5 rms24=1324561.9 rms_dbfs=-13.02 peak_dbfs=-9.62 lowbyte_nz_frac=0.0000 zero_frac=0.0000 first_nz_ms=0.56
+    1.374 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.9989 zero_frac=0.0011 first_nz_ms=0.50
+    1.936 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-7.81 zero_frac=0.0000
+    1.936 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=5.21
+    2.125 @MEM tag=streaming int_total=336356 int_free=287032 int_min_free=287032 int_largest=278516 dma_free=279256 psram=disabled_in_sdkconfig
+    3.122 @STATS t_ms=12937 samples=19040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-7.7 peak16=32766 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    4.124 @STATS t_ms=13937 samples=35040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-22.5 peak16=5143 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    5.123 @STATS t_ms=14937 samples=51040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-25.4 peak16=4257 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    6.125 @STATS t_ms=15937 samples=67040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-27.8 peak16=2961 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    7.121 @STATS t_ms=16937 samples=83040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-30.5 peak16=2229 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    8.118 @STATS t_ms=17937 samples=99040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-23.8 peak16=6097 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400
+    9.116 @STATS t_ms=18937 samples=115040 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-22.6 peak16=6034 heap_free=287032 heap_min=287032 hwm_reader=2740 hwm_tx=3320 hwm_main=1400

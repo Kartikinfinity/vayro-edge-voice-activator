@@ -95,21 +95,33 @@ def metrics(x, fs):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("run_dir")
-    ap.add_argument("--segments", default="", help='e.g. "silence:0-5,speech:5-12,hiss:12-16"')
+    ap.add_argument("--segments", default="",
+                    help='e.g. "silence:0-5,speech:5-12"; default: the prompts recorded by capture.py --script')
+    ap.add_argument("--trim", type=float, default=0.7, help="seconds dropped from each scripted segment start (reaction lag)")
     args = ap.parse_args()
     run = pathlib.Path(args.run_dir)
     x, fs = read_wav24(run / "audio_24bit.wav")
 
-    whole, (f, pxx), win_db = metrics(x, fs)
-    seg_results, seg_psd = {}, {"whole": (f, pxx)}
+    segs = []
     for spec in filter(None, args.segments.split(",")):
         name, _, rng = spec.partition(":")
         a, _, b = rng.partition("-")
-        lo, hi = int(float(a) * fs), min(int(float(b) * fs), len(x))
+        segs.append((name, float(a), float(b)))
+    summ = run / "capture_summary.json"
+    if not segs and summ.exists():
+        s = json.loads(summ.read_text(encoding="utf-8"))
+        if s.get("settle_s"):
+            segs.append(("settle", 0.0, float(s["settle_s"])))
+        segs += [(g["name"], g["t0_s"] + args.trim, g["t1_s"]) for g in s.get("script_segments", [])]
+
+    whole, (f, pxx), win_db = metrics(x, fs)
+    seg_results, seg_psd = {}, {"whole": (f, pxx)}
+    for name, a, b in segs:
+        lo, hi = int(a * fs), min(int(b * fs), len(x))
         if hi - lo < 1024:
             continue
         m, psd, _ = metrics(x[lo:hi], fs)
-        seg_results[name] = {"t0_s": float(a), "t1_s": float(b), **m}
+        seg_results[name] = {"t0_s": a, "t1_s": b, **m}
         seg_psd[name] = psd
 
     # zero runs >= 1 ms located in time — the first one after I2S start is the mic blanking candidate.

@@ -39,6 +39,16 @@ static const ac_config_t s_cfg = {
     .sd_gpio = CONFIG_PS_I2S_SD_GPIO,
     .dma_desc_num = DESC_NUM,
     .dma_frame_num = HOP,
+#if CONFIG_PS_I2S_FORMAT_MSB
+    .format = AC_FMT_MSB,
+#else
+    .format = AC_FMT_PHILIPS,
+#endif
+#if CONFIG_PS_I2S_BCLK_INV
+    .bclk_inv = true,
+#else
+    .bclk_inv = false,
+#endif
 };
 
 typedef struct {
@@ -47,6 +57,7 @@ typedef struct {
     double sumsq;
     int32_t peak;
     uint32_t lowbyte_nz; /* words with bits 7:0 set — the INMP441 only drives 24 of 32 bits */
+    uint32_t lsb1;       /* samples whose 24-bit LSB is 1: ~50 % when aligned, 0 % if one bit late */
     uint32_t zeros;
     int64_t first_nz_frame;
 } slot_stats_t;
@@ -63,8 +74,8 @@ static double dbfs_rms(double rms, double full_scale)
 
 /* Captures discard_ms + measure_ms of audio; stats cover only the measure window, except
  * first_nz_frame, which counts from the I2S clock start. Returns the DMA byte rate. */
-static uint32_t probe(i2s_slot_mode_t mode, i2s_std_slot_mask_t mask, uint32_t discard_ms,
-                      uint32_t measure_ms, slot_stats_t *st)
+static uint32_t probe(const ac_config_t *cfg, i2s_slot_mode_t mode, i2s_std_slot_mask_t mask,
+                      uint32_t discard_ms, uint32_t measure_ms, slot_stats_t *st)
 {
     static int32_t buf[HOP * 2];
     const int ch = (mode == I2S_SLOT_MODE_STEREO) ? 2 : 1;
@@ -72,7 +83,7 @@ static uint32_t probe(i2s_slot_mode_t mode, i2s_std_slot_mask_t mask, uint32_t d
         memset(&st[s], 0, sizeof st[s]);
         st[s].first_nz_frame = -1;
     }
-    if (ac_open(&s_cfg, mode, mask) != ESP_OK) {
+    if (ac_open(cfg, mode, mask) != ESP_OK) {
         return 0;
     }
     const uint64_t discard = (uint64_t)FS * discard_ms / 1000;
@@ -106,6 +117,9 @@ static uint32_t probe(i2s_slot_mode_t mode, i2s_std_slot_mask_t mask, uint32_t d
                 if (w & 0xFF) {
                     p->lowbyte_nz++;
                 }
+                if (x & 1) {
+                    p->lsb1++;
+                }
                 if (w == 0) {
                     p->zeros++;
                 }
@@ -117,14 +131,47 @@ static uint32_t probe(i2s_slot_mode_t mode, i2s_std_slot_mask_t mask, uint32_t d
     return dt > 0 ? (uint32_t)(bytes * 1000000ULL / (uint64_t)dt) : 0;
 }
 
+static double frac(uint32_t k, const slot_stats_t *s)
+{
+    return s->n ? (double)k / (double)s->n : 0.0;
+}
+
 static void report_slot(const char *phase, int slot, const slot_stats_t *s)
 {
     link_text("@DIAG phase=%s slot=%d n=%" PRIu64 " dc=%.1f rms24=%.1f rms_dbfs=%.2f peak_dbfs=%.2f "
-              "lowbyte_nz_frac=%.4f zero_frac=%.4f first_nz_ms=%.2f\n",
+              "lowbyte_nz_frac=%.4f lsb1_frac=%.4f zero_frac=%.4f first_nz_ms=%.2f\n",
               phase, slot, s->n, s->n ? s->sum / (double)s->n : 0.0, rms24(s), dbfs_rms(rms24(s), FS24),
-              s->peak ? 20.0 * log10(s->peak / FS24) : -999.0,
-              s->n ? (double)s->lowbyte_nz / (double)s->n : 0.0, s->n ? (double)s->zeros / (double)s->n : 0.0,
-              s->first_nz_frame < 0 ? -1.0 : (double)s->first_nz_frame * 1000.0 / FS);
+              s->peak ? 20.0 * log10(s->peak / FS24) : -999.0, frac(s->lowbyte_nz, s), frac(s->lsb1, s),
+              frac(s->zeros, s), s->first_nz_frame < 0 ? -1.0 : (double)s->first_nz_frame * 1000.0 / FS);
+}
+
+/* Alignment sweep: for each framing x BCK edge, an aligned capture has a random 24-bit LSB in
+ * the mic slot (lsb1 ~ 0.5) and nothing in the empty slot. A capture that is k bits late shows
+ * lsb1 = 0 and leaks the next sample's sign bits into the empty slot's low byte. */
+static void alignment_sweep(void)
+{
+    static const struct {
+        ac_format_t fmt;
+        bool inv;
+        const char *name;
+    } combos[] = {
+        {AC_FMT_PHILIPS, false, "PHILIPS"},
+        {AC_FMT_MSB, false, "MSB"},
+        {AC_FMT_PHILIPS, true, "PHILIPS_INV"},
+        {AC_FMT_MSB, true, "MSB_INV"},
+    };
+    for (size_t i = 0; i < sizeof combos / sizeof combos[0]; i++) {
+        ac_config_t c = s_cfg;
+        c.format = combos[i].fmt;
+        c.bclk_inv = combos[i].inv;
+        slot_stats_t st[2];
+        probe(&c, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH, 50, 250, st);
+        link_text("@ALIGN cfg=%s s0_rms_dbfs=%.2f s0_dc=%.1f s0_lsb1_frac=%.4f s0_lowbyte_nz=%.4f "
+                  "s1_rms_dbfs=%.2f s1_lowbyte_nz=%.4f s1_zero_frac=%.4f\n",
+                  combos[i].name, dbfs_rms(rms24(&st[0]), FS24), st[0].n ? st[0].sum / (double)st[0].n : 0.0,
+                  frac(st[0].lsb1, &st[0]), frac(st[0].lowbyte_nz, &st[0]), dbfs_rms(rms24(&st[1]), FS24),
+                  frac(st[1].lowbyte_nz, &st[1]), frac(st[1].zeros, &st[1]));
+    }
 }
 
 /* ---- continuous capture ------------------------------------------------------------ */
@@ -150,6 +197,11 @@ static void reader_task(void *arg)
     const i2s_std_slot_mask_t mask = (i2s_std_slot_mask_t)(uintptr_t)arg;
     static int32_t raw[HOP];
     ESP_ERROR_CHECK(ac_open(&s_cfg, I2S_SLOT_MODE_MONO, mask));
+    /* The clock was stopped between probes: skip the INMP441 standby recovery (P-20, 16 ms). */
+    for (int i = 0; i < 5; i++) {
+        size_t got;
+        ac_read(raw, sizeof raw, &got, 1000);
+    }
 
     uint32_t idx = 0;
     int64_t acc = 0;
@@ -224,20 +276,25 @@ static void tx_task(void *arg)
 void app_main(void)
 {
     ESP_ERROR_CHECK(link_init());
-    vTaskDelay(pdMS_TO_TICKS(50));
+    /* Hold the I2S clock off until the host is listening. The INMP441's power-up blanking is
+     * counted in SCK cycles (P-19), so waiting here does not change what the probe measures. */
+    const int32_t waited_ms = link_wait_host(30000);
     inst_boot_report();
-    link_text("@CFG fs=%d hop=%d bck=%d ws=%d sd=%d settle_ms=%d dma_desc=%d dma_frames=%d slot_bits=32 "
-              "i16_shift=16\n",
+    link_text("@SYNC host_waited_ms=%" PRId32 "\n", waited_ms);
+    link_text("@CFG fs=%d hop=%d bck=%d ws=%d sd=%d fmt=%s bclk_inv=%d settle_ms=%d dma_desc=%d dma_frames=%d "
+              "slot_bits=32 i16_shift=16\n",
               FS, HOP, CONFIG_PS_I2S_BCK_GPIO, CONFIG_PS_I2S_WS_GPIO, CONFIG_PS_I2S_SD_GPIO,
-              CONFIG_PS_MIC_SETTLE_MS, DESC_NUM, HOP);
+              s_cfg.format == AC_FMT_MSB ? "MSB" : "PHILIPS", s_cfg.bclk_inv ? 1 : 0, CONFIG_PS_MIC_SETTLE_MS,
+              DESC_NUM, HOP);
     inst_mem_report("boot");
 
-    /* Stereo probe: which slot carries the mic, what the empty slot looks like, blanking. */
+    /* Stereo probe first (it sees the first I2S clock after boot, so it also measures blanking). */
     slot_stats_t st[2];
-    const uint32_t stereo_bps = probe(I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH, CONFIG_PS_MIC_SETTLE_MS, 1000, st);
+    const uint32_t stereo_bps = probe(&s_cfg, I2S_SLOT_MODE_STEREO, I2S_STD_SLOT_BOTH, CONFIG_PS_MIC_SETTLE_MS, 1000, st);
     link_text("@DIAG phase=stereo bytes_per_s=%" PRIu32 "\n", stereo_bps);
     report_slot("stereo", 0, &st[0]);
     report_slot("stereo", 1, &st[1]);
+    alignment_sweep();
     const int active = rms24(&st[1]) > rms24(&st[0]) ? 1 : 0;
     const double stereo_rms = rms24(&st[active]);
     const bool no_signal = stereo_rms < 16.0; /* mic self-noise alone should be ~hundreds of LSB24 */
@@ -251,7 +308,7 @@ void app_main(void)
     double best = -1.0;
     for (int m = 0; m < 2; m++) {
         slot_stats_t ms;
-        const uint32_t bps = probe(I2S_SLOT_MODE_MONO, masks[m], 50, 500, &ms);
+        const uint32_t bps = probe(&s_cfg, I2S_SLOT_MODE_MONO, masks[m], 50, 500, &ms);
         link_text("@DIAG phase=mono mask=%s bytes_per_s=%" PRIu32 " rms_dbfs=%.2f zero_frac=%.4f\n",
                   masks[m] == I2S_STD_SLOT_LEFT ? "LEFT" : "RIGHT", bps, dbfs_rms(rms24(&ms), FS24),
                   ms.n ? (double)ms.zeros / (double)ms.n : 0.0);

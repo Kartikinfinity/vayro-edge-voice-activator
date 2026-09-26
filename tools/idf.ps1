@@ -29,6 +29,17 @@ if ($LASTEXITCODE -ne 0) { exit 1 }
 $fw = "$Repo\firmware"
 $bdir = "$fw\build_$Console"
 $defaults = "sdkconfig.defaults;sdkconfig.board;sdkconfig.console_$Console"
+# An existing sdkconfig wins over sdkconfig.defaults*, so a changed wiring/policy file would be
+# silently ignored. Regenerate whenever any defaults file is newer than the build's sdkconfig.
+$sdk = "$bdir\sdkconfig"
+if (Test-Path $sdk) {
+    $stamp = (Get-Item $sdk).LastWriteTime
+    $newer = $defaults.Split(";") | Where-Object { (Get-Item "$fw\$_").LastWriteTime -gt $stamp }
+    if ($newer) {
+        Write-Host "Config changed ($($newer -join ', ')): regenerating $sdk"
+        Remove-Item $sdk
+    }
+}
 $portArgs = @()
 if ($Port) { $portArgs = @("-p", $Port) }
 Push-Location $fw

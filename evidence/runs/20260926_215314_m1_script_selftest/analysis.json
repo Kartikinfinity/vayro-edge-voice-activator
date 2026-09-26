@@ -1,0 +1,127 @@
+{
+  "file": "audio_24bit.wav",
+  "fs_hz": 16000,
+  "whole": {
+    "samples": 104000,
+    "seconds": 6.5,
+    "dc_lsb24": -26212.11,
+    "rms_dbfs": -24.25,
+    "peak_dbfs": -7.15,
+    "int16_rms_lsb": 1421.04,
+    "int16_peak_lsb": 14378,
+    "clip_samples_24": 0,
+    "clip_samples_16": 0,
+    "level_100ms_dbfs": {
+      "p10_noise_floor": -39.22,
+      "p50": -36.03,
+      "p90": -23.24,
+      "max": -7.88
+    },
+    "zero_run_longest_samples": 0,
+    "zero_runs_ge_1ms": 0,
+    "band_db": {
+      "1-4k": 42.93356903370714,
+      "5.5-6.5k": 20.64367784403217,
+      "7.0-7.5k": 18.646324593121005,
+      "7.6-7.95k": 16.592852060315394
+    },
+    "rolloff_db": -4.05
+  },
+  "segments": {
+    "settle": {
+      "t0_s": 0.0,
+      "t1_s": 2.0,
+      "samples": 32000,
+      "seconds": 2.0,
+      "dc_lsb24": -70701.45,
+      "rms_dbfs": -19.31,
+      "peak_dbfs": -7.15,
+      "int16_rms_lsb": 2507.97,
+      "int16_peak_lsb": 14378,
+      "clip_samples_24": 0,
+      "clip_samples_16": 0,
+      "level_100ms_dbfs": {
+        "p10_noise_floor": -35.3,
+        "p50": -27.28,
+        "p90": -20.27,
+        "max": -7.88
+      },
+      "zero_run_longest_samples": 0,
+      "zero_runs_ge_1ms": 0,
+      "band_db": {
+        "1-4k": 44.00369961338142,
+        "5.5-6.5k": 21.52313487638676,
+        "7.0-7.5k": 20.068747585636988,
+        "7.6-7.95k": 17.169081086161174
+      },
+      "rolloff_db": -4.35
+    },
+    "quiet a": {
+      "t0_s": 2.7,
+      "t1_s": 4.0,
+      "samples": 20800,
+      "seconds": 1.3,
+      "dc_lsb24": -3886.66,
+      "rms_dbfs": -36.58,
+      "peak_dbfs": -26.1,
+      "int16_rms_lsb": 343.62,
+      "int16_peak_lsb": 1624,
+      "clip_samples_24": 0,
+      "clip_samples_16": 0,
+      "level_100ms_dbfs": {
+        "p10_noise_floor": -39.35,
+        "p50": -37.67,
+        "p90": -33.41,
+        "max": -32.99
+      },
+      "zero_run_longest_samples": 0,
+      "zero_runs_ge_1ms": 0,
+      "band_db": {
+        "1-4k": 43.625330149969926,
+        "5.5-6.5k": 20.72505842916883,
+        "7.0-7.5k": 18.796747829601813,
+        "7.6-7.95k": 16.293847102372233
+      },
+      "rolloff_db": -4.43
+    },
+    "quiet b": {
+      "t0_s": 4.7,
+      "t1_s": 6.0,
+      "samples": 20800,
+      "seconds": 1.3,
+      "dc_lsb24": 3960.82,
+      "rms_dbfs": -35.34,
+      "peak_dbfs": -23.56,
+      "int16_rms_lsb": 396.16,
+      "int16_peak_lsb": 2175,
+      "clip_samples_24": 0,
+      "clip_samples_16": 0,
+      "level_100ms_dbfs": {
+        "p10_noise_floor": -39.55,
+        "p50": -36.03,
+        "p90": -32.61,
+        "max": -30.95
+      },
+      "zero_run_longest_samples": 0,
+      "zero_runs_ge_1ms": 0,
+      "band_db": {
+        "1-4k": 43.12279159767363,
+        "5.5-6.5k": 20.503694532128264,
+        "7.0-7.5k": 17.847067442811934,
+        "7.6-7.95k": 17.30208098498075
+      },
+      "rolloff_db": -3.2
+    }
+  },
+  "zero_runs_ge_1ms_located_first20": [],
+  "definitions": {
+    "rms_dbfs": "AES17: 20*log10(RMS*sqrt(2)/2^23); a full-scale sine reads 0 dBFS",
+    "peak_dbfs": "20*log10(max|x|/2^23), sample peak",
+    "clip_samples_24": "samples with |x| >= 2^23-1",
+    "clip_samples_16": "int16-domain samples (x>>8) with value 32767 or -32768",
+    "noise_floor_dbfs": "10th percentile of 100 ms RMS values",
+    "zero_run": "run of consecutive samples exactly equal to 0 (24-bit); live mic self-noise makes long runs implausible",
+    "band_db": "mean Welch PSD (dB re 1 LSB24^2/Hz) over the band",
+    "rolloff_db": "band 7.6-7.95 kHz minus band 5.5-6.5 kHz; INMP441 DS: passband edge 0.423*fs=6768 Hz, -6 dB at 0.5*fs"
+  }
+}
