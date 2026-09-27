@@ -1,0 +1,26 @@
+﻿wsl.exe : INFO:__main__:Downloaded: en_US-libritts_r-medium
+At line:1 char:302
++ ... tch {} } }; wsl.exe -d Ubuntu -- bash -lc "sed -i 's/\r$//' /mnt/d/ps ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (INFO:__main__:D...britts_r-medium:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+INFO:__main__:Downloaded: en_GB-vctk-medium
+INFO:__main__:Downloaded: en_US-l2arctic-medium
+INFO:__main__:Downloaded: hi_IN-pratham-medium
+total 288952
+drwxr-xr-x 2 kartik kartik     4096 Sep 27 07:44 .
+drwxr-xr-x 4 kartik kartik     4096 Sep 27 07:44 ..
+-rw-r--r-- 1 kartik kartik 76952753 Sep 27 07:44 en_GB-vctk-medium.onnx
+-rw-r--r-- 1 kartik kartik     6637 Sep 27 07:44 en_GB-vctk-medium.onnx.json
+-rw-r--r-- 1 kartik kartik 76778673 Sep 27 07:44 en_US-l2arctic-medium.onnx
+-rw-r--r-- 1 kartik kartik     5252 Sep 27 07:44 en_US-l2arctic-medium.onnx.json
+-rw-r--r-- 1 kartik kartik 78580914 Sep 27 07:44 en_US-libritts_r-medium.onnx
+-rw-r--r-- 1 kartik kartik    20123 Sep 27 07:44 en_US-libritts_r-medium.onnx.json
+-rw-r--r-- 1 kartik kartik 63516050 Sep 27 07:44 hi_IN-pratham-medium.onnx
+-rw-r--r-- 1 kartik kartik     4970 Sep 27 07:44 hi_IN-pratham-medium.onnx.json
+4e9fc85ab9009385319fc6bae7f55577f8a2d7ee77fd9159a5500eb6531f41e6  /home/kartik/ps26172_data/piper_voices/en_GB-vctk-medium.onnx
+d89f6f124bf1e7735b2179d2141b8001c3e19169d5e743ed6e35624f4c76f044  /home/kartik/ps26172_data/piper_voices/en_US-l2arctic-medium.onnx
+10bb85e071d616fcf4071f369f1799d0491492ab3c5d552ec19fb548fac13195  /home/kartik/ps26172_data/piper_voices/en_US-libritts_r-medium.onnx
+169964b0871667f6793416d4b35e97357a68ba1ad01df8580c28048989ee7693  /home/kartik/ps26172_data/piper_voices/hi_IN-pratham-medium.onnx
+piper-tts 1.8.0

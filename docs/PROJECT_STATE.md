@@ -46,6 +46,11 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | DEC-08 | **Keyword = "Hey Vayro"**, pronounced "Hey VAI-ro" (3 syllables) | User decision 2026-09-27; satisfies §B8 (3–4 syllables). "Vayro" alone was offered and declined. |
 | DEC-09 | int16 conversion stays **bits 23:8 (word >> 16)** as §2.4 specifies — C-07 closed without an architecture change | E-06: in-band room floor ≈52 LSB RMS, int16 quantisation noise ≈45 dB below it. The level offset versus training corpora is handled with gain augmentation over the measured range plus real recordings through this mic. |
 | DEC-10 | MIC_SETTLE stays **300 ms** — C-11 withdrawn | E-19: the front-end band settles within 100 ms after clock start (cold and warm); the long DC tail is below 125 Hz. |
+| DEC-11 | **Deviation (user-approved 2026-09-27):** the submission build runs a **windowed** causal 1D DS-CNN (last ~1 s of features, every ~60 ms) instead of the stateful streaming model in §7.1/§11-A. Streaming conversion becomes a PROPOSED roadmap item. | Deadline risk: stateful int8 streaming in TFLM is the least-proven step. Same causal, no-padding architecture (X5 rule), so the weights convert later without retraining. Cost: inference CPU [EST] 3–7 % of one core versus ≈1 %; to be MEASURED in EXP-2 and reported against the 10 % gate. |
+| DEC-12 | Training environment = WSL Ubuntu, uv-managed CPython 3.12 venv (`~/.venvs/ps26172`), TensorFlow CPU, Piper TTS; public negatives = LibriSpeech dev-clean | User-approved downloads 2026-09-27. Script `tools/setup_train_env.sh`; versions frozen to `model/env/requirements.lock`. |
+| DEC-13 | Ambient recording: afternoon (~13:30–18:00) + overnight, through this mic | User-approved 2026-09-27, including household sound. Local only, used only as non-keyword data. |
+| DEC-14 | TTS input text = **"Hey Vyro"** (English voices) and **"हे वाइरो"** (Hindi voice); the keyword itself is unchanged | espeak-ng phonemes via Piper (`model/data/tts_probe.py`): "Hey Vayro" → /veɪɹoʊ/ (wrong, VAY-ro) in all 3 English voices; "Hey Vyro" → /vaɪɹoʊ/ ✓; "हे वाइरो" → /ʋaːɪɾoː/ ✓. Human listening check pending. |
+| DEC-15 | Front end = TFLM microfrontend **vendored unmodified** (tflite-micro `aab6e2fd`, KissFFT from esp-tflite-micro v1.4.1), wrapped by `ps_frontend.c`; every parameter set explicitly from `model/frontend.json` (SHA-256 `5bd00bc673ecb2b3…`) | Resolves C-02/C-03. The same sources build the firmware and the host twin (`model/frontend/libpsfe.so`). Upstream defaults differ from §7.2 (25 ms window, PCAN off), so none are relied on. |
 
 ## 5. Conflicts and open issues
 
@@ -93,7 +98,9 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 |---|---|
 | M0 toolchain, pinned build, X25 gate | **DONE** 2026-09-26 — ESP-IDF v5.5.5; `tools/idf.ps1 -Console uart build` green, gate PASS, image 241 095 B |
 | M1 physical audio | IN PROGRESS — flashed and running; alignment fixed (DEC-06); EXP-10 done; **scripted cold-boot Session A (user) and 10 min integrity run pending** |
-| M2–M6 | NOT STARTED |
+| M2 front end + parity | IN PROGRESS — microfrontend vendored; firmware builds with on-device front end + feature streaming + per-hop cycle counts; host twin built and smoke-tested; parity test written. **Device parity run pending (needs the board).** |
+| M3 data | IN PROGRESS — kw_S01 recorded (143 s, integrity clean; 24/25 kw windows ≥11 dB above floor); TTS voices + spellings ready; LibriSpeech dev-clean downloaded |
+| M4–M6 | NOT STARTED |
 
 ## 9. Blockers
 

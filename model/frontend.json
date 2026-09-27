@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "_doc": "SINGLE SOURCE OF TRUTH for the KWS front end (architecture §7.3/§B3). tools/gen_frontend_config.py compiles it into firmware/components/microfrontend/include/ps_frontend_config.h (with this file's SHA-256); model/frontend/psfe.py reads it at runtime. Every microfrontend parameter is set explicitly — upstream defaults differ (25 ms window, PCAN off).",
+  "sample_rate_hz": 16000,
+  "int16_from_i2s_word": ">> 16 (24-bit INMP441 sample bits 23:8; I2S MSB-justified 32-bit slot, DEC-06/DEC-09)",
+  "fft": "microfrontend built-in KissFFT, FIXED_POINT=16, real FFT (C-02: esp-dsp float FFT not used, to keep bit-exact parity)",
+  "window_ms": 30,
+  "hop_ms": 10,
+  "mel_bands": 40,
+  "mel_low_hz": 125.0,
+  "mel_high_hz": 6500.0,
+  "_mel_high_rationale": "INMP441 passband = 0.423*fs = 6768 Hz (DS Rev 1.1 Table 1); O1 in §2.3b",
+  "filterbank_output_scale_shift": 7,
+  "noise_reduction": {"smoothing_bits": 10, "even_smoothing": 0.025, "odd_smoothing": 0.06, "min_signal_remaining": 0.05},
+  "pcan": {"enable": 1, "strength": 0.95, "offset": 80.0, "gain_bits": 21},
+  "log_scale": {"enable": 1, "scale_shift": 6},
+  "int8_mapping": "q = clamp(((v * 256) + 333) / 666 - 128, -128, 127) on the uint16 microfrontend output (TFLM micro_speech FeatureProvider mapping)"
+}

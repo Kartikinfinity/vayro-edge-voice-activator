@@ -1,0 +1,156 @@
+﻿[2026-09-27T07:33:40+00:00] uv
+wsl.exe : downloading uv 0.12.19 x86_64-unknown-linux-gnu
+At line:2 char:1
++ wsl.exe -d Ubuntu -- bash -lc "sed -i 's/\r$//' /mnt/d/ps26172/tools/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (downloading uv ...known-linux-gnu:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+installing to /home/kartik/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+uv 0.12.19 (x86_64-unknown-linux-gnu)
+[2026-09-27T07:33:41+00:00] python 3.12 venv
+Downloading cpython-3.12.14-linux-x86_64-gnu (download) (32.7MiB)
+ Downloaded cpython-3.12.14-linux-x86_64-gnu (download)
+Installed Python 3.12.14 in 2.08s
+ + cpython-3.12.14-linux-x86_64-gnu (python3.12)
+warning: `/home/kartik/.local/bin` is not on your PATH. To use installed Python executables, run `export 
+PATH="/home/kartik/.local/bin:$PATH"` or `uv python update-shell`.
+Using CPython 3.12.14
+Creating virtual environment at: /home/kartik/.venvs/ps26172
+Activate with: source /home/kartik/.venvs/ps26172/bin/activate
+[2026-09-27T07:33:44+00:00] python packages
+Using Python 3.12.14 environment at: /home/kartik/.venvs/ps26172
+Resolved 47 packages in 613ms
+Downloading piper-tts (32.6MiB)
+Downloading numpy (15.9MiB)
+Downloading pillow (6.6MiB)
+Downloading keras (2.3MiB)
+Downloading grpcio (6.8MiB)
+Downloading onnxruntime (22.5MiB)
+Downloading scipy (33.7MiB)
+Downloading soundfile (1.3MiB)
+Downloading pygments (1.2MiB)
+Downloading libclang (23.4MiB)
+Downloading tensorflow (546.1MiB)
+Downloading h5py (4.7MiB)
+Downloading fonttools (5.1MiB)
+Downloading matplotlib (9.4MiB)
+Downloading kiwisolver (1.4MiB)
+ Downloaded pygments
+ Downloaded soundfile
+ Downloaded kiwisolver
+ Downloaded keras
+ Downloaded h5py
+ Downloaded fonttools
+ Downloaded pillow
+ Downloaded grpcio
+ Downloaded matplotlib
+ Downloaded numpy
+ Downloaded onnxruntime
+ Downloaded libclang
+ Downloaded piper-tts
+ Downloaded scipy
+ Downloaded tensorflow
+Prepared 47 packages in 51.97s
+Installed 47 packages in 9.10s
+ + absl-py==2.5.0
+ + astunparse==1.6.3
+ + certifi==2026.7.22
+ + cffi==2.1.1
+ + charset-normalizer==3.5.1
+ + contourpy==1.4.0
+ + cycler==0.12.1
+ + flatbuffers==25.12.19
+ + fonttools==4.66.0
+ + gast==0.7.0
+ + google-pasta==0.2.0
+ + grpcio==1.84.0
+ + h5py==3.14.0
+ + idna==3.20
+ + keras==3.15.1
+ + kiwisolver==1.5.1
+ + libclang==18.1.1
+ + markdown-it-py==4.2.0
+ + matplotlib==3.11.2
+ + mdurl==0.1.2
+ + ml-dtypes==0.6.0
+ + namex==0.1.0
+ + numpy==2.5.3
+ + onnxruntime==1.30.0
+ + opt-einsum==3.4.0
+ + optree==0.20.0
+ + packaging==26.3
+ + pathvalidate==3.3.1
+ + pillow==12.3.0
+ + piper-tts==1.8.0
+ + protobuf==7.36.2
+ + pycparser==3.0
+ + pygments==2.21.0
+ + pyparsing==3.3.3
+ + python-dateutil==2.9.0.post0
+ + requests==2.34.2
+ + rich==15.0.0
+ + scipy==1.18.1
+ + setuptools==84.0.0
+ + six==1.17.0
+ + soundfile==0.14.0
+ + tensorflow==2.21.0
+ + termcolor==3.3.0
+ + typing-extensions==4.16.0
+ + urllib3==2.8.0
+ + wheel==0.48.0
+ + wrapt==2.5.0
+Using Python 3.12.14 environment at: /home/kartik/.venvs/ps26172
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790494486.456649     833 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be 
+used.
+I0000 00:00:1790494486.512703     833 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available 
+CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler 
+flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790494521.599009     833 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be 
+used.
+tensorflow 2.21.0 | numpy 2.5.3 | scipy 1.18.1
+[2026-09-27T07:35:24+00:00] LibriSpeech dev-clean
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+  0 322.2M   0  63943   0      0  62918      0 1:29:30   00:01 1:29:29  62936
+  0 322.2M   0  2.65M   0      0  1.25M      0   04:17   00:02   04:15  1.25M
+  5 322.2M   5 17.91M   0      0  5.73M      0   00:56   00:03   00:53  5.73M
+ 10 322.2M  10 33.62M   0      0  8.15M      0   00:39   00:04   00:35  8.16M
+ 15 322.2M  15 49.34M   0      0  9.48M      0   00:33   00:05   00:28  9.48M
+ 20 322.2M  20 65.68M   0      0 10.58M      0   00:30   00:06   00:24 12.64M
+ 25 322.2M  25 81.41M   0      0 11.22M      0   00:28   00:07   00:21 15.34M
+ 30 322.2M  30 98.03M   0      0 11.87M      0   00:27   00:08   00:19 15.61M
+ 35 322.2M  35 115.2M   0      0 12.38M      0   00:26   00:09   00:17 15.73M
+ 41 322.2M  41 132.6M   0      0 12.86M      0   00:25   00:10   00:15 16.31M
+ 46 322.2M  46 149.9M   0      0 13.20M      0   00:24   00:11   00:13 16.35M
+ 50 322.2M  50 162.5M   0      0 13.15M      0   00:24   00:12   00:12 15.89M
+ 54 322.2M  54 175.3M   0      0 13.08M      0   00:24   00:13   00:11 15.00M
+ 58 322.2M  58 189.1M   0      0 13.13M      0   00:24   00:14   00:10 14.49M
+ 62 322.2M  62 203.0M   0      0 13.13M      0   00:24   00:15   00:09 13.68M
+ 67 322.2M  67 216.9M   0      0 13.18M      0   00:24   00:16   00:08 13.14M
+ 72 322.2M  72 232.0M   0      0 13.26M      0   00:24   00:17   00:07 13.53M
+ 76 322.2M  76 246.1M   0      0 13.30M      0   00:24   00:18   00:06 13.91M
+ 81 322.2M  81 261.2M   0      0 13.40M      0   00:24   00:19   00:05 14.16M
+ 85 322.2M  85 275.4M   0      0 13.42M      0   00:24   00:20   00:04 14.29M
+ 90 322.2M  90 290.2M   0      0 13.48M      0   00:23   00:21   00:02 14.45M
+ 94 322.2M  94 305.2M   0      0 13.54M      0   00:23   00:22   00:01 14.54M
+ 99 322.2M  99 319.0M   0      0 13.55M      0   00:23   00:23         14.48M
+100 322.2M 100 322.2M   0      0 13.58M      0   00:23   00:23         14.48M
+100 322.2M 100 322.2M   0      0 13.58M      0   00:23   00:23         14.48M
+100 322.2M 100 322.2M   0      0 13.58M      0   00:23   00:23         14.48M
+42e2234ba48799c1f50f24a7926300a1  dev-clean.tar.gz
+LibriSpeech dev-clean flac files: 2703
+[2026-09-27T07:35:50+00:00] DONE

@@ -15,19 +15,44 @@
 #include <string.h>
 
 #include "audio_capture.h"
+#include "esp_cpu.h"
 #include "esp_heap_caps.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
 #include "instrument.h"
+#include "ps_frontend.h"
+#include "ps_frontend_config.h"
 #include "sdkconfig.h"
 #include "serial_link.h"
+
+#define LINK_TYPE_FEATURES 3 /* u32 frame_idx, u32 end_sample, u16 bands, bands x u16 */
+
+static const ps_fe_params_t s_fe_params = {
+    .sample_rate_hz = PS_FE_SAMPLE_RATE_HZ,
+    .window_ms = PS_FE_WINDOW_MS,
+    .hop_ms = PS_FE_HOP_MS,
+    .mel_bands = PS_FE_MEL_BANDS,
+    .mel_low_hz = PS_FE_MEL_LOW_HZ,
+    .mel_high_hz = PS_FE_MEL_HIGH_HZ,
+    .fb_output_scale_shift = PS_FE_FB_OUTPUT_SCALE_SHIFT,
+    .nr_smoothing_bits = PS_FE_NR_SMOOTHING_BITS,
+    .nr_even_smoothing = PS_FE_NR_EVEN_SMOOTHING,
+    .nr_odd_smoothing = PS_FE_NR_ODD_SMOOTHING,
+    .nr_min_signal_remaining = PS_FE_NR_MIN_SIGNAL_REMAINING,
+    .pcan_enable = PS_FE_PCAN_ENABLE,
+    .pcan_strength = PS_FE_PCAN_STRENGTH,
+    .pcan_offset = PS_FE_PCAN_OFFSET,
+    .pcan_gain_bits = PS_FE_PCAN_GAIN_BITS,
+    .log_enable = PS_FE_LOG_ENABLE,
+    .log_scale_shift = PS_FE_LOG_SCALE_SHIFT,
+};
 
 #define FS        CONFIG_PS_SAMPLE_RATE_HZ
 #define HOP       (FS / 100)  /* 10 ms hop = 160 samples @ 16 kHz (§7.2) */
 #define DESC_NUM  4           /* §7.1: 4 x 160-frame DMA descriptors */
-#define POOL_N    32          /* 320 ms of slack between the reader and the link */
+#define POOL_N    64          /* audio + feature frame per 10 ms hop: 320 ms of slack */
 #define AUDIO_HDR 8           /* u32 first_sample, u8 bytes_per_sample, u8 slot, u16 n */
 #define FS24      8388608.0   /* 2^23 */
 #define SQRT2     1.4142135623730951
@@ -191,6 +216,27 @@ static volatile uint32_t s_pool_drops;
 static volatile uint32_t s_short_reads;
 static volatile int32_t s_level_db10 = -9990; /* int16-domain RMS of the last second, dBFS x 10 */
 static volatile int32_t s_peak16;
+/* I-2 per-stage attribution: front-end CPU cycles per 10 ms hop, over the last STATS second. */
+static volatile uint32_t s_fe_cyc_mean;
+static volatile uint32_t s_fe_cyc_max;
+static volatile uint32_t s_fe_frames;
+
+static void enqueue_features(uint32_t frame_idx, uint32_t end_sample, const uint16_t *v)
+{
+    uint8_t k;
+    if (xQueueReceive(s_free_q, &k, 0) != pdTRUE) {
+        s_pool_drops++;
+        return;
+    }
+    uint8_t *pl = s_pool[k].buf + LINK_HDR_BYTES;
+    memcpy(pl, &frame_idx, 4);
+    memcpy(pl + 4, &end_sample, 4);
+    const uint16_t bands = PS_FE_MEL_BANDS;
+    memcpy(pl + 8, &bands, 2);
+    memcpy(pl + 10, v, bands * sizeof(uint16_t));
+    s_pool[k].len = (uint16_t)link_build_frame(s_pool[k].buf, LINK_TYPE_FEATURES, pl, 10 + bands * 2);
+    xQueueSend(s_tx_q, &k, 0);
+}
 
 static void reader_task(void *arg)
 {
@@ -207,11 +253,42 @@ static void reader_task(void *arg)
     int64_t acc = 0;
     uint32_t acc_n = 0;
     int32_t pk = 0;
+    static int16_t i16[HOP];
+    static uint16_t feat[PS_FE_MEL_BANDS];
+    uint32_t fe_frames = 0;
+    uint64_t fe_cyc_sum = 0;
+    uint32_t fe_cyc_max = 0, fe_hops = 0;
     for (;;) {
         size_t got = 0;
         if (ac_read(raw, sizeof raw, &got, 1000) != ESP_OK || got != sizeof raw) {
             s_short_reads++;
             continue;
+        }
+
+        /* Front end on the int16 samples the model will see (word >> 16, DEC-09). */
+        for (int i = 0; i < HOP; i++) {
+            i16[i] = (int16_t)(raw[i] >> 16);
+        }
+        const uint32_t c0 = esp_cpu_get_cycle_count();
+        size_t off = 0;
+        while (off < HOP) {
+            size_t used = 0;
+            const int produced = ps_fe_process(i16 + off, HOP - off, &used, feat);
+            off += used;
+            if (produced) {
+                enqueue_features(fe_frames++, idx + (uint32_t)off, feat);
+            }
+        }
+        const uint32_t dc = esp_cpu_get_cycle_count() - c0; /* includes enqueue: an upper bound */
+        fe_cyc_sum += dc;
+        fe_cyc_max = dc > fe_cyc_max ? dc : fe_cyc_max;
+        if (++fe_hops == 100) {
+            s_fe_cyc_mean = (uint32_t)(fe_cyc_sum / fe_hops);
+            s_fe_cyc_max = fe_cyc_max;
+            s_fe_frames = fe_frames;
+            fe_cyc_sum = 0;
+            fe_cyc_max = 0;
+            fe_hops = 0;
         }
         /* Level meter in the int16 domain the model will see: x16 = word >> 16 (§2.4). */
         for (int i = 0; i < HOP; i++) {
@@ -324,6 +401,12 @@ void app_main(void)
               chosen == I2S_STD_SLOT_LEFT ? "LEFT" : "RIGHT", no_signal ? 1 : 0,
               (best > 0 && stereo_rms > 0) ? 20.0 * log10(best / stereo_rms) : -999.0);
 
+    link_text("@CFG fe_sha256=%s fe_window_ms=%d fe_hop_ms=%d fe_bands=%d fe_mel_hz=%.0f-%.0f fe_pcan=%d\n",
+              PS_FE_JSON_SHA256, PS_FE_WINDOW_MS, PS_FE_HOP_MS, PS_FE_MEL_BANDS, (double)PS_FE_MEL_LOW_HZ,
+              (double)PS_FE_MEL_HIGH_HZ, PS_FE_PCAN_ENABLE);
+    ESP_ERROR_CHECK(ps_fe_init(&s_fe_params) == 0 ? ESP_OK : ESP_FAIL);
+    inst_mem_report("fe_init");
+
     s_free_q = xQueueCreate(POOL_N, sizeof(uint8_t));
     s_tx_q = xQueueCreate(POOL_N, sizeof(uint8_t));
     for (uint8_t k = 0; k < POOL_N; k++) {
@@ -338,12 +421,13 @@ void app_main(void)
         vTaskDelay(pdMS_TO_TICKS(1000));
         link_text("@STATS t_ms=%" PRId64 " samples=%" PRIu32 " pool_drops=%" PRIu32 " link_drops=%" PRIu32
                   " i2s_ovf=%" PRIu32 " short_reads=%" PRIu32 " level_dbfs=%.1f peak16=%" PRId32
-                  " heap_free=%u heap_min=%u hwm_reader=%u hwm_tx=%u hwm_main=%u\n",
+                  " heap_free=%u heap_min=%u hwm_reader=%u hwm_tx=%u hwm_main=%u fe_frames=%" PRIu32
+                  " fe_cyc_mean=%" PRIu32 " fe_cyc_max=%" PRIu32 "\n",
                   esp_timer_get_time() / 1000, s_samples, s_pool_drops, link_dropped_frames(),
                   ac_overflow_count(), s_short_reads, s_level_db10 / 10.0, s_peak16,
                   (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
                   (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL),
                   (unsigned)uxTaskGetStackHighWaterMark(s_reader), (unsigned)uxTaskGetStackHighWaterMark(s_tx),
-                  (unsigned)uxTaskGetStackHighWaterMark(NULL));
+                  (unsigned)uxTaskGetStackHighWaterMark(NULL), s_fe_frames, s_fe_cyc_mean, s_fe_cyc_max);
     }
 }

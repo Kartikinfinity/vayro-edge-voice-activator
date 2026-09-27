@@ -1,0 +1,148 @@
+﻿forbidden_deps: PASS (D:\ps26172)
+frontend.json sha256=5bd00bc673ecb2b3… -> firmware\components\microfrontend\include\ps_frontend_config.h
+Executing action: all (aliases: build)
+Running ninja in directory D:\ps26172\firmware\build_usbjtag
+Executing "ninja all"...
+[0/1] Re-running CMake...
+
+-- Component directory D:/esp/esp-idf-v5.5.5/components/esp_blockdev does not contain a CMakeLists.txt file. No component will be added
+-- Minimal build - OFF
+-- ccache will be used for faster recompilation
+-- Building ESP-IDF components for target esp32s3
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5 SoCs
+-- Project sdkconfig file D:/ps26172/firmware/build_usbjtag/sdkconfig
+Loading defaults file D:/ps26172/firmware/sdkconfig.defaults...
+
+D:/ps26172/firmware/sdkconfig.defaults:26 CONFIG_NEWLIB_STDOUT_LINE_ENDING_LF was replaced with CONFIG_LIBC_STDOUT_LINE_ENDING_LF 
+
+Loading defaults file D:/ps26172/firmware/sdkconfig.board...
+
+Loading defaults file D:/ps26172/firmware/sdkconfig.console_usbjtag...
+
+-- Compiler supported targets: xtensa-esp-elf
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- USING O3
+-- App "ps26172_fw" version: 1933941-dirty
+-- Adding linker script D:/ps26172/firmware/build_usbjtag/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script D:/ps26172/firmware/build_usbjtag/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.api.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.bt_funcs.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.libgcc.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.wdt.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.version.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_master.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_50.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_smp.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_dtm.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_test.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.ble_scan.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.libc.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/esp_rom/esp32s3/ld/esp32s3.rom.newlib.ld
+-- Adding linker script D:/esp/esp-idf-v5.5.5/components/soc/esp32s3/ld/esp32s3.peripherals.ld
+-- Components: app_trace app_update audio_capture bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_bootloader_format esp_coex esp_common esp_driver_ana_cmpr esp_driver_bitscrambler esp_driver_cam esp_driver_dac esp_driver_gpio esp_driver_gptimer esp_driver_i2c esp_driver_i2s esp_driver_isp esp_driver_jpeg esp_driver_ledc esp_driver_mcpwm esp_driver_parlio esp_driver_pcnt esp_driver_ppa esp_driver_rmt esp_driver_sdio esp_driver_sdm esp_driver_sdmmc esp_driver_sdspi esp_driver_spi esp_driver_touch_sens esp_driver_tsens esp_driver_twai esp_driver_uart esp_driver_usb_serial_jtag esp_eth esp_event esp_gdbstub esp_hal_ieee802154 esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_security esp_system esp_timer esp_vfs_console esp_wifi espcoredump esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 instrument json log lwip main mbedtls microfrontend mqtt newlib nvs_flash nvs_sec_provider openthread partition_table perfmon protobuf-c protocomm pthread rt sdmmc serial_link soc spi_flash spiffs tcp_transport touch_element ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: D:/esp/esp-idf-v5.5.5/components/app_trace D:/esp/esp-idf-v5.5.5/components/app_update D:/ps26172/firmware/components/audio_capture D:/esp/esp-idf-v5.5.5/components/bootloader D:/esp/esp-idf-v5.5.5/components/bootloader_support D:/esp/esp-idf-v5.5.5/components/bt D:/esp/esp-idf-v5.5.5/components/cmock D:/esp/esp-idf-v5.5.5/components/console D:/esp/esp-idf-v5.5.5/components/cxx D:/esp/esp-idf-v5.5.5/components/driver D:/esp/esp-idf-v5.5.5/components/efuse D:/esp/esp-idf-v5.5.5/components/esp-tls D:/esp/esp-idf-v5.5.5/components/esp_adc D:/esp/esp-idf-v5.5.5/components/esp_app_format D:/esp/esp-idf-v5.5.5/components/esp_bootloader_format D:/esp/esp-idf-v5.5.5/components/esp_coex D:/esp/esp-idf-v5.5.5/components/esp_common D:/esp/esp-idf-v5.5.5/components/esp_driver_ana_cmpr D:/esp/esp-idf-v5.5.5/components/esp_driver_bitscrambler D:/esp/esp-idf-v5.5.5/components/esp_driver_cam D:/esp/esp-idf-v5.5.5/components/esp_driver_dac D:/esp/esp-idf-v5.5.5/components/esp_driver_gpio D:/esp/esp-idf-v5.5.5/components/esp_driver_gptimer D:/esp/esp-idf-v5.5.5/components/esp_driver_i2c D:/esp/esp-idf-v5.5.5/components/esp_driver_i2s D:/esp/esp-idf-v5.5.5/components/esp_driver_isp D:/esp/esp-idf-v5.5.5/components/esp_driver_jpeg D:/esp/esp-idf-v5.5.5/components/esp_driver_ledc D:/esp/esp-idf-v5.5.5/components/esp_driver_mcpwm D:/esp/esp-idf-v5.5.5/components/esp_driver_parlio D:/esp/esp-idf-v5.5.5/components/esp_driver_pcnt D:/esp/esp-idf-v5.5.5/components/esp_driver_ppa D:/esp/esp-idf-v5.5.5/components/esp_driver_rmt D:/esp/esp-idf-v5.5.5/components/esp_driver_sdio D:/esp/esp-idf-v5.5.5/components/esp_driver_sdm D:/esp/esp-idf-v5.5.5/components/esp_driver_sdmmc D:/esp/esp-idf-v5.5.5/components/esp_driver_sdspi D:/esp/esp-idf-v5.5.5/components/esp_driver_spi D:/esp/esp-idf-v5.5.5/components/esp_driver_touch_sens D:/esp/esp-idf-v5.5.5/components/esp_driver_tsens D:/esp/esp-idf-v5.5.5/components/esp_driver_twai D:/esp/esp-idf-v5.5.5/components/esp_driver_uart D:/esp/esp-idf-v5.5.5/components/esp_driver_usb_serial_jtag D:/esp/esp-idf-v5.5.5/components/esp_eth D:/esp/esp-idf-v5.5.5/components/esp_event D:/esp/esp-idf-v5.5.5/components/esp_gdbstub D:/esp/esp-idf-v5.5.5/components/esp_hal_ieee802154 D:/esp/esp-idf-v5.5.5/components/esp_hid D:/esp/esp-idf-v5.5.5/components/esp_http_client D:/esp/esp-idf-v5.5.5/components/esp_http_server D:/esp/esp-idf-v5.5.5/components/esp_https_ota D:/esp/esp-idf-v5.5.5/components/esp_https_server D:/esp/esp-idf-v5.5.5/components/esp_hw_support D:/esp/esp-idf-v5.5.5/components/esp_lcd D:/esp/esp-idf-v5.5.5/components/esp_local_ctrl D:/esp/esp-idf-v5.5.5/components/esp_mm D:/esp/esp-idf-v5.5.5/components/esp_netif D:/esp/esp-idf-v5.5.5/components/esp_netif_stack D:/esp/esp-idf-v5.5.5/components/esp_partition D:/esp/esp-idf-v5.5.5/components/esp_phy D:/esp/esp-idf-v5.5.5/components/esp_pm D:/esp/esp-idf-v5.5.5/components/esp_psram D:/esp/esp-idf-v5.5.5/components/esp_ringbuf D:/esp/esp-idf-v5.5.5/components/esp_rom D:/esp/esp-idf-v5.5.5/components/esp_security D:/esp/esp-idf-v5.5.5/components/esp_system D:/esp/esp-idf-v5.5.5/components/esp_timer D:/esp/esp-idf-v5.5.5/components/esp_vfs_console D:/esp/esp-idf-v5.5.5/components/esp_wifi D:/esp/esp-idf-v5.5.5/components/espcoredump D:/esp/esp-idf-v5.5.5/components/esptool_py D:/esp/esp-idf-v5.5.5/components/fatfs D:/esp/esp-idf-v5.5.5/components/freertos D:/esp/esp-idf-v5.5.5/components/hal D:/esp/esp-idf-v5.5.5/components/heap D:/esp/esp-idf-v5.5.5/components/http_parser D:/esp/esp-idf-v5.5.5/components/idf_test D:/esp/esp-idf-v5.5.5/components/ieee802154 D:/ps26172/firmware/components/instrument D:/esp/esp-idf-v5.5.5/components/json D:/esp/esp-idf-v5.5.5/components/log D:/esp/esp-idf-v5.5.5/components/lwip D:/ps26172/firmware/main D:/esp/esp-idf-v5.5.5/components/mbedtls D:/ps26172/firmware/components/microfrontend D:/esp/esp-idf-v5.5.5/components/mqtt D:/esp/esp-idf-v5.5.5/components/newlib D:/esp/esp-idf-v5.5.5/components/nvs_flash D:/esp/esp-idf-v5.5.5/components/nvs_sec_provider D:/esp/esp-idf-v5.5.5/components/openthread D:/esp/esp-idf-v5.5.5/components/partition_table D:/esp/esp-idf-v5.5.5/components/perfmon D:/esp/esp-idf-v5.5.5/components/protobuf-c D:/esp/esp-idf-v5.5.5/components/protocomm D:/esp/esp-idf-v5.5.5/components/pthread D:/esp/esp-idf-v5.5.5/components/rt D:/esp/esp-idf-v5.5.5/components/sdmmc D:/ps26172/firmware/components/serial_link D:/esp/esp-idf-v5.5.5/components/soc D:/esp/esp-idf-v5.5.5/components/spi_flash D:/esp/esp-idf-v5.5.5/components/spiffs D:/esp/esp-idf-v5.5.5/components/tcp_transport D:/esp/esp-idf-v5.5.5/components/touch_element D:/esp/esp-idf-v5.5.5/components/ulp D:/esp/esp-idf-v5.5.5/components/unity D:/esp/esp-idf-v5.5.5/components/usb D:/esp/esp-idf-v5.5.5/components/vfs D:/esp/esp-idf-v5.5.5/components/wear_levelling D:/esp/esp-idf-v5.5.5/components/wifi_provisioning D:/esp/esp-idf-v5.5.5/components/wpa_supplicant D:/esp/esp-idf-v5.5.5/components/xtensa
+-- Configuring done (24.0s)
+-- Generating done (1.5s)
+-- Build files have been written to: D:/ps26172/firmware/build_usbjtag
+[1/31] Performing build step for 'bootloader'
+
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\bootloader\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/ps26172/firmware/build_usbjtag/bootloader/bootloader.bin"
+
+
+Bootloader binary size 0x5170 bytes. 0x2e90 bytes (36%) free.
+
+
+
+[2/31] No install step for 'bootloader'
+
+[3/31] Completed 'bootloader'
+
+[4/31] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+
+[5/31] Linking C static library esp-idf\esp_app_format\libesp_app_format.a
+
+[6/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/ps_frontend.c.obj
+
+[7/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/filterbank.c.obj
+
+[8/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/filterbank_util.c.obj
+
+[9/31] Building CXX object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/fft.cc.obj
+
+[10/31] Building CXX object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/fft_util.cc.obj
+
+[11/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/frontend.c.obj
+
+[12/31] Building CXX object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/kiss_fft_int16.cc.obj
+
+[13/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/log_lut.c.obj
+
+[14/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/frontend_util.c.obj
+
+[15/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/log_scale.c.obj
+
+[16/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/log_scale_util.c.obj
+
+[17/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/noise_reduction.c.obj
+
+[18/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/noise_reduction_util.c.obj
+
+[19/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control.c.obj
+
+[20/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/pcan_gain_control_util.c.obj
+
+[21/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/window.c.obj
+
+[22/31] Building C object esp-idf/microfrontend/CMakeFiles/__idf_microfrontend.dir/tensorflow/lite/experimental/microfrontend/lib/window_util.c.obj
+
+[23/31] Linking C static library esp-idf\microfrontend\libmicrofrontend.a
+
+[24/31] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/app_main.c.obj
+
+[25/31] Linking C static library esp-idf\main\libmain.a
+
+[26/31] Generating esp-idf/esp_system/ld/sections.ld
+
+[27/31] Building C object CMakeFiles/ps26172_fw.elf.dir/project_elf_src_esp32s3.c.obj
+
+[28/31] Linking CXX executable ps26172_fw.elf
+
+[29/31] Generating binary image from built executable
+
+esptool.py v4.12.0
+
+
+Creating esp32s3 image...
+
+
+Merged 2 ELF sections
+
+
+Successfully created esp32s3 image.
+
+
+Generated D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin
+
+[30/31] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin"
+
+ps26172_fw.bin binary size 0x3da70 bytes. Smallest app partition is 0x100000 bytes. 0xc2590 bytes (76%) free.
+
+
+
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 4MB --flash_freq 80m 0x0 build_usbjtag\bootloader\bootloader.bin 0x8000 build_usbjtag\partition_table\partition-table.bin 0x10000 build_usbjtag\ps26172_fw.bin
+or from the "D:\ps26172\firmware\build_usbjtag" directory
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"

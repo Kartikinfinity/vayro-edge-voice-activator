@@ -26,7 +26,7 @@ import serial
 from serial.tools import list_ports
 
 SYNC = b"\xA5\x5A\x26\x17"
-T_AUDIO, T_TEXT = 1, 2
+T_AUDIO, T_TEXT, T_FEATURES = 1, 2, 3
 HDR, CRC_LEN, MAX_PAYLOAD = 8, 2, 1024
 ESP_VIDS = {0x303A: "Espressif native USB-Serial-JTAG", 0x10C4: "Silicon Labs CP210x",
             0x1A86: "WCH CH34x", 0x0403: "FTDI"}
@@ -263,6 +263,7 @@ def main():
     expect_boot, seen_boot, reset_retries, auto_resets = not args.attach, False, 0, 0
     recv_samples, wd_t, wd_recv = 0, time.time(), 0  # stall watchdog: real (non-gap) samples received
     streaming = False  # watchdog windows start at the first audio frame of each boot (boot probes take ~3 s)
+    feat_file, feat_session, feat_frames = None, 0, 0
     try:
         while True:
             if not got_frame and time.time() - last_kick > 0.25:
@@ -336,6 +337,19 @@ def main():
                     if t_first_audio is None:
                         t_first_audio = time.time()
                     s.add(first_idx, n, payload[8:])
+                elif ftype == T_FEATURES:
+                    # Device front-end output (M2 parity test): u32 frame_idx, u32 end_sample, u16 bands, bands x u16.
+                    # Stored per boot session so they align with that session's audio file.
+                    if not seen_boot and expect_boot:
+                        continue
+                    if feat_file is None or feat_session != len(sessions):
+                        if feat_file:
+                            feat_file.close()
+                        feat_session = len(sessions)
+                        sfx = "" if feat_session == 1 else f"_s{feat_session}"
+                        feat_file = open(out / f"features_device{sfx}.bin", "wb")
+                    feat_file.write(payload)
+                    feat_frames += 1
                 elif ftype == T_TEXT:
                     text = payload.decode("utf-8", "replace")
                     log.write(f"{time.time() - t_start:9.3f} {text}" + ("" if text.endswith("\n") else "\n"))
@@ -392,6 +406,8 @@ def main():
         log.close()
         for s in sessions:
             s.close()
+        if feat_file:
+            feat_file.close()
     print()
 
     (out / "boot_raw.txt").write_text(boot_raw.decode("latin-1"), encoding="utf-8")
@@ -420,6 +436,7 @@ def main():
                             for (n, d, p), s0 in zip(script, starts)],
         "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); "
                               "speaker reaction lag is not compensated — analysis trims segment starts",
+        "device_feature_frames": feat_frames,
         "crc_errors": crc_errors,
         "bad_length_frames": bad_len,
         "device_last_stats": last_stats,

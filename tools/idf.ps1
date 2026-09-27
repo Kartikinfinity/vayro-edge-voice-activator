@@ -25,6 +25,9 @@ $IdfPython = (Get-Command python).Source  # the IDF virtualenv python after expo
 
 & "$Repo\.venv-host\Scripts\python.exe" "$PSScriptRoot\forbidden_deps.py" $Repo
 if ($LASTEXITCODE -ne 0) { exit 1 }
+# frontend.json -> firmware header (single source of truth, architecture §7.3)
+& "$Repo\.venv-host\Scripts\python.exe" "$PSScriptRoot\gen_frontend_config.py"
+if ($LASTEXITCODE -ne 0) { exit 1 }
 
 $fw = "$Repo\firmware"
 $bdir = "$fw\build_$Console"
