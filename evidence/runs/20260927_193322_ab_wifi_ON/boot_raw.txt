@@ -1,0 +1,1 @@
+I (204) esp_image: segment 5: paddr=000f2250 vaddr=50000000 size

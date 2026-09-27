@@ -107,7 +107,9 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | M2 front end + parity | **DONE** 2026-09-27 — bit-exact device vs host features after DEC-16 (runs `…145754`, `…150156`) |
 | M3 local KWS | **ON DEVICE** — v0 (windowed DS-CNN, 10 665 params, 212 584 MACs, 28 024 B int8) runs on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with host TFLite reference (1 984/1 984). Offline on held-out real speaker S01: 22/23 at thr 0.9, N=3. **Live spoken test pending.** |
 | M4 trigger | Decision logic (N-mean, threshold, 2 s refractory, IN-2 GPIO 15 pulse, `@KW` log) implemented on device; exit test pending (live keywords) |
-| M5–M6 | NOT STARTED |
+| M5 streaming | IN PROGRESS — firmware + server written; Wi-Fi + warm TCP connected on hardware (E-32). A detection-triggered stream has **not yet** been observed live, because the live test produced no detections (E-33). |
+| M6 ASR | NOT STARTED |
+| **Open risk** | **Evening/night acoustic domain shift** (E-33/E-34): the model misses live keywords under evening 5–8 kHz noise. Fix plan: night-time beds (overnight recording) + high-frequency noise augmentation → v3; re-test on fresh sessions. |
 
 ## 9. Blockers
 
