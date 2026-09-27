@@ -43,6 +43,7 @@ class Session:
         self.offset_us, self.rtt_us, self.pings = None, None, 0
         self.act = None
         self.tx_lock = threading.Lock()
+        self.conn_stamp = dt.datetime.now().strftime("c%H%M%S")
 
     def send(self, flags, payload=b""):
         hdr = bytes([MAGIC, flags, 0, 0, 0, 0, 0, 0])
@@ -95,7 +96,10 @@ class Session:
             a["L1_start_ms"] = round((a["t_start_rx_us"] - t_det_srv) / 1000, 3)
             a["L1_audio0_ms"] = round((a["t_audio0_rx_us"] - t_det_srv) / 1000, 3) if a["t_audio0_rx_us"] else None
             a["clock_uncertainty_ms_half_rtt"] = round(a["rtt_us"] / 2000, 3)
-        stem = f"act{a['activation']:04d}"
+        # Connection timestamp in the name: the device restarts activation numbering at 1 after every reboot, and
+        # plain act0001.wav names overwrote earlier activations (session 20260927_192112, 19:30-19:52 files lost).
+        stem = f"{self.conn_stamp}_act{a['activation']:04d}"
+        a["file_stem"] = stem
         with wave.open(str(self.out / f"{stem}.wav"), "wb") as w:
             w.setnchannels(1)
             w.setsampwidth(2)

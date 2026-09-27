@@ -1,0 +1,121 @@
+{
+  "model": "model/artifacts/v0/model_int8.tflite",
+  "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+  "stride_frames": 6,
+  "win_frames": 100,
+  "refractory_s": 2.0,
+  "runs": {
+    "20260927_195253_kw_S01_s3": {
+      "seconds": 204.5,
+      "keywords_located": 25,
+      "keyword_prompts_without_speech": [],
+      "silence_floor_dbfs_20ms": null,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.8,
+          "detections": 26,
+          "recall": 0.72,
+          "recall_by_condition": {
+            "050_normal": "4/6",
+            "050_fast": "2/3",
+            "050_slow": "2/3",
+            "100_normal": "5/6",
+            "100_soft": "1/2",
+            "200_normal": "4/5"
+          },
+          "false_activations": 8,
+          "fa_per_hour": 140.82,
+          "exposure_hours": 0.0568,
+          "fa_locations": [
+            "kw_100_normal_02",
+            "move_200",
+            "kw_200_normal_01",
+            "kw_200_normal_02",
+            "neg_wireo_01",
+            "neg_vayu_01",
+            "neg_heyvayu_01",
+            "neg_pyro_01"
+          ],
+          "extra_detections_within_keyword_prompts": 0,
+          "detection_lag_s": {
+            "median": 0.08,
+            "min": 0.02,
+            "max": 0.72
+          },
+          "prompt_score": {
+            "kw_prompts": 25,
+            "kw_prompts_hit": 21,
+            "recall": 0.84,
+            "by_condition": {
+              "050_normal": "4/6",
+              "050_fast": "2/3",
+              "050_slow": "3/3",
+              "100_normal": "6/6",
+              "100_soft": "1/2",
+              "200_normal": "5/5"
+            },
+            "neg_prompt_false_activations": 4,
+            "fa_prompts": [
+              "neg_wireo_01",
+              "neg_vayu_01",
+              "neg_heyvayu_01",
+              "neg_pyro_01"
+            ]
+          }
+        },
+        {
+          "n": 3,
+          "threshold": 0.9,
+          "detections": 25,
+          "recall": 0.72,
+          "recall_by_condition": {
+            "050_normal": "4/6",
+            "050_fast": "2/3",
+            "050_slow": "2/3",
+            "100_normal": "5/6",
+            "100_soft": "1/2",
+            "200_normal": "4/5"
+          },
+          "false_activations": 7,
+          "fa_per_hour": 123.22,
+          "exposure_hours": 0.0568,
+          "fa_locations": [
+            "kw_100_normal_02",
+            "move_200",
+            "kw_200_normal_01",
+            "kw_200_normal_02",
+            "neg_wireo_01",
+            "neg_heyvayu_01",
+            "neg_pyro_01"
+          ],
+          "extra_detections_within_keyword_prompts": 0,
+          "detection_lag_s": {
+            "median": 0.14,
+            "min": 0.06,
+            "max": 0.72
+          },
+          "prompt_score": {
+            "kw_prompts": 25,
+            "kw_prompts_hit": 21,
+            "recall": 0.84,
+            "by_condition": {
+              "050_normal": "4/6",
+              "050_fast": "2/3",
+              "050_slow": "3/3",
+              "100_normal": "6/6",
+              "100_soft": "1/2",
+              "200_normal": "5/5"
+            },
+            "neg_prompt_false_activations": 3,
+            "fa_prompts": [
+              "neg_wireo_01",
+              "neg_heyvayu_01",
+              "neg_pyro_01"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

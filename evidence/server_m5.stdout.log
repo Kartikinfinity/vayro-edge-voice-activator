@@ -6,3 +6,34 @@ device connected from 192.168.1.24:51896
 [2026-09-27T19:32:13.774] activation 3: 3.64 s audio, L1_start 1.986 ms, L1_audio0 2.346 ms (±1.16 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0003.wav
 device connected from 192.168.1.24:58443
 [2026-09-27T19:33:52.052] activation 1: 3.64 s audio, L1_start 1.417 ms, L1_audio0 1.851 ms (±1.451 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0001.wav
+[2026-09-27T19:36:38.067] activation 2: 3.64 s audio, L1_start 0.065 ms, L1_audio0 0.553 ms (±1.476 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0002.wav
+[2026-09-27T19:41:09.480] activation 3: 3.64 s audio, L1_start 1.871 ms, L1_audio0 2.097 ms (±1.492 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0003.wav
+[2026-09-27T19:43:32.116] activation 4: 3.64 s audio, L1_start 0.528 ms, L1_audio0 2.803 ms (±1.267 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0004.wav
+[2026-09-27T19:47:32.571] activation 5: 3.64 s audio, L1_start 2.594 ms, L1_audio0 3.024 ms (±1.609 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0005.wav
+[2026-09-27T19:48:09.269] activation 6: 3.64 s audio, L1_start 2.173 ms, L1_audio0 2.839 ms (±1.47 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0006.wav
+[2026-09-27T19:52:23.182] activation 7: 3.64 s audio, L1_start 1.812 ms, L1_audio0 2.224 ms (±1.415 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0007.wav
+device connected from 192.168.1.24:52402
+[2026-09-27T19:53:13.892] activation 1: 3.64 s audio, L1_start 2.18 ms, L1_audio0 2.321 ms (±1.287 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0001.wav
+[2026-09-27T19:53:19.532] activation 2: 3.64 s audio, L1_start 1.722 ms, L1_audio0 2.153 ms (±1.287 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0002.wav
+[2026-09-27T19:53:24.212] activation 3: 3.64 s audio, L1_start 1.433 ms, L1_audio0 1.938 ms (±1.287 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0003.wav
+[2026-09-27T19:53:27.751] activation 4: 3.64 s audio, L1_start 1.56 ms, L1_audio0 2.0 ms (±1.287 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0004.wav
+[2026-09-27T19:53:33.932] activation 5: 3.64 s audio, L1_start 1.439 ms, L1_audio0 1.689 ms (±1.407 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0005.wav
+[2026-09-27T19:53:37.171] activation 6: 3.64 s audio, L1_start 0.717 ms, L1_audio0 1.583 ms (±1.407 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0006.wav
+[2026-09-27T19:53:47.130] activation 7: 3.64 s audio, L1_start 0.384 ms, L1_audio0 0.977 ms (±1.407 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0007.wav
+[2026-09-27T19:53:50.851] activation 8: 3.64 s audio, L1_start 0.302 ms, L1_audio0 1.168 ms (±1.407 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0008.wav
+[2026-09-27T19:54:00.271] activation 9: 3.64 s audio, L1_start 2.157 ms, L1_audio0 2.657 ms (±1.377 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0009.wav
+[2026-09-27T19:54:04.050] activation 10: 3.64 s audio, L1_start 2.371 ms, L1_audio0 2.505 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0010.wav
+[2026-09-27T19:54:07.110] activation 11: 3.64 s audio, L1_start 2.101 ms, L1_audio0 2.49 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0011.wav
+[2026-09-27T19:54:11.190] activation 12: 3.64 s audio, L1_start 1.989 ms, L1_audio0 2.469 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0012.wav
+[2026-09-27T19:54:15.810] activation 13: 3.64 s audio, L1_start 2.106 ms, L1_audio0 2.609 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0013.wav
+[2026-09-27T19:54:19.050] activation 14: 3.64 s audio, L1_start 1.743 ms, L1_audio0 2.095 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0014.wav
+[2026-09-27T19:54:24.210] activation 15: 3.64 s audio, L1_start 1.675 ms, L1_audio0 2.256 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0015.wav
+[2026-09-27T19:54:28.290] activation 16: 3.64 s audio, L1_start 1.869 ms, L1_audio0 2.347 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0016.wav
+[2026-09-27T19:54:34.169] activation 17: 3.64 s audio, L1_start 1.228 ms, L1_audio0 1.906 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0017.wav
+[2026-09-27T19:54:40.710] activation 18: 3.64 s audio, L1_start 1.638 ms, L1_audio0 1.977 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0018.wav
+[2026-09-27T19:54:47.909] activation 19: 3.64 s audio, L1_start 1.043 ms, L1_audio0 1.742 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0019.wav
+[2026-09-27T19:54:51.029] activation 20: 3.64 s audio, L1_start 0.927 ms, L1_audio0 1.219 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0020.wav
+[2026-09-27T19:54:54.809] activation 21: 3.64 s audio, L1_start 0.823 ms, L1_audio0 1.657 ms (±1.217 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0021.wav
+[2026-09-27T19:55:41.369] activation 22: 3.64 s audio, L1_start 2.035 ms, L1_audio0 9.687 ms (±1.291 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0022.wav
+[2026-09-27T19:55:49.948] activation 23: 3.64 s audio, L1_start 2.181 ms, L1_audio0 4.552 ms (±1.177 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0023.wav
+[2026-09-27T19:56:25.826] activation 24: 3.64 s audio, L1_start 1.197 ms, L1_audio0 2.609 ms (±1.177 ms clock), end=server_end, overrun=False, seq_gaps=0 -> act0024.wav

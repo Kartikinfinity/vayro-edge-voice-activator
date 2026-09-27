@@ -107,7 +107,8 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | M2 front end + parity | **DONE** 2026-09-27 — bit-exact device vs host features after DEC-16 (runs `…145754`, `…150156`) |
 | M3 local KWS | **ON DEVICE** — v0 (windowed DS-CNN, 10 665 params, 212 584 MACs, 28 024 B int8) runs on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with host TFLite reference (1 984/1 984). Offline on held-out real speaker S01: 22/23 at thr 0.9, N=3. **Live spoken test pending.** |
 | M4 trigger | Decision logic (N-mean, threshold, 2 s refractory, IN-2 GPIO 15 pulse, `@KW` log) implemented on device; exit test pending (live keywords) |
-| M5 streaming | IN PROGRESS — firmware + server written; Wi-Fi + warm TCP connected on hardware (E-32). A detection-triggered stream has **not yet** been observed live (the 150 s session contained no keyword, E-33 corrected). |
+| M4 trigger | **DONE (software instruments)** — live triggers exactly equal the offline decision replay (E-26, re-confirmed on session 3). GPIO pulse present but not captured (logic analyser arrives 28 Sep). |
+| M5 streaming | **DONE** 2026-09-27 — 24/24 detections streamed with pre-roll, 0 overruns, 0 seq gaps (E-36); L1 median 1.66 ms, L2 ≈ 95 ms median (E-37). |
 | M6 ASR | NOT STARTED |
 | **Open risk** | Evening acoustic domain (E-34): the room is 10–15 dB louder at 5–8 kHz in the evening. Its effect on recall is **untested**; next: a fresh scripted session (S01 s3, test data) under evening conditions with streaming on. |
 
