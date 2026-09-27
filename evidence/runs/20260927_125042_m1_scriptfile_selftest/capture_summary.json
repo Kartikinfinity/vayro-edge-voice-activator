@@ -1,0 +1,114 @@
+{
+  "label": "m1_scriptfile_selftest",
+  "note": "tooling self-test; nobody speaking",
+  "host_start_local": "2026-09-27T12:50:42",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "warm (RTS reset)",
+  "port_losses": 0,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "files": [
+        "audio_24bit.wav"
+      ],
+      "samples": 240160,
+      "seconds": 15.01,
+      "audio_frames": 16,
+      "host_gap_count": 15,
+      "host_gap_samples": 237600,
+      "host_gaps_first50": [
+        [
+          1893600,
+          15840
+        ],
+        [
+          1909600,
+          15840
+        ],
+        [
+          1925600,
+          15840
+        ],
+        [
+          1941600,
+          15840
+        ],
+        [
+          1957600,
+          15840
+        ],
+        [
+          1973600,
+          15840
+        ],
+        [
+          1989600,
+          15840
+        ],
+        [
+          2005600,
+          15840
+        ],
+        [
+          2021600,
+          15840
+        ],
+        [
+          2037600,
+          15840
+        ],
+        [
+          2053600,
+          15840
+        ],
+        [
+          2069600,
+          15840
+        ],
+        [
+          2085600,
+          15840
+        ],
+        [
+          2101600,
+          15840
+        ],
+        [
+          2117600,
+          15840
+        ]
+      ]
+    }
+  ],
+  "settle_s": 1.0,
+  "script_file": "C:\\Users\\user\\AppData\\Local\\Temp\\claude\\D--sih-final\\cf60499b-96e6-4067-8458-d692d0d6318f\\scratchpad\\mini_script.txt",
+  "script_segments": [
+    {
+      "name": "sil_a",
+      "prompt": "Stay quiet",
+      "t0_s": 1.0,
+      "t1_s": 2.5
+    },
+    {
+      "name": "kw_test_01",
+      "prompt": "Say: Hey Vayro (dry run, nobody speaks)",
+      "t0_s": 2.5,
+      "t1_s": 4.5
+    },
+    {
+      "name": "sil_b",
+      "prompt": "Stay quiet",
+      "t0_s": 4.5,
+      "t1_s": 6.0
+    }
+  ],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "crc_errors": 0,
+  "bad_length_frames": 0,
+  "device_last_stats": null,
+  "device_boot": null,
+  "device_cfg": null,
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}

@@ -74,6 +74,26 @@ def open_port(port, baud, timeout_s=10.0):
             time.sleep(0.2)
 
 
+def pulse_reset(ser):
+    """Hold EN low for 200 ms via RTS. Re-writing DTR after each RTS change is esptool's workaround
+    for Windows usbser.sys, which otherwise does not forward the new line state to the device
+    (a bare RTS pulse silently failed to reset the board in run 20260927_125042)."""
+    ser.dtr = False
+    ser.rts = True
+    ser.dtr = ser.dtr
+    time.sleep(0.2)
+    ser.rts = False
+    ser.dtr = ser.dtr
+
+
+def reset_and_reopen(ser, port, baud):
+    pulse_reset(ser)
+    ser.close()
+    time.sleep(0.5)  # native USB re-enumerates on reset
+    wait_until(lambda: port_present(port), 10, "port did not come back after reset")
+    return open_port(port, baud)
+
+
 def wait_until(pred, timeout_s, msg):
     t0 = time.time()
     while not pred():
@@ -106,20 +126,32 @@ def to_int16_bytes(pcm24: bytes) -> bytes:
 
 
 class Session:
-    """One device boot's worth of contiguous audio (the sample index restarts on reboot)."""
+    """One device boot's worth of contiguous audio (the sample index restarts on reboot).
+    With chunk_s > 0 the WAVs rotate every chunk_s seconds (_c000, _c001, ...), so a crash
+    during a multi-hour recording loses at most the header of the open chunk."""
 
-    def __init__(self, out: pathlib.Path, n: int, fs: int):
-        suffix = "" if n == 1 else f"_s{n}"
-        self.w24 = wave.open(str(out / f"audio_24bit{suffix}.wav"), "wb")
-        self.w16 = wave.open(str(out / f"audio_16bit{suffix}.wav"), "wb")
-        for w, width in ((self.w24, 3), (self.w16, 2)):
-            w.setnchannels(1)
-            w.setsampwidth(width)
-            w.setframerate(fs)
+    def __init__(self, out: pathlib.Path, n: int, fs: int, chunk_s: float = 0):
+        self.out, self.fs = out, fs
+        self.suffix = "" if n == 1 else f"_s{n}"
+        self.chunk = int(chunk_s * fs) if chunk_s else 0
+        self.k = 0
+        self.in_chunk = 0
+        self.files = []
+        self._open()
         self.samples = 0
         self.next_idx = None
         self.gaps = []  # (at_sample, missing_samples)
         self.frames = 0
+
+    def _open(self):
+        c = f"_c{self.k:03d}" if self.chunk else ""
+        self.w24 = wave.open(str(self.out / f"audio_24bit{self.suffix}{c}.wav"), "wb")
+        self.w16 = wave.open(str(self.out / f"audio_16bit{self.suffix}{c}.wav"), "wb")
+        for w, width in ((self.w24, 3), (self.w16, 2)):
+            w.setnchannels(1)
+            w.setsampwidth(width)
+            w.setframerate(self.fs)
+        self.files.append(f"audio_24bit{self.suffix}{c}.wav")
 
     def add(self, first_idx: int, n: int, data: bytes):
         if self.next_idx is not None and first_idx > self.next_idx:
@@ -131,9 +163,20 @@ class Session:
         self.frames += 1
 
     def _write(self, pcm24: bytes):
-        self.w24.writeframes(pcm24)
-        self.w16.writeframes(to_int16_bytes(pcm24))
-        self.samples += len(pcm24) // 3
+        while pcm24:
+            if self.chunk and self.in_chunk >= self.chunk:
+                self.close()
+                self.k += 1
+                self.in_chunk = 0
+                self._open()
+            n = len(pcm24) // 3
+            if self.chunk:
+                n = min(n, self.chunk - self.in_chunk)
+            part, pcm24 = pcm24[:3 * n], pcm24[3 * n:]
+            self.w24.writeframes(part)
+            self.w16.writeframes(to_int16_bytes(part))
+            self.samples += n
+            self.in_chunk += n
 
     def close(self):
         self.w24.close()
@@ -148,22 +191,33 @@ def main():
     ap.add_argument("--script", default="",
                     help='timed prompts "name:seconds,..." e.g. "silence:5,count 1 to 10 at 50 cm:7"; '
                          "boundaries are recorded in capture_summary.json")
+    ap.add_argument("--script-file", default="", help='prompt file, one "label | seconds | prompt" per line')
     ap.add_argument("--settle-s", type=float, default=3.0,
                     help="with --script: seconds of audio recorded before the first prompt (mic settling)")
     ap.add_argument("--label", required=True)
     ap.add_argument("--note", default="", help="free-text test conditions, stored in the summary")
-    ap.add_argument("--reset", action="store_true", help="pulse RTS to reset the board (warm boot) and capture boot diagnostics")
     ap.add_argument("--cold", action="store_true", help="guide an unplug/replug power cycle (cold boot) before capturing")
+    ap.add_argument("--attach", action="store_true",
+                    help="attach to an already-running board WITHOUT resetting it (default: warm reset, so every run "
+                         "starts from a fresh boot; attaching after an earlier run stalled the USB link, run 20260926_221804)")
+    ap.add_argument("--chunk-s", type=float, default=0, help="rotate WAV files every N seconds (long recordings)")
     ap.add_argument("--fs", type=int, default=16000)
     ap.add_argument("--out-root", default=str(ROOT / "evidence" / "runs"))
     args = ap.parse_args()
 
-    script, starts, t = [], [], args.settle_s
+    script = []  # (label, seconds, prompt)
     for item in filter(None, (s.strip() for s in args.script.split(","))):
         name, _, dur = item.rpartition(":")
-        script.append((name.strip(), float(dur)))
+        script.append((name.strip(), float(dur), name.strip()))
+    if args.script_file:
+        for line in pathlib.Path(args.script_file).read_text(encoding="utf-8").splitlines():
+            if line.strip() and not line.lstrip().startswith("#"):
+                label, dur, prompt = (p.strip() for p in line.split("|", 2))
+                script.append((label, float(dur), prompt))
+    starts, t = [], args.settle_s
+    for _, dur, _ in script:
         starts.append(t)
-        t += float(dur)
+        t += dur
     if script:
         args.seconds = t + 0.5
     if not args.seconds:
@@ -185,20 +239,14 @@ def main():
         ser = open_port(port, args.baud)
     else:
         ser = open_port(port, args.baud)
-        if args.reset:
-            ser.rts = True
-            time.sleep(0.2)
-            ser.rts = False
-            ser.close()
-            time.sleep(0.5)  # native USB re-enumerates on reset
-            wait_until(lambda: port_present(port), 10, "port did not come back after reset")
-            ser = open_port(port, args.baud)
+        if not args.attach:
+            ser = reset_and_reopen(ser, port, args.baud)
             boot_kind = "warm (RTS reset)"
     print(f"Port {port} open ({port_kind}); boot: {boot_kind}")
 
     buf = bytearray()
     boot_raw = bytearray()
-    sessions = [Session(out, 1, args.fs)]
+    sessions = [Session(out, 1, args.fs, args.chunk_s)]
     crc_errors = bad_len = 0
     events, last_stats = [], None
     log = open(out / "device_log.txt", "w", encoding="utf-8")
@@ -211,6 +259,10 @@ def main():
     last_kick = 0.0
     port_losses = 0
     prompt_i, script_done = -1, False
+    # A fresh boot sends @BOOT before any audio; audio first means the reset did not happen.
+    expect_boot, seen_boot, reset_retries, auto_resets = not args.attach, False, 0, 0
+    recv_samples, wd_t, wd_recv = 0, time.time(), 0  # stall watchdog: real (non-gap) samples received
+    streaming = False  # watchdog windows start at the first audio frame of each boot (boot probes take ~3 s)
     try:
         while True:
             if not got_frame and time.time() - last_kick > 0.25:
@@ -263,9 +315,22 @@ def main():
                     if bps != 3 or len(payload) != 8 + 3 * n:
                         bad_len += 1
                         continue
+                    if expect_boot and not seen_boot:
+                        if reset_retries >= 2:
+                            sys.exit("\nBoard keeps streaming from an old boot and will not reset. "
+                                     "Unplug and replug the USB cable, then run again.")
+                        reset_retries += 1
+                        print(f"\n  !! audio arrived before @BOOT (board did not reset) — reset retry {reset_retries}")
+                        ser = reset_and_reopen(ser, port, args.baud)
+                        buf.clear()
+                        got_frame = False
+                        break
+                    if not streaming:
+                        streaming, wd_t, wd_recv = True, time.time(), recv_samples
+                    recv_samples += n
                     s = sessions[-1]
                     if s.next_idx is not None and first_idx < s.next_idx:
-                        sessions.append(Session(out, len(sessions) + 1, args.fs))  # device rebooted
+                        sessions.append(Session(out, len(sessions) + 1, args.fs, args.chunk_s))  # device rebooted
                         s = sessions[-1]
                         print("\n  !! device restarted its sample counter (reboot?) — new session file")
                     if t_first_audio is None:
@@ -278,20 +343,33 @@ def main():
                         rec = parse_kv(text)
                         rec["host_t"] = round(time.time() - t_start, 3)
                         events.append(rec)
+                        if rec["type"] == "BOOT":
+                            seen_boot = True
                         if rec["type"] == "STATS":
                             last_stats = rec
                         else:
                             print("\n" + text.strip(), end="")
 
             now = time.time()
+            # Stall watchdog: <80 % of real-time audio over 10 s (after the first audio) -> reset the board
+            # into a new session. Such gaps stay in the WAV timeline and in the summary.
+            if streaming and now - wd_t >= 10.0:
+                if (recv_samples - wd_recv) < 0.8 * (now - wd_t) * args.fs:
+                    auto_resets += 1
+                    print(f"\n  !! link stall: {(recv_samples - wd_recv) / args.fs:.1f} s of audio in {now - wd_t:.0f} s "
+                          f"— auto-reset #{auto_resets}")
+                    ser = reset_and_reopen(ser, port, args.baud)
+                    buf.clear()
+                    got_frame, seen_boot, expect_boot, streaming = False, False, True, False
+                wd_t, wd_recv = now, recv_samples
             rec_s = sessions[0].samples / args.fs
             if script and t_first_audio is not None:
                 if prompt_i == -1:
                     print(f"\n\n>>> Stay QUIET — mic settling ({args.settle_s:.0f} s)", flush=True)
                     prompt_i = 0
                 while prompt_i < len(script) and rec_s >= starts[prompt_i]:
-                    name, dur = script[prompt_i]
-                    print(f"\n>>> NOW ({dur:.0f} s):  {name.upper()}", flush=True)
+                    _, dur, prompt = script[prompt_i]
+                    print(f"\n>>> [{prompt_i + 1}/{len(script)}] ({dur:g} s)   {prompt.upper()}", flush=True)
                     prompt_i += 1
                 if prompt_i == len(script) and rec_s >= starts[-1] + script[-1][1] and not script_done:
                     print("\n>>> DONE — you can stop.", flush=True)
@@ -330,13 +408,16 @@ def main():
         "baud": args.baud,
         "boot": boot_kind,
         "port_losses": port_losses,
+        "reset_retries": reset_retries,
+        "auto_resets_on_stall": auto_resets,
         "fs_hz": args.fs,
-        "sessions": [{"samples": s.samples, "seconds": round(s.samples / args.fs, 3), "audio_frames": s.frames,
+        "sessions": [{"files": s.files, "samples": s.samples, "seconds": round(s.samples / args.fs, 3), "audio_frames": s.frames,
                       "host_gap_count": len(s.gaps), "host_gap_samples": sum(g[1] for g in s.gaps),
                       "host_gaps_first50": s.gaps[:50]} for s in sessions],
         "settle_s": args.settle_s if script else None,
-        "script_segments": [{"name": n, "t0_s": round(s0, 3), "t1_s": round(s0 + d, 3)}
-                            for (n, d), s0 in zip(script, starts)],
+        "script_file": args.script_file or None,
+        "script_segments": [{"name": n, "prompt": p, "t0_s": round(s0, 3), "t1_s": round(s0 + d, 3)}
+                            for (n, d, p), s0 in zip(script, starts)],
         "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); "
                               "speaker reaction lag is not compensated — analysis trims segment starts",
         "crc_errors": crc_errors,

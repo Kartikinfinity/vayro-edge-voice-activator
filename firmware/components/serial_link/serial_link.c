@@ -57,9 +57,9 @@ size_t link_build_frame(uint8_t *out, uint8_t type, const void *payload, uint16_
 static esp_err_t raw_write(const uint8_t *p, size_t n)
 {
 #if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
-    if (!usb_serial_jtag_is_connected()) {
-        return ESP_FAIL;
-    }
+    /* No usb_serial_jtag_is_connected() gate: it briefly reads false while the host is actively
+     * reading and dropped single frames (runs 20260926_214931, 20260927_125228). A host that is
+     * really gone is caught by the write timeout and shows up as pool drops. */
     size_t off = 0;
     while (off < n) {
         /* 1 s: rides out host-side USB scheduling stalls (a 100 ms limit lost a frame, run 20260926_214931). */

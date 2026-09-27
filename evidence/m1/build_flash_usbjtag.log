@@ -41,7 +41,7 @@ Generated D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin
 
 [9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin"
 
-ps26172_fw.bin binary size 0x381e0 bytes. Smallest app partition is 0x100000 bytes. 0xc7e20 bytes (78%) free.
+ps26172_fw.bin binary size 0x38250 bytes. Smallest app partition is 0x100000 bytes. 0xc7db0 bytes (78%) free.
 
 
 Executing action: flash
@@ -49,7 +49,7 @@ Running ninja in directory D:\ps26172\firmware\build_usbjtag
 Executing "ninja flash"...
 [1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin"
 
-ps26172_fw.bin binary size 0x381e0 bytes. Smallest app partition is 0x100000 bytes. 0xc7e20 bytes (78%) free.
+ps26172_fw.bin binary size 0x38250 bytes. Smallest app partition is 0x100000 bytes. 0xc7db0 bytes (78%) free.
 
 
 [2/5] Performing build step for 'bootloader'
@@ -109,29 +109,29 @@ Compressed 20848 bytes to 13357...
 
 Writing at 0x00000000... (100 %)
 
-Wrote 20848 bytes (13357 compressed) at 0x00000000 in 0.3 seconds (effective 556.7 kbit/s)...
+Wrote 20848 bytes (13357 compressed) at 0x00000000 in 0.3 seconds (effective 546.5 kbit/s)...
 
 Hash of data verified.
 
-Compressed 229856 bytes to 126713...
+Compressed 229968 bytes to 126790...
 
 Writing at 0x00010000... (12 %)
 
-Writing at 0x0001c0dc... (25 %)
+Writing at 0x0001c185... (25 %)
 
-Writing at 0x00023b57... (37 %)
+Writing at 0x00023b77... (37 %)
 
-Writing at 0x000298f6... (50 %)
+Writing at 0x00029925... (50 %)
 
-Writing at 0x0002f5d7... (62 %)
+Writing at 0x0002f599... (62 %)
 
 Writing at 0x00038080... (75 %)
 
-Writing at 0x0003dcb1... (87 %)
+Writing at 0x0003dca3... (87 %)
 
-Writing at 0x00043984... (100 %)
+Writing at 0x00043978... (100 %)
 
-Wrote 229856 bytes (126713 compressed) at 0x00010000 in 1.5 seconds (effective 1191.9 kbit/s)...
+Wrote 229968 bytes (126790 compressed) at 0x00010000 in 1.5 seconds (effective 1189.0 kbit/s)...
 
 Hash of data verified.
 
@@ -139,7 +139,7 @@ Compressed 3072 bytes to 103...
 
 Writing at 0x00008000... (100 %)
 
-Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 522.9 kbit/s)...
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 503.7 kbit/s)...
 
 Hash of data verified.
 

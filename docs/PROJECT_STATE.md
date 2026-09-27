@@ -43,6 +43,9 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | DEC-05 | Unified ring (§8.4) built at M2, not M1 | Its first consumer is the front end. |
 | DEC-06 | **I2S RX framing = MSB-justified** (not Philips as in §2.2/P-02), normal BCK edge | Measured (E-18): Philips captures one bit late (LSB never set, sign bits leak into the empty slot); MSB is bit-aligned. Locked in `firmware/sdkconfig.board`. |
 | DEC-07 | Console/capture link = native USB-Serial-JTAG (COM7); firmware waits for a host start byte before starting I2S | The board's USB port is the native one (VID 303A:1001). Without the start byte, boot diagnostics are lost before the host opens the port. |
+| DEC-08 | **Keyword = "Hey Vayro"**, pronounced "Hey VAI-ro" (3 syllables) | User decision 2026-09-27; satisfies §B8 (3–4 syllables). "Vayro" alone was offered and declined. |
+| DEC-09 | int16 conversion stays **bits 23:8 (word >> 16)** as §2.4 specifies — C-07 closed without an architecture change | E-06: in-band room floor ≈52 LSB RMS, int16 quantisation noise ≈45 dB below it. The level offset versus training corpora is handled with gain augmentation over the measured range plus real recordings through this mic. |
+| DEC-10 | MIC_SETTLE stays **300 ms** — C-11 withdrawn | E-19: the front-end band settles within 100 ms after clock start (cold and warm); the long DC tail is below 125 Hz. |
 
 ## 5. Conflicts and open issues
 
@@ -94,8 +97,10 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 
 ## 9. Blockers
 
-B-3 keyword not chosen (blocks M3) · room conditions not recorded (C-12)
+Training toolchain not installed (WSL Python is 3.14; TensorFlow needs ≤ 3.13) · real keyword recordings not yet made
+
+Room conditions for Session A (user, verbatim): "fan was on of other room sound i could listen pc is about 30 cm from mic".
 
 ## 10. Next task
 
-User runs Session A (cold boot, scripted, ~25 s). Then: analyse → fix MIC_SETTLE (C-11) and the int16 shift/gain (C-07) → start the overnight ambient recording → M2.
+Record real "Hey Vayro" sessions (`host/scripts/kw_session_v1.txt`, one run per speaker). Then afternoon ambient recording, M2 front end and training setup, and the overnight ambient run.

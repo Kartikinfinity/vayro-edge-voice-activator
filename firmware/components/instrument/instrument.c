@@ -1,6 +1,7 @@
 #include "instrument.h"
 
 #include <inttypes.h>
+#include <stdio.h>
 
 #include "esp_app_desc.h"
 #include "esp_chip_info.h"
@@ -54,11 +55,18 @@ void inst_boot_report(void)
     esp_flash_get_size(NULL, &flash_bytes);
     char elf_sha[17] = {0};
     esp_app_get_elf_sha256(elf_sha, sizeof elf_sha);
+    /* "Sep 26 2026" -> "Sep-26-2026": @ lines are space-separated key=value pairs. */
+    char date[sizeof esp_app_get_description()->date];
+    snprintf(date, sizeof date, "%s", esp_app_get_description()->date);
+    for (char *p = date; *p; p++) {
+        if (*p == ' ') {
+            *p = '-';
+        }
+    }
 
     link_text("@BOOT idf=%s elf_sha=%s built=%s_%s cores=%d rev=%d.%d emb_psram=%d flash_bytes=%" PRIu32
               " cpu_mhz=%d reset=%s\n",
-              esp_get_idf_version(), elf_sha, esp_app_get_description()->date,
-              esp_app_get_description()->time, chip.cores, chip.revision / 100, chip.revision % 100,
+              esp_get_idf_version(), elf_sha, date, esp_app_get_description()->time, chip.cores, chip.revision / 100, chip.revision % 100,
               (chip.features & CHIP_FEATURE_EMB_PSRAM) ? 1 : 0, flash_bytes,
               CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ, reset_reason_str(esp_reset_reason()));
 }

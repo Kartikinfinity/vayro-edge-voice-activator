@@ -1,0 +1,52 @@
+# Keyword recording protocol v1 — "Hey Vayro" (pronounced "Hey VAI-ro"), one speaker per run.
+# Format: label | seconds | prompt shown to the speaker.
+# Labels: kw_<distance cm>_<style>_<n> = keyword · neg_<word>_<n> = confusable non-keyword ·
+#         talk_* = free speech (non-keyword) · sil_* = silence · move_* = speaker repositioning (discarded).
+# Each utterance window is 2.5 s; the precise keyword end is located later by energy within the window.
+sil_start        | 5   | Stay quiet
+kw_050_normal_01 | 2.5 | Say: Hey Vayro   (normal, ~50 cm from the mic)
+kw_050_normal_02 | 2.5 | Say: Hey Vayro
+kw_050_normal_03 | 2.5 | Say: Hey Vayro
+kw_050_normal_04 | 2.5 | Say: Hey Vayro
+kw_050_normal_05 | 2.5 | Say: Hey Vayro
+kw_050_normal_06 | 2.5 | Say: Hey Vayro
+kw_050_fast_01   | 2.5 | Say FAST: Hey Vayro
+kw_050_fast_02   | 2.5 | Say FAST: Hey Vayro
+kw_050_fast_03   | 2.5 | Say FAST: Hey Vayro
+kw_050_slow_01   | 2.5 | Say SLOWLY: Hey Vayro
+kw_050_slow_02   | 2.5 | Say SLOWLY: Hey Vayro
+kw_050_slow_03   | 2.5 | Say SLOWLY: Hey Vayro
+move_100         | 5   | MOVE to about 1 m from the mic
+kw_100_normal_01 | 2.5 | Say: Hey Vayro   (~1 m)
+kw_100_normal_02 | 2.5 | Say: Hey Vayro
+kw_100_normal_03 | 2.5 | Say: Hey Vayro
+kw_100_normal_04 | 2.5 | Say: Hey Vayro
+kw_100_normal_05 | 2.5 | Say: Hey Vayro
+kw_100_normal_06 | 2.5 | Say: Hey Vayro
+kw_100_soft_01   | 2.5 | Say SOFTLY: Hey Vayro
+kw_100_soft_02   | 2.5 | Say SOFTLY: Hey Vayro
+move_200         | 5   | MOVE to about 2 m (across the room)
+kw_200_normal_01 | 2.5 | Say: Hey Vayro   (~2 m)
+kw_200_normal_02 | 2.5 | Say: Hey Vayro
+kw_200_normal_03 | 2.5 | Say: Hey Vayro
+kw_200_normal_04 | 2.5 | Say: Hey Vayro
+kw_200_normal_05 | 2.5 | Say: Hey Vayro
+move_050         | 5   | COME BACK to about 50 cm
+neg_hey_01       | 2.5 | Say: Hey
+neg_vai_01       | 2.5 | Say: Vai
+neg_hero_01      | 2.5 | Say: Hero
+neg_cairo_01     | 2.5 | Say: Cairo
+neg_wireo_01     | 2.5 | Say: Wire-o
+neg_heythere_01  | 2.5 | Say: Hey there
+neg_heybro_01    | 2.5 | Say: Hey bro
+neg_higher_01    | 2.5 | Say: Higher
+neg_okay_01      | 2.5 | Say: Okay
+neg_vayu_01      | 2.5 | Say: Vayu
+neg_heyvayu_01   | 2.5 | Say: Hey Vayu
+neg_viral_01     | 2.5 | Say: Viral
+neg_tyre_01      | 2.5 | Say: Tyre
+neg_heyravi_01   | 2.5 | Say: Hey Ravi
+neg_via_01       | 2.5 | Say: Via
+neg_pyro_01      | 2.5 | Say: Pyro
+talk_free        | 12  | TALK normally about anything for 12 s (do NOT say the keyword)
+sil_end          | 5   | Stay quiet

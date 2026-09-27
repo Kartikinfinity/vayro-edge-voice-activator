@@ -1,0 +1,195 @@
+    0.064 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+    0.064 @SYNC host_waited_ms=670
+    0.064 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+    0.064 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+    1.358 @DIAG phase=stereo bytes_per_s=127963
+    1.358 @DIAG phase=stereo slot=0 n=16000 dc=-469435.5 rms24=540669.5 rms_dbfs=-20.80 peak_dbfs=-20.96 lowbyte_nz_frac=0.0000 lsb1_frac=0.4966 zero_frac=0.0000 first_nz_ms=0.56
+    1.358 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+    1.658 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.20 s0_dc=2579000.6 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0032 s1_zero_frac=0.9968
+    1.972 @ALIGN cfg=MSB s0_rms_dbfs=-11.41 s0_dc=1245919.4 s0_lsb1_frac=0.5032 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    2.279 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.40 s0_dc=2484991.8 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0130 s1_zero_frac=0.9870
+    2.583 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.28 s0_dc=-448805.9 s0_lsb1_frac=0.5070 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    3.123 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.23 zero_frac=0.0000
+    3.123 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.57
+    3.309 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+    4.301 @STATS t_ms=4932 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13211 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    5.298 @STATS t_ms=5932 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.2 peak16=1613 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    6.293 @STATS t_ms=6932 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.1 peak16=594 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    7.282 @STATS t_ms=7932 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-37.1 peak16=695 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    8.326 @STATS t_ms=8932 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.1 peak16=714 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+    9.311 @STATS t_ms=9932 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.1 peak16=730 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   10.836 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   10.836 @SYNC host_waited_ms=645
+   10.836 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   10.836 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   12.139 @DIAG phase=stereo bytes_per_s=127963
+   12.139 @DIAG phase=stereo slot=0 n=16000 dc=-454394.3 rms24=513321.3 rms_dbfs=-21.26 peak_dbfs=-21.08 lowbyte_nz_frac=0.0000 lsb1_frac=0.4936 zero_frac=0.0000 first_nz_ms=0.56
+   12.139 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   12.442 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.33 s0_dc=2523852.2 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0070 s1_zero_frac=0.9930
+   12.754 @ALIGN cfg=MSB s0_rms_dbfs=-11.49 s0_dc=1234069.2 s0_lsb1_frac=0.5055 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   13.067 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.48 s0_dc=2455744.5 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0365 s1_zero_frac=0.9635
+   13.375 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.10 s0_dc=-457766.2 s0_lsb1_frac=0.4900 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   13.871 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.25 zero_frac=0.0000
+   13.871 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=7.00
+   14.121 @MEM tag=streaming int_total=336356 int_free=287032 int_min_free=287032 int_largest=278516 dma_free=279256 psram=disabled_in_sdkconfig
+   15.117 @STATS t_ms=4906 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13386 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   16.103 @STATS t_ms=5906 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.7 peak16=1252 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   17.100 @STATS t_ms=6906 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.6 peak16=379 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   18.089 @STATS t_ms=7906 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.0 peak16=310 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   19.074 @STATS t_ms=8906 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-50.6 peak16=262 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   20.065 @STATS t_ms=9906 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-47.5 peak16=330 heap_free=287032 heap_min=287032 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   20.838 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   20.838 @SYNC host_waited_ms=641
+   20.838 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   20.838 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   22.144 @DIAG phase=stereo bytes_per_s=127963
+   22.144 @DIAG phase=stereo slot=0 n=16000 dc=-450143.1 rms24=514095.0 rms_dbfs=-21.24 peak_dbfs=-21.43 lowbyte_nz_frac=0.0000 lsb1_frac=0.4999 zero_frac=0.0000 first_nz_ms=0.56
+   22.144 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   22.455 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.35 s0_dc=2494102.6 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0200 s1_zero_frac=0.9800
+   22.764 @ALIGN cfg=MSB s0_rms_dbfs=-11.48 s0_dc=1252272.0 s0_lsb1_frac=0.4860 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   23.070 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.46 s0_dc=2411595.8 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0717 s1_zero_frac=0.9283
+   23.319 @ALIGN cfg=MSB_INV s0_rms_dbfs=-21.95 s0_dc=-471635.9 s0_lsb1_frac=0.5058 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   23.881 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.14 zero_frac=0.0000
+   23.881 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=7.10
+   24.070 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   25.125 @STATS t_ms=4903 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13256 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   26.120 @STATS t_ms=5903 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-33.1 peak16=1259 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   27.116 @STATS t_ms=6903 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-47.3 peak16=337 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   28.114 @STATS t_ms=7903 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-48.1 peak16=345 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   29.107 @STATS t_ms=8903 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.2 peak16=610 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   30.105 @STATS t_ms=9903 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.1 peak16=578 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   30.878 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   30.878 @SYNC host_waited_ms=640
+   30.878 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   30.879 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   32.174 @DIAG phase=stereo bytes_per_s=127963
+   32.174 @DIAG phase=stereo slot=0 n=16000 dc=-464605.9 rms24=520321.6 rms_dbfs=-21.14 peak_dbfs=-21.05 lowbyte_nz_frac=0.0000 lsb1_frac=0.4991 zero_frac=0.0000 first_nz_ms=0.56
+   32.174 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   32.484 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.40 s0_dc=2513628.6 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0123 s1_zero_frac=0.9878
+   32.797 @ALIGN cfg=MSB s0_rms_dbfs=-11.50 s0_dc=1228063.7 s0_lsb1_frac=0.4833 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   33.110 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.46 s0_dc=2464420.6 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0215 s1_zero_frac=0.9785
+   33.357 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.14 s0_dc=-457065.0 s0_lsb1_frac=0.4940 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   33.919 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.16 zero_frac=0.0000
+   33.919 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.98
+   34.109 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   35.166 @STATS t_ms=4902 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.7 peak16=13253 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   36.144 @STATS t_ms=5902 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.9 peak16=1242 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   37.139 @STATS t_ms=6902 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-43.9 peak16=472 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   38.122 @STATS t_ms=7902 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-44.2 peak16=510 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   39.165 @STATS t_ms=8902 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.7 peak16=1495 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   40.158 @STATS t_ms=9902 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-24.0 peak16=7801 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   40.949 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   40.950 @SYNC host_waited_ms=650
+   40.950 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   40.950 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   42.239 @DIAG phase=stereo bytes_per_s=127963
+   42.239 @DIAG phase=stereo slot=0 n=16000 dc=-463728.4 rms24=522192.2 rms_dbfs=-21.11 peak_dbfs=-20.52 lowbyte_nz_frac=0.0000 lsb1_frac=0.5029 zero_frac=0.0000 first_nz_ms=0.56
+   42.239 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   42.549 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.32 s0_dc=2542153.4 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0107 s1_zero_frac=0.9892
+   42.856 @ALIGN cfg=MSB s0_rms_dbfs=-11.53 s0_dc=1227960.9 s0_lsb1_frac=0.5032 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   43.167 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.60 s0_dc=2428693.8 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0377 s1_zero_frac=0.9623
+   43.470 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.26 s0_dc=-446125.5 s0_lsb1_frac=0.5035 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   43.968 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.18 zero_frac=0.0000
+   43.968 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.93
+   44.217 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   45.204 @STATS t_ms=4911 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13629 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   46.199 @STATS t_ms=5911 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-31.4 peak16=1766 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   47.199 @STATS t_ms=6911 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=964 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   48.188 @STATS t_ms=7911 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.1 peak16=486 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   49.185 @STATS t_ms=8911 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.5 peak16=397 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   50.181 @STATS t_ms=9911 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-47.9 peak16=377 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   50.975 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   50.975 @SYNC host_waited_ms=655
+   50.975 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   50.975 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   52.282 @DIAG phase=stereo bytes_per_s=127963
+   52.282 @DIAG phase=stereo slot=0 n=16000 dc=-462690.1 rms24=522735.8 rms_dbfs=-21.10 peak_dbfs=-21.22 lowbyte_nz_frac=0.0000 lsb1_frac=0.4993 zero_frac=0.0000 first_nz_ms=0.56
+   52.282 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   52.596 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.31 s0_dc=2533676.4 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0105 s1_zero_frac=0.9895
+   52.898 @ALIGN cfg=MSB s0_rms_dbfs=-11.47 s0_dc=1236136.5 s0_lsb1_frac=0.4815 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   53.148 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.49 s0_dc=2455405.0 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0278 s1_zero_frac=0.9722
+   53.458 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.09 s0_dc=-459533.8 s0_lsb1_frac=0.5115 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   54.006 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.25 zero_frac=0.0000
+   54.007 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.84
+   54.254 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   55.255 @STATS t_ms=4916 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13253 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   56.253 @STATS t_ms=5916 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.6 peak16=1391 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   57.255 @STATS t_ms=6916 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.4 peak16=401 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   58.258 @STATS t_ms=7916 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.4 peak16=249 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   59.255 @STATS t_ms=8916 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.0 peak16=306 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   60.988 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   60.988 @SYNC host_waited_ms=656
+   60.988 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   60.988 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   62.272 @DIAG phase=stereo bytes_per_s=127963
+   62.272 @DIAG phase=stereo slot=0 n=16000 dc=-492001.3 rms24=531443.1 rms_dbfs=-20.95 peak_dbfs=-20.80 lowbyte_nz_frac=0.0000 lsb1_frac=0.5014 zero_frac=0.0000 first_nz_ms=0.56
+   62.272 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   62.583 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.36 s0_dc=2521833.3 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0115 s1_zero_frac=0.9885
+   62.883 @ALIGN cfg=MSB s0_rms_dbfs=-11.50 s0_dc=1228736.8 s0_lsb1_frac=0.5120 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   63.187 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.49 s0_dc=2451956.4 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0215 s1_zero_frac=0.9785
+   63.495 @ALIGN cfg=MSB_INV s0_rms_dbfs=-21.99 s0_dc=-464873.1 s0_lsb1_frac=0.5008 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   64.050 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.25 zero_frac=0.0000
+   64.050 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.70
+   64.249 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   65.245 @STATS t_ms=4918 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13241 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   66.218 @STATS t_ms=5918 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.8 peak16=1328 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   67.207 @STATS t_ms=6918 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.5 peak16=374 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   68.264 @STATS t_ms=7918 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-47.4 peak16=363 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   69.257 @STATS t_ms=8918 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-46.3 peak16=399 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   70.244 @STATS t_ms=9918 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.2 peak16=559 heap_free=286844 heap_min=286704 hwm_reader=2692 hwm_tx=3320 hwm_main=1304
+   71.042 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   71.042 @SYNC host_waited_ms=655
+   71.042 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   71.042 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   72.345 @DIAG phase=stereo bytes_per_s=127963
+   72.345 @DIAG phase=stereo slot=0 n=16000 dc=-466916.8 rms24=528908.9 rms_dbfs=-21.00 peak_dbfs=-18.62 lowbyte_nz_frac=0.0000 lsb1_frac=0.4952 zero_frac=0.0000 first_nz_ms=0.56
+   72.345 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   72.657 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.41 s0_dc=2508799.5 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0123 s1_zero_frac=0.9878
+   72.907 @ALIGN cfg=MSB s0_rms_dbfs=-11.46 s0_dc=1232717.1 s0_lsb1_frac=0.5202 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   73.217 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.31 s0_dc=2482499.6 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0467 s1_zero_frac=0.9533
+   73.525 @ALIGN cfg=MSB_INV s0_rms_dbfs=-21.76 s0_dc=-474133.2 s0_lsb1_frac=0.5015 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   74.087 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.25 zero_frac=0.0000
+   74.087 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.75
+   74.273 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   75.259 @STATS t_ms=4917 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13309 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   76.318 @STATS t_ms=5917 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.7 peak16=1351 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   77.318 @STATS t_ms=6917 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-46.0 peak16=467 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   78.313 @STATS t_ms=7917 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-50.3 peak16=273 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   79.306 @STATS t_ms=8917 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.9 peak16=311 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   81.039 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   81.039 @SYNC host_waited_ms=652
+   81.039 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   81.039 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   82.341 @DIAG phase=stereo bytes_per_s=127963
+   82.341 @DIAG phase=stereo slot=0 n=16000 dc=-478299.3 rms24=532482.1 rms_dbfs=-20.94 peak_dbfs=-20.50 lowbyte_nz_frac=0.0000 lsb1_frac=0.4943 zero_frac=0.0000 first_nz_ms=0.56
+   82.341 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   82.654 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.35 s0_dc=2519510.5 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0075 s1_zero_frac=0.9925
+   82.903 @ALIGN cfg=MSB s0_rms_dbfs=-11.47 s0_dc=1232713.4 s0_lsb1_frac=0.5028 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   83.213 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.48 s0_dc=2456436.1 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0198 s1_zero_frac=0.9802
+   83.518 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.09 s0_dc=-459791.0 s0_lsb1_frac=0.5032 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   84.077 @DIAG phase=mono mask=LEFT bytes_per_s=63975 rms_dbfs=-14.23 zero_frac=0.0000
+   84.077 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.71
+   84.281 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   85.267 @STATS t_ms=4913 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13289 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   86.260 @STATS t_ms=5913 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.8 peak16=1313 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   87.310 @STATS t_ms=6913 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.7 peak16=376 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   88.306 @STATS t_ms=7913 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-48.9 peak16=332 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   89.311 @STATS t_ms=8913 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-50.6 peak16=259 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   90.305 @STATS t_ms=9913 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-50.5 peak16=283 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   91.099 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+   91.099 @SYNC host_waited_ms=650
+   91.099 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+   91.100 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+   92.410 @DIAG phase=stereo bytes_per_s=127963
+   92.410 @DIAG phase=stereo slot=0 n=16000 dc=-481441.4 rms24=531242.1 rms_dbfs=-20.96 peak_dbfs=-20.99 lowbyte_nz_frac=0.0000 lsb1_frac=0.4943 zero_frac=0.0000 first_nz_ms=0.56
+   92.410 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+   92.661 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.36 s0_dc=2528560.4 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0010 s1_zero_frac=0.9990
+   92.972 @ALIGN cfg=MSB s0_rms_dbfs=-11.50 s0_dc=1232633.4 s0_lsb1_frac=0.4888 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   93.283 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.50 s0_dc=2458338.9 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0235 s1_zero_frac=0.9765
+   93.594 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.09 s0_dc=-458870.5 s0_lsb1_frac=0.5068 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+   94.142 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.26 zero_frac=0.0000
+   94.142 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.70
+   94.326 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+   95.323 @STATS t_ms=4912 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.8 peak16=13338 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   96.318 @STATS t_ms=5912 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.6 peak16=1314 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304
+   97.370 @STATS t_ms=6912 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-43.2 peak16=614 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3320 hwm_main=1304

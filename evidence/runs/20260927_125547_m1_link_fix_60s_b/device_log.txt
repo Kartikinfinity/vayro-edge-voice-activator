@@ -1,0 +1,73 @@
+    0.055 @BOOT idf=v5.5.5 elf_sha=212f9350d built=Sep-27-2026_12:47:39 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+    0.055 @SYNC host_waited_ms=656
+    0.055 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+    0.055 @MEM tag=boot int_total=336356 int_free=300628 int_min_free=300628 int_largest=286708 dma_free=292852 psram=disabled_in_sdkconfig
+    1.339 @DIAG phase=stereo bytes_per_s=127963
+    1.339 @DIAG phase=stereo slot=0 n=16000 dc=-464700.9 rms24=522412.2 rms_dbfs=-21.10 peak_dbfs=-21.24 lowbyte_nz_frac=0.0000 lsb1_frac=0.4915 zero_frac=0.0000 first_nz_ms=0.56
+    1.339 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+    1.651 @ALIGN cfg=PHILIPS s0_rms_dbfs=-5.39 s0_dc=2519549.1 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0090 s1_zero_frac=0.9910
+    1.962 @ALIGN cfg=MSB s0_rms_dbfs=-11.53 s0_dc=1228725.7 s0_lsb1_frac=0.4908 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    2.274 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-5.49 s0_dc=2444868.7 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0297 s1_zero_frac=0.9702
+    2.582 @ALIGN cfg=MSB_INV s0_rms_dbfs=-22.12 s0_dc=-458106.0 s0_lsb1_frac=0.5100 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    3.080 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-14.23 zero_frac=0.0000
+    3.080 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=6.87
+    3.284 @MEM tag=streaming int_total=336356 int_free=286844 int_min_free=286704 int_largest=278516 dma_free=279068 psram=disabled_in_sdkconfig
+    4.339 @STATS t_ms=4918 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-16.9 peak16=13321 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+    5.338 @STATS t_ms=5918 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-32.9 peak16=1305 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+    6.333 @STATS t_ms=6918 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.1 peak16=402 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+    7.330 @STATS t_ms=7918 samples=66240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.1 peak16=439 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+    8.324 @STATS t_ms=8918 samples=82240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-48.3 peak16=322 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+    9.316 @STATS t_ms=9918 samples=98240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.1 peak16=307 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   10.309 @STATS t_ms=10918 samples=114240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-50.4 peak16=294 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   11.304 @STATS t_ms=11918 samples=130240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.3 peak16=280 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   12.300 @STATS t_ms=12918 samples=146240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-48.3 peak16=361 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   13.294 @STATS t_ms=13918 samples=162240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-45.3 peak16=571 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   14.293 @STATS t_ms=14918 samples=178240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.3 peak16=688 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   15.286 @STATS t_ms=15918 samples=194240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.4 peak16=582 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   16.341 @STATS t_ms=16918 samples=210240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.1 peak16=965 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   17.333 @STATS t_ms=17918 samples=226240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=808 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   18.326 @STATS t_ms=18918 samples=242240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.6 peak16=692 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   19.324 @STATS t_ms=19918 samples=258240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.8 peak16=593 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   20.312 @STATS t_ms=20918 samples=274240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.9 peak16=647 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   21.299 @STATS t_ms=21918 samples=290240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.7 peak16=667 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   22.295 @STATS t_ms=22918 samples=306240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.2 peak16=699 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   23.288 @STATS t_ms=23918 samples=322240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.7 peak16=683 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   24.282 @STATS t_ms=24918 samples=338240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-37.9 peak16=808 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   25.337 @STATS t_ms=25918 samples=354240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.3 peak16=836 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   26.320 @STATS t_ms=26918 samples=370240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.2 peak16=625 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   27.311 @STATS t_ms=27918 samples=386240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.4 peak16=586 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   28.300 @STATS t_ms=28918 samples=402240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.1 peak16=698 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   29.295 @STATS t_ms=29918 samples=418240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.9 peak16=680 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   30.291 @STATS t_ms=30918 samples=434240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.1 peak16=618 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   31.283 @STATS t_ms=31918 samples=450240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.0 peak16=608 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   32.338 @STATS t_ms=32918 samples=466240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.6 peak16=774 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   33.331 @STATS t_ms=33918 samples=482240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.5 peak16=579 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   34.315 @STATS t_ms=34918 samples=498240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.8 peak16=555 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   35.310 @STATS t_ms=35918 samples=514240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.5 peak16=536 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   36.303 @STATS t_ms=36918 samples=530240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.0 peak16=529 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   37.297 @STATS t_ms=37918 samples=546240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.5 peak16=660 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   38.290 @STATS t_ms=38918 samples=562240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.7 peak16=729 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   39.341 @STATS t_ms=39918 samples=578240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.6 peak16=589 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   40.337 @STATS t_ms=40918 samples=594240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.2 peak16=549 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   41.332 @STATS t_ms=41918 samples=610240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-43.8 peak16=493 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   42.325 @STATS t_ms=42918 samples=626240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.5 peak16=598 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   43.323 @STATS t_ms=43918 samples=642240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.8 peak16=535 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   44.318 @STATS t_ms=44918 samples=658240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.4 peak16=649 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   45.302 @STATS t_ms=45918 samples=674240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.5 peak16=631 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   46.296 @STATS t_ms=46918 samples=690240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.5 peak16=569 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   47.336 @STATS t_ms=47918 samples=706240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.7 peak16=625 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   48.282 @STATS t_ms=48918 samples=722240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.8 peak16=575 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   49.328 @STATS t_ms=49918 samples=738240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.1 peak16=652 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   50.323 @STATS t_ms=50918 samples=754240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.0 peak16=657 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   51.323 @STATS t_ms=51918 samples=770240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.7 peak16=636 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   52.316 @STATS t_ms=52918 samples=786240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.6 peak16=604 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   53.302 @STATS t_ms=53918 samples=802240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.2 peak16=617 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   54.289 @STATS t_ms=54918 samples=818240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.9 peak16=606 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   55.286 @STATS t_ms=55918 samples=834240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.1 peak16=608 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   56.338 @STATS t_ms=56918 samples=850240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.8 peak16=730 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   57.330 @STATS t_ms=57918 samples=866240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=605 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   58.308 @STATS t_ms=58918 samples=882240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.6 peak16=567 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   59.305 @STATS t_ms=59918 samples=898240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.1 peak16=555 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   60.300 @STATS t_ms=60918 samples=914240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=698 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   61.293 @STATS t_ms=61918 samples=930240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.2 peak16=581 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304
+   62.291 @STATS t_ms=62918 samples=946240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.6 peak16=558 heap_free=286844 heap_min=286704 hwm_reader=2724 hwm_tx=3304 hwm_main=1304

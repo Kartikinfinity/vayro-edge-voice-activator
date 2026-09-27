@@ -1,0 +1,101 @@
+{
+  "label": "m1_fan_off",
+  "note": "",
+  "host_start_local": "2026-09-26T22:18:04",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "already running",
+  "port_losses": 0,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "samples": 242080,
+      "seconds": 15.13,
+      "audio_frames": 65,
+      "host_gap_count": 16,
+      "host_gap_samples": 231680,
+      "host_gaps_first50": [
+        [
+          397600,
+          2240
+        ],
+        [
+          402720,
+          10880
+        ],
+        [
+          413760,
+          15840
+        ],
+        [
+          429760,
+          15840
+        ],
+        [
+          445760,
+          15840
+        ],
+        [
+          461760,
+          15840
+        ],
+        [
+          477760,
+          15840
+        ],
+        [
+          493760,
+          15840
+        ],
+        [
+          509760,
+          15840
+        ],
+        [
+          525760,
+          15840
+        ],
+        [
+          541760,
+          15840
+        ],
+        [
+          557760,
+          15840
+        ],
+        [
+          573760,
+          15840
+        ],
+        [
+          589760,
+          15840
+        ],
+        [
+          605760,
+          15840
+        ],
+        [
+          621760,
+          12640
+        ]
+      ]
+    }
+  ],
+  "settle_s": 3.0,
+  "script_segments": [
+    {
+      "name": "silence fan off",
+      "t0_s": 3.0,
+      "t1_s": 13.0
+    }
+  ],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "crc_errors": 0,
+  "bad_length_frames": 0,
+  "device_last_stats": null,
+  "device_boot": null,
+  "device_cfg": null,
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}
