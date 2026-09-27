@@ -1,2 +1,8 @@
 ingest listening on 0.0.0.0:5005; writing to D:\ps26172\evidence\server\20260927_200002
 device connected from 192.168.1.24:52403
+[2026-09-27T20:00:34.100] activation 25: 3.64 s audio, L1_start 1.699 ms, L1_audio0 3.831 ms (±1.621 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c200023_act0025.wav
+[2026-09-27T20:01:29.138] activation 26: 3.64 s audio, L1_start 1.6 ms, L1_audio0 1.679 ms (±1.376 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c200023_act0026.wav
+[2026-09-27T20:02:23.835] activation 27: 3.64 s audio, L1_start 1.754 ms, L1_audio0 2.278 ms (±1.268 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c200023_act0027.wav
+[2026-09-27T20:12:45.574] activation 28: 3.64 s audio, L1_start 3.168 ms, L1_audio0 3.168 ms (±1.229 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c200023_act0028.wav
+[2026-09-27T20:23:43.549] activation 29: 3.64 s audio, L1_start 0.879 ms, L1_audio0 3.132 ms (±1.545 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c200023_act0029.wav
+device connected from 192.168.1.24:57147

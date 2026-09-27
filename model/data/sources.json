@@ -12,6 +12,7 @@
     "20260927_151127_kw_S01_s2": "VALIDATION only (model/threshold selection, DEC-18) — never trained on",
     "20260927_134535_ambient_day_20260927/audio_16bit_c002.wav": "HELD-OUT daytime false-activation test (400 s)"
   },
+  "_night_split_declared": "2026-09-27 ~20:05, BEFORE recording: ambient_night_20260927 hourly chunks c000-c004 (first 5 h) = TRAINING beds + hard-negative mining for v3; chunks c005 and later = HELD-OUT false-activation test (never trained on, never used for selection). S01 session 3 (20260927_195253_kw_S01_s3) = TEST for v2b; any v3 use must be declared.",
   "real_train_runs": ["20260927_130649_kw_S01"],
   "validation_runs": ["20260927_151127_kw_S01_s2"],
   "_split_note_v2": "v2 split (2026-09-27 18:00): train = S01 session 1 + ambient_day c000-c001 + TTS v2 train speakers + LibriSpeech train speakers; validation = S01 session 2 (selection only); held-out test = ambient_day c002, overnight ambient, and any NEW session/speaker recorded after v2 is frozen.",
