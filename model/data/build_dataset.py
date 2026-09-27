@@ -34,7 +34,7 @@ from model.frontend.psfe import Frontend  # noqa: E402
 FS, HOP, FE_WIN, WIN = 16000, 160, 480, 100
 WARM = int(2.5 * FS)
 SOS = signal.butter(4, [125, 6500], btype="band", fs=FS, output="sos")
-SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4}
+SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4, "real_pos": 5, "real_neg": 6}
 
 
 def read_wav16(path):
@@ -105,11 +105,33 @@ class Builder:
                 self.src.append(SRC_CODES[src])
 
 
+def add_real_run(b, run, rng, copies):
+    """Real device recording (scripted session): the whole session is one continuous stream, as on the
+    device. Positives = windows ending 0..160 ms after each located keyword end; negatives = every 4th
+    window farther than [start-0.3 s, end+1.2 s] from any keyword (includes the spoken confusables).
+    `copies` extra versions add room bed at a random level (noise augmentation)."""
+    sys.path.insert(0, str(ROOT))
+    from model.eval.eval_stream import keyword_ends, load_run_audio  # noqa: E402
+    audio = load_run_audio(run).astype(np.float64)
+    kws, _, _, _ = keyword_ends(run, audio.astype(np.int16))
+    for c in range(copies + 1):
+        s = audio if c == 0 else audio + b.beds.sample(len(audio)) * 10 ** (rng.uniform(-12, 3) / 20)
+        feats = b.fe.to_int8(b.fe.features(np.clip(np.round(s), -32768, 32767).astype(np.int16)))
+        ends = [end_frame(int(k["t_end"] * FS)) for k in kws]
+        for e in ends:
+            b.add(feats, e + rng.choice(17, 3, replace=False), 1, "real_pos")
+        near = np.zeros(len(feats), bool)
+        for k in kws:
+            near[max(0, end_frame(int((k["t_start"] - 0.3) * FS))):end_frame(int((k["t_end"] + 1.2) * FS)) + 1] = True
+        b.add(feats, [e for e in range(WIN - 1, len(feats), 4) if not near[e]], 0, "real_neg")
+    return len(kws)
+
+
 def build_split(split, cfg, fe, rng, args):
     beds = Beds([pathlib.Path(cfg["runs_root"]) / f for f in cfg[f"bed_{split}"]], cfg["bed_skip_start_s"], rng)
     b = Builder(fe, beds, rng)
     t0 = time.time()
-    tts_root = pathlib.Path(cfg["tts_root"])
+    tts_root = pathlib.Path(args.tts_root or cfg["tts_root"]).expanduser()
     rows = [r for r in csv.DictReader(open(tts_root / "manifest.csv", encoding="utf-8")) if r["split"] == split]
     for r in rows:
         clip, sr = sf.read(tts_root / r["file"], dtype="float64")
@@ -136,6 +158,11 @@ def build_split(split, cfg, fe, rng, args):
         b.add(feats, range(end_frame(WARM) + 10, fe_end + 30, 8), 0, "libri")
     print(f"[{split}] librispeech: {len(flacs[::args.libri_stride])} utt -> {len(b.y) - n0} windows", flush=True)
 
+    for rn in cfg.get(f"real_{split}_runs", []):
+        n0 = len(b.y)
+        nk = add_real_run(b, pathlib.Path(cfg["runs_root"]) / rn, rng, args.real_copies)
+        print(f"[{split}] real {rn}: {nk} keywords -> {len(b.y) - n0} windows", flush=True)
+
     n0 = len(b.y)
     for _ in range(args.ambient_streams if split == "train" else args.ambient_streams // 4):
         feats, fe_end = b.stream(np.zeros(int(8 * FS)), 0.0)
@@ -151,6 +178,8 @@ def main():
     ap.add_argument("--pos-reps", type=int, default=2)
     ap.add_argument("--libri-stride", type=int, default=1)
     ap.add_argument("--ambient-streams", type=int, default=400)
+    ap.add_argument("--real-copies", type=int, default=6)
+    ap.add_argument("--tts-root", default="", help="override sources.json tts_root (e.g. ~/ps26172_data/tts_v2)")
     args = ap.parse_args()
     cfg = json.loads((ROOT / "model" / "data" / "sources.json").read_text(encoding="utf-8"))
     out = pathlib.Path(args.out).expanduser()

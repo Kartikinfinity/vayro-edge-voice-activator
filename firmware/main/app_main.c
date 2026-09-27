@@ -22,9 +22,11 @@
 #include "freertos/queue.h"
 #include "freertos/task.h"
 #include "instrument.h"
+#include "audio_ring.h"
 #include "driver/gpio.h"
 #include "esp_err.h"
 #include "kws_engine.h"
+#include "netstream.h"
 #include "ps_frontend.h"
 #include "ps_frontend_config.h"
 #include "sdkconfig.h"
@@ -310,8 +312,13 @@ static void kws_on_frame(uint32_t f, const uint16_t *feat)
         gpio_set_level(CONFIG_PS_INST_DETECT_GPIO, 1);
         detect_high = true;
         s_kw_triggers++;
-        link_text("@KW frame=%" PRIu32 " t_ms=%" PRIu32 " p=%.3f avg=%.3f raw=%d\n", f,
-                  (uint32_t)((PS_FE_WINDOW_MS) + f * PS_FE_HOP_MS), (double)p, (double)avg, raw);
+        int streamed = 0;
+#if CONFIG_PS_NET_ENABLE
+        const ns_trigger_t nt = {.kw_frame = f, .trig_sample = ring_w(), .t_detect_us = esp_timer_get_time(), .raw = raw};
+        streamed = ns_trigger(&nt) ? 1 : 0;
+#endif
+        link_text("@KW frame=%" PRIu32 " t_ms=%" PRIu32 " p=%.3f avg=%.3f raw=%d streamed=%d\n", f,
+                  (uint32_t)((PS_FE_WINDOW_MS) + f * PS_FE_HOP_MS), (double)p, (double)avg, raw, streamed);
     }
     enqueue_posterior(f, raw, trig);
     cyc_sum += cyc;
@@ -357,6 +364,7 @@ static void reader_task(void *arg)
         for (int i = 0; i < HOP; i++) {
             i16[i] = (int16_t)(raw[i] >> 16);
         }
+        ring_write(i16, HOP); /* SS-2 unified ring: pre-roll + stream source (§8.4) */
         const uint32_t c0 = esp_cpu_get_cycle_count();
         size_t off = 0;
         int new_frame = 0; /* hop == window step, so at most one feature frame per hop */
@@ -527,6 +535,19 @@ void app_main(void)
               CONFIG_PS_KWS_THRESHOLD_PCT, CONFIG_PS_KWS_REFRACTORY_MS, CONFIG_PS_INST_DETECT_GPIO);
     ESP_ERROR_CHECK(kerr);
     inst_mem_report("kws_init");
+#endif
+    ring_init();
+#if CONFIG_PS_NET_ENABLE
+    link_text("@CFG net=1 server=%s:%d preroll_ms=%d stream_max_ms=%d wifi_ps_none=%d\n", CONFIG_PS_SERVER_HOST,
+              CONFIG_PS_SERVER_PORT, CONFIG_PS_PREROLL_MS, CONFIG_PS_STREAM_MAX_MS,
+#if CONFIG_PS_WIFI_PS_NONE
+              1
+#else
+              0
+#endif
+    );
+    ESP_ERROR_CHECK(ns_start());
+    inst_mem_report("net_start");
 #endif
 
     s_free_q = xQueueCreate(POOL_N, sizeof(uint8_t));

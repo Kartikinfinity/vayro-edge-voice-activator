@@ -1,0 +1,8 @@
+{
+  "declared_at": "2026-09-27T18:18",
+  "candidates": ["v2a (balanced class weight)", "v2b (positive weight 4)"],
+  "decision_params": {"N": 3, "thresholds": [0.8, 0.9, 0.95, 0.98], "stride_frames": 6, "refractory_s": 2.0},
+  "validation_data": "20260927_151127_kw_S01_s2 (prompt_score)",
+  "rule": "FA-first lexicographic: (1) minimise false activations on the 16 confusable/negative prompts of S01 session 2; (2) tie-break: maximise keyword-prompt recall on S01 session 2; (3) tie-break: lower threshold is NOT preferred - choose the higher threshold among exact ties",
+  "held_out_after_selection": ["ambient_day c002", "overnight ambient 2026-09-27/28", "new sessions/speakers recorded after freeze"]
+}

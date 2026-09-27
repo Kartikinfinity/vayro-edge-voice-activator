@@ -1,0 +1,15 @@
+[train] tts: 4736 clips -> 30776 windows, 50 s
+[train] librispeech: 2128 utt -> 121608 windows
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790513339.613854     433 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+I0000 00:00:1790513340.489369     433 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790513343.725363     433 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+[train] real 20260927_130649_kw_S01: 23 keywords -> 17241 windows
+[train] ambient: 34000 windows (bed 3709 s)
+train {'windows': 203625, 'positives': 12315, 'bed_seconds': 3709.1, 'by_source': {'tts_pos': 11832, 'tts_prefix': 7888, 'tts_neg': 11056, 'libri': 121608, 'ambient': 34000, 'real_pos': 483, 'real_neg': 16758}}
+[val] tts: 616 clips -> 3952 windows, 14 s
+[val] librispeech: 575 utt -> 33117 windows
+[val] ambient: 8500 windows (bed 57 s)
+val {'windows': 45569, 'positives': 1488, 'bed_seconds': 57.0, 'by_source': {'tts_pos': 1488, 'tts_prefix': 992, 'tts_neg': 1472, 'libri': 33117, 'ambient': 8500, 'real_pos': 0, 'real_neg': 0}}

@@ -212,7 +212,7 @@ def main():
         name, _, dur = item.rpartition(":")
         script.append((name.strip(), float(dur), name.strip()))
     if args.script_file:
-        for line in pathlib.Path(args.script_file).read_text(encoding="utf-8").splitlines():
+        for line in pathlib.Path(args.script_file).read_text(encoding="utf-8-sig").splitlines():
             if line.strip() and not line.lstrip().startswith("#"):
                 label, dur, prompt = (p.strip() for p in line.split("|", 2))
                 script.append((label, float(dur), prompt))
@@ -268,7 +268,7 @@ def main():
     got_frame = False
     last_kick = 0.0
     port_losses = 0
-    prompt_i, script_done = -1, False
+    prompt_i, script_done, previewed = -1, False, {}
     # A fresh boot sends @BOOT before any audio; audio first means the reset did not happen.
     expect_boot, seen_boot, reset_retries, auto_resets = not args.attach, False, 0, 0
     recv_samples, wd_t, wd_recv = 0, time.time(), 0  # stall watchdog: real (non-gap) samples received
@@ -397,9 +397,14 @@ def main():
                 if prompt_i == -1:
                     print(f"\n\n>>> Stay QUIET — mic settling ({args.settle_s:.0f} s)", flush=True)
                     prompt_i = 0
+                # "next:" preview 1.2 s before each prompt, so the speaker is ready and speaks early in the window
+                # (session kw_S01_s2 showed utterances drifting to the window end / into the next prompt).
+                if prompt_i < len(script) and not previewed.get(prompt_i) and rec_s >= starts[prompt_i] - 1.2:
+                    print(f"\n    next: {script[prompt_i][2]}", flush=True)
+                    previewed[prompt_i] = True
                 while prompt_i < len(script) and rec_s >= starts[prompt_i]:
                     _, dur, prompt = script[prompt_i]
-                    print(f"\n>>> [{prompt_i + 1}/{len(script)}] ({dur:g} s)   {prompt.upper()}", flush=True)
+                    print(f">>> [{prompt_i + 1}/{len(script)}] ({dur:g} s)   {prompt.upper()}   <-- NOW", flush=True)
                     prompt_i += 1
                 if prompt_i == len(script) and rec_s >= starts[-1] + script[-1][1] and not script_done:
                     print("\n>>> DONE — you can stop.", flush=True)

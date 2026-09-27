@@ -8,8 +8,13 @@
     "20260926_221804_m1_fan_off": "stalled link, 65 frames",
     "20260927_125042_m1_scriptfile_selftest": "stalled link (board not reset)",
     "20260927_125350_m1_link_fix_60s": "10 short sessions (watchdog bug)",
-    "20260927_130649_kw_S01": "speaker S01 — TEST ONLY (speaker-held-out)"
+    "20260927_130649_kw_S01": "v0/v1: TEST (speaker-held-out). From v2 on: TRAINING data (real_train_runs) — v0/v1 results on it stay valid for v0/v1 only",
+    "20260927_151127_kw_S01_s2": "VALIDATION only (model/threshold selection, DEC-18) — never trained on",
+    "20260927_134535_ambient_day_20260927/audio_16bit_c002.wav": "HELD-OUT daytime false-activation test (400 s)"
   },
+  "real_train_runs": ["20260927_130649_kw_S01"],
+  "validation_runs": ["20260927_151127_kw_S01_s2"],
+  "_split_note_v2": "v2 split (2026-09-27 18:00): train = S01 session 1 + ambient_day c000-c001 + TTS v2 train speakers + LibriSpeech train speakers; validation = S01 session 2 (selection only); held-out test = ambient_day c002, overnight ambient, and any NEW session/speaker recorded after v2 is frozen.",
   "bed_train": [
     "20260926_214931_m1_msb_settle_warm/audio_16bit.wav",
     "20260926_215314_m1_script_selftest/audio_16bit.wav",
@@ -17,7 +22,8 @@
     "20260927_124810_m1_chunk_selftest/audio_16bit_c001.wav",
     "20260927_125228_m1_reset_fix_selftest/audio_16bit.wav",
     "20260927_125547_m1_link_fix_60s_b/audio_16bit.wav",
-    "20260927_134535_ambient_day_20260927/audio_16bit_c000.wav"
+    "20260927_134535_ambient_day_20260927/audio_16bit_c000.wav",
+    "20260927_134535_ambient_day_20260927/audio_16bit_c001.wav"
   ],
   "_bed_train_note": "ambient_day c000 = 13:45-14:15 household audio (may include speaker S01 talking normally; never the keyword by instruction). Later ambient_day chunks are reserved: c001-c003 train in the final build, c004+ HELD-OUT for the false-activation test.",
   "bed_val": [

@@ -1,0 +1,32 @@
+{
+  "model": "model/artifacts/v0/model_int8.tflite",
+  "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+  "stride_frames": 6,
+  "win_frames": 100,
+  "refractory_s": 2.0,
+  "runs": {
+    "20260927_134535_ambient_day_20260927/audio_16bit_c002.wav": {
+      "seconds": 401.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.9,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 0.1114,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        },
+        {
+          "n": 3,
+          "threshold": 0.95,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 0.1114,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    }
+  }
+}

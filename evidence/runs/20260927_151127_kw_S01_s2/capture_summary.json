@@ -1,0 +1,621 @@
+{
+  "label": "kw_S01_s2",
+  "note": "speaker S01 session 2 (validation), live on-device KWS v0",
+  "host_start_local": "2026-09-27T15:11:28",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "warm (RTS reset)",
+  "port_losses": 0,
+  "reset_retries": 0,
+  "auto_resets_on_stall": 0,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "files": [
+        "audio_24bit.wav"
+      ],
+      "samples": 2288000,
+      "seconds": 143.0,
+      "audio_frames": 14300,
+      "host_gap_count": 0,
+      "host_gap_samples": 0,
+      "host_gaps_first50": []
+    }
+  ],
+  "settle_s": 3.0,
+  "script_file": "D:/ps26172/host/scripts/kw_session_v1.txt",
+  "script_segments": [
+    {
+      "name": "sil_start",
+      "prompt": "Stay quiet",
+      "t0_s": 3.0,
+      "t1_s": 8.0
+    },
+    {
+      "name": "kw_050_normal_01",
+      "prompt": "Say: Hey Vayro   (normal, ~50 cm from the mic)",
+      "t0_s": 8.0,
+      "t1_s": 10.5
+    },
+    {
+      "name": "kw_050_normal_02",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 10.5,
+      "t1_s": 13.0
+    },
+    {
+      "name": "kw_050_normal_03",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 13.0,
+      "t1_s": 15.5
+    },
+    {
+      "name": "kw_050_normal_04",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 15.5,
+      "t1_s": 18.0
+    },
+    {
+      "name": "kw_050_normal_05",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 18.0,
+      "t1_s": 20.5
+    },
+    {
+      "name": "kw_050_normal_06",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 20.5,
+      "t1_s": 23.0
+    },
+    {
+      "name": "kw_050_fast_01",
+      "prompt": "Say FAST: Hey Vayro",
+      "t0_s": 23.0,
+      "t1_s": 25.5
+    },
+    {
+      "name": "kw_050_fast_02",
+      "prompt": "Say FAST: Hey Vayro",
+      "t0_s": 25.5,
+      "t1_s": 28.0
+    },
+    {
+      "name": "kw_050_fast_03",
+      "prompt": "Say FAST: Hey Vayro",
+      "t0_s": 28.0,
+      "t1_s": 30.5
+    },
+    {
+      "name": "kw_050_slow_01",
+      "prompt": "Say SLOWLY: Hey Vayro",
+      "t0_s": 30.5,
+      "t1_s": 33.0
+    },
+    {
+      "name": "kw_050_slow_02",
+      "prompt": "Say SLOWLY: Hey Vayro",
+      "t0_s": 33.0,
+      "t1_s": 35.5
+    },
+    {
+      "name": "kw_050_slow_03",
+      "prompt": "Say SLOWLY: Hey Vayro",
+      "t0_s": 35.5,
+      "t1_s": 38.0
+    },
+    {
+      "name": "move_100",
+      "prompt": "MOVE to about 1 m from the mic",
+      "t0_s": 38.0,
+      "t1_s": 43.0
+    },
+    {
+      "name": "kw_100_normal_01",
+      "prompt": "Say: Hey Vayro   (~1 m)",
+      "t0_s": 43.0,
+      "t1_s": 45.5
+    },
+    {
+      "name": "kw_100_normal_02",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 45.5,
+      "t1_s": 48.0
+    },
+    {
+      "name": "kw_100_normal_03",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 48.0,
+      "t1_s": 50.5
+    },
+    {
+      "name": "kw_100_normal_04",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 50.5,
+      "t1_s": 53.0
+    },
+    {
+      "name": "kw_100_normal_05",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 53.0,
+      "t1_s": 55.5
+    },
+    {
+      "name": "kw_100_normal_06",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 55.5,
+      "t1_s": 58.0
+    },
+    {
+      "name": "kw_100_soft_01",
+      "prompt": "Say SOFTLY: Hey Vayro",
+      "t0_s": 58.0,
+      "t1_s": 60.5
+    },
+    {
+      "name": "kw_100_soft_02",
+      "prompt": "Say SOFTLY: Hey Vayro",
+      "t0_s": 60.5,
+      "t1_s": 63.0
+    },
+    {
+      "name": "move_200",
+      "prompt": "MOVE to about 2 m (across the room)",
+      "t0_s": 63.0,
+      "t1_s": 68.0
+    },
+    {
+      "name": "kw_200_normal_01",
+      "prompt": "Say: Hey Vayro   (~2 m)",
+      "t0_s": 68.0,
+      "t1_s": 70.5
+    },
+    {
+      "name": "kw_200_normal_02",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 70.5,
+      "t1_s": 73.0
+    },
+    {
+      "name": "kw_200_normal_03",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 73.0,
+      "t1_s": 75.5
+    },
+    {
+      "name": "kw_200_normal_04",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 75.5,
+      "t1_s": 78.0
+    },
+    {
+      "name": "kw_200_normal_05",
+      "prompt": "Say: Hey Vayro",
+      "t0_s": 78.0,
+      "t1_s": 80.5
+    },
+    {
+      "name": "move_050",
+      "prompt": "COME BACK to about 50 cm",
+      "t0_s": 80.5,
+      "t1_s": 85.5
+    },
+    {
+      "name": "neg_hey_01",
+      "prompt": "Say: Hey",
+      "t0_s": 85.5,
+      "t1_s": 88.0
+    },
+    {
+      "name": "neg_vai_01",
+      "prompt": "Say: Vai",
+      "t0_s": 88.0,
+      "t1_s": 90.5
+    },
+    {
+      "name": "neg_hero_01",
+      "prompt": "Say: Hero",
+      "t0_s": 90.5,
+      "t1_s": 93.0
+    },
+    {
+      "name": "neg_cairo_01",
+      "prompt": "Say: Cairo",
+      "t0_s": 93.0,
+      "t1_s": 95.5
+    },
+    {
+      "name": "neg_wireo_01",
+      "prompt": "Say: Wire-o",
+      "t0_s": 95.5,
+      "t1_s": 98.0
+    },
+    {
+      "name": "neg_heythere_01",
+      "prompt": "Say: Hey there",
+      "t0_s": 98.0,
+      "t1_s": 100.5
+    },
+    {
+      "name": "neg_heybro_01",
+      "prompt": "Say: Hey bro",
+      "t0_s": 100.5,
+      "t1_s": 103.0
+    },
+    {
+      "name": "neg_higher_01",
+      "prompt": "Say: Higher",
+      "t0_s": 103.0,
+      "t1_s": 105.5
+    },
+    {
+      "name": "neg_okay_01",
+      "prompt": "Say: Okay",
+      "t0_s": 105.5,
+      "t1_s": 108.0
+    },
+    {
+      "name": "neg_vayu_01",
+      "prompt": "Say: Vayu",
+      "t0_s": 108.0,
+      "t1_s": 110.5
+    },
+    {
+      "name": "neg_heyvayu_01",
+      "prompt": "Say: Hey Vayu",
+      "t0_s": 110.5,
+      "t1_s": 113.0
+    },
+    {
+      "name": "neg_viral_01",
+      "prompt": "Say: Viral",
+      "t0_s": 113.0,
+      "t1_s": 115.5
+    },
+    {
+      "name": "neg_tyre_01",
+      "prompt": "Say: Tyre",
+      "t0_s": 115.5,
+      "t1_s": 118.0
+    },
+    {
+      "name": "neg_heyravi_01",
+      "prompt": "Say: Hey Ravi",
+      "t0_s": 118.0,
+      "t1_s": 120.5
+    },
+    {
+      "name": "neg_via_01",
+      "prompt": "Say: Via",
+      "t0_s": 120.5,
+      "t1_s": 123.0
+    },
+    {
+      "name": "neg_pyro_01",
+      "prompt": "Say: Pyro",
+      "t0_s": 123.0,
+      "t1_s": 125.5
+    },
+    {
+      "name": "talk_free",
+      "prompt": "TALK normally about anything for 12 s (do NOT say the keyword)",
+      "t0_s": 125.5,
+      "t1_s": 137.5
+    },
+    {
+      "name": "sil_end",
+      "prompt": "Stay quiet",
+      "t0_s": 137.5,
+      "t1_s": 142.5
+    }
+  ],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "device_feature_frames": 14298,
+  "device_posterior_frames": 2367,
+  "device_kw_triggers": [
+    {
+      "type": "KW",
+      "frame": 1227,
+      "t_ms": 12300,
+      "p": 0.934,
+      "avg": 0.904,
+      "raw": 111,
+      "host_t": 15.497
+    },
+    {
+      "type": "KW",
+      "frame": 2007,
+      "t_ms": 20100,
+      "p": 0.996,
+      "avg": 0.984,
+      "raw": 127,
+      "host_t": 23.257
+    },
+    {
+      "type": "KW",
+      "frame": 2235,
+      "t_ms": 22380,
+      "p": 0.996,
+      "avg": 0.93,
+      "raw": 127,
+      "host_t": 25.557
+    },
+    {
+      "type": "KW",
+      "frame": 2547,
+      "t_ms": 25500,
+      "p": 0.996,
+      "avg": 0.935,
+      "raw": 127,
+      "host_t": 28.67
+    },
+    {
+      "type": "KW",
+      "frame": 2907,
+      "t_ms": 29100,
+      "p": 0.984,
+      "avg": 0.966,
+      "raw": 124,
+      "host_t": 32.263
+    },
+    {
+      "type": "KW",
+      "frame": 3465,
+      "t_ms": 34680,
+      "p": 0.996,
+      "avg": 0.987,
+      "raw": 127,
+      "host_t": 37.876
+    },
+    {
+      "type": "KW",
+      "frame": 3741,
+      "t_ms": 37440,
+      "p": 0.996,
+      "avg": 0.939,
+      "raw": 127,
+      "host_t": 40.611
+    },
+    {
+      "type": "KW",
+      "frame": 4251,
+      "t_ms": 42540,
+      "p": 0.961,
+      "avg": 0.941,
+      "raw": 118,
+      "host_t": 45.702
+    },
+    {
+      "type": "KW",
+      "frame": 4653,
+      "t_ms": 46560,
+      "p": 0.969,
+      "avg": 0.911,
+      "raw": 120,
+      "host_t": 49.761
+    },
+    {
+      "type": "KW",
+      "frame": 4989,
+      "t_ms": 49920,
+      "p": 0.969,
+      "avg": 0.951,
+      "raw": 120,
+      "host_t": 53.123
+    },
+    {
+      "type": "KW",
+      "frame": 5253,
+      "t_ms": 52560,
+      "p": 0.926,
+      "avg": 0.914,
+      "raw": 109,
+      "host_t": 55.747
+    },
+    {
+      "type": "KW",
+      "frame": 5487,
+      "t_ms": 54900,
+      "p": 0.996,
+      "avg": 0.986,
+      "raw": 127,
+      "host_t": 58.055
+    },
+    {
+      "type": "KW",
+      "frame": 5691,
+      "t_ms": 56940,
+      "p": 0.988,
+      "avg": 0.962,
+      "raw": 125,
+      "host_t": 60.106
+    },
+    {
+      "type": "KW",
+      "frame": 5895,
+      "t_ms": 58980,
+      "p": 0.871,
+      "avg": 0.952,
+      "raw": 95,
+      "host_t": 62.163
+    },
+    {
+      "type": "KW",
+      "frame": 6255,
+      "t_ms": 62580,
+      "p": 0.941,
+      "avg": 0.934,
+      "raw": 113,
+      "host_t": 65.772
+    },
+    {
+      "type": "KW",
+      "frame": 7257,
+      "t_ms": 72600,
+      "p": 0.996,
+      "avg": 0.992,
+      "raw": 127,
+      "host_t": 75.797
+    },
+    {
+      "type": "KW",
+      "frame": 7479,
+      "t_ms": 74820,
+      "p": 0.996,
+      "avg": 0.924,
+      "raw": 127,
+      "host_t": 77.987
+    },
+    {
+      "type": "KW",
+      "frame": 7683,
+      "t_ms": 76860,
+      "p": 0.996,
+      "avg": 0.913,
+      "raw": 127,
+      "host_t": 80.037
+    },
+    {
+      "type": "KW",
+      "frame": 7887,
+      "t_ms": 78900,
+      "p": 0.996,
+      "avg": 0.996,
+      "raw": 127,
+      "host_t": 82.077
+    },
+    {
+      "type": "KW",
+      "frame": 8091,
+      "t_ms": 80940,
+      "p": 0.809,
+      "avg": 0.932,
+      "raw": 79,
+      "host_t": 84.119
+    },
+    {
+      "type": "KW",
+      "frame": 8415,
+      "t_ms": 84180,
+      "p": 0.98,
+      "avg": 0.975,
+      "raw": 123,
+      "host_t": 87.346
+    },
+    {
+      "type": "KW",
+      "frame": 8619,
+      "t_ms": 86220,
+      "p": 0.988,
+      "avg": 0.979,
+      "raw": 125,
+      "host_t": 89.396
+    },
+    {
+      "type": "KW",
+      "frame": 9189,
+      "t_ms": 91920,
+      "p": 0.965,
+      "avg": 0.915,
+      "raw": 119,
+      "host_t": 95.109
+    },
+    {
+      "type": "KW",
+      "frame": 10227,
+      "t_ms": 102300,
+      "p": 0.926,
+      "avg": 0.923,
+      "raw": 109,
+      "host_t": 105.506
+    },
+    {
+      "type": "KW",
+      "frame": 10965,
+      "t_ms": 109680,
+      "p": 0.945,
+      "avg": 0.905,
+      "raw": 114,
+      "host_t": 112.835
+    },
+    {
+      "type": "KW",
+      "frame": 11223,
+      "t_ms": 112260,
+      "p": 0.996,
+      "avg": 0.938,
+      "raw": 127,
+      "host_t": 115.442
+    },
+    {
+      "type": "KW",
+      "frame": 12459,
+      "t_ms": 124620,
+      "p": 0.961,
+      "avg": 0.938,
+      "raw": 118,
+      "host_t": 127.81
+    }
+  ],
+  "crc_errors": 0,
+  "bad_length_frames": 0,
+  "device_last_stats": {
+    "type": "STATS",
+    "t_ms": 145892,
+    "samples": 2274240,
+    "pool_drops": 0,
+    "link_drops": 0,
+    "i2s_ovf": 0,
+    "short_reads": 0,
+    "level_dbfs": -40.5,
+    "peak16": 599,
+    "heap_free": 208452,
+    "heap_min": 208440,
+    "host_t": 145.349
+  },
+  "device_last_perf": {
+    "type": "PERF",
+    "t_ms": 145892,
+    "hwm_reader": 1372,
+    "hwm_tx": 3300,
+    "hwm_main": 1296,
+    "fe_frames": 14198,
+    "fe_cyc_mean": 112349,
+    "fe_cyc_max": 123680,
+    "inf_count": 2353,
+    "inf_cyc_mean": 449677,
+    "inf_cyc_max": 506585,
+    "kw_triggers": 27,
+    "host_t": 145.35
+  },
+  "device_boot": {
+    "type": "BOOT",
+    "idf": "v5.5.5",
+    "elf_sha": "b4bf2f86f",
+    "built": "Sep-27-2026_14:32:21",
+    "cores": 2,
+    "rev": 0.2,
+    "emb_psram": 0,
+    "flash_bytes": 4194304,
+    "cpu_mhz": 240,
+    "reset": "USB",
+    "host_t": 0.061
+  },
+  "device_cfg": {
+    "type": "CFG",
+    "fs": 16000,
+    "hop": 160,
+    "bck": 6,
+    "ws": 5,
+    "sd": 4,
+    "fmt": "MSB",
+    "bclk_inv": 0,
+    "settle_ms": 300,
+    "dma_desc": 4,
+    "dma_frames": 160,
+    "slot_bits": 32,
+    "i16_shift": 16,
+    "host_t": 0.062
+  },
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}

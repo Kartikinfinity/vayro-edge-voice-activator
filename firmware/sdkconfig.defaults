@@ -3,6 +3,8 @@
 CONFIG_IDF_TARGET="esp32s3"
 CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
 CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+# Wi-Fi + TFLM image is ~926 KB: the default 1 MB app partition left 12 % free (M5 net build).
+CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y
 
 # §3.7: PSRAM is DISABLED. The 256 KB claim depends on this.
 # CONFIG_SPIRAM is not set

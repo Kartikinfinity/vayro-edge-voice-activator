@@ -11,6 +11,8 @@
 param(
     [ValidateSet("uart", "usbjtag")][string]$Console = "uart",
     [string]$Port = "",
+    [string]$ExtraDefaults = "",   # absolute path of an additional sdkconfig defaults file (e.g. compile checks)
+    [string]$BuildTag = "",        # suffix for a separate build directory
     [Parameter(ValueFromRemainingArguments = $true)][string[]]$IdfArgs
 )
 if (-not $IdfArgs) { Write-Error "No idf.py action given (e.g. build, flash, size)."; exit 2 }
@@ -32,12 +34,19 @@ if ($LASTEXITCODE -ne 0) { exit 1 }
 $fw = "$Repo\firmware"
 $bdir = "$fw\build_$Console"
 $defaults = "sdkconfig.defaults;sdkconfig.board;sdkconfig.console_$Console"
+# Local network credentials (gitignored, never committed): enables M5 streaming when present.
+if (Test-Path "$fw\sdkconfig.wifi") { $defaults += ";sdkconfig.wifi" }
+if ($ExtraDefaults) { $defaults += ";$ExtraDefaults" }
+if ($BuildTag) { $bdir = "$bdir`_$BuildTag" }
 # An existing sdkconfig wins over sdkconfig.defaults*, so a changed wiring/policy file would be
 # silently ignored. Regenerate whenever any defaults file is newer than the build's sdkconfig.
 $sdk = "$bdir\sdkconfig"
 if (Test-Path $sdk) {
     $stamp = (Get-Item $sdk).LastWriteTime
-    $newer = $defaults.Split(";") | Where-Object { (Get-Item "$fw\$_").LastWriteTime -gt $stamp }
+    $newer = $defaults.Split(";") | Where-Object {
+        $p = if ([IO.Path]::IsPathRooted($_)) { $_ } else { "$fw\$_" }
+        (Get-Item $p).LastWriteTime -gt $stamp
+    }
     if ($newer) {
         Write-Host "Config changed ($($newer -join ', ')): regenerating $sdk"
         Remove-Item $sdk

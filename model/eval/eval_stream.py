@@ -109,6 +109,28 @@ def keyword_ends(run, audio, fr=320, rel_db=9.0, bridge_s=0.3, max_span_s=2.0):
     return kws, skipped, None, segs
 
 
+def prompt_score(dets, segs, late_s=1.5):
+    """Label-free scoring that tolerates speakers drifting late in a prompt window (session kw_S01_s2):
+    a keyword prompt is HIT if a detection falls in [t0 + 0.3, t1 + late_s]; detections in neg_/talk_/sil_
+    prompts that are more than late_s after a keyword prompt's end are FALSE ACTIVATIONS; move_ prompts
+    and the late-spill zone are ignored."""
+    kw = [g for g in segs if g["name"].startswith("kw_")]
+    hit = {g["name"]: any(g["t0_s"] + 0.3 <= d <= g["t1_s"] + late_s for d in dets) for g in kw}
+    spill = lambda d: any(g["t1_s"] < d <= g["t1_s"] + late_s for g in kw)  # noqa: E731
+    fa = [next(g["name"] for g in segs if g["t0_s"] <= d < g["t1_s"]) for d in dets
+          if any(g["t0_s"] <= d < g["t1_s"] and g["name"].startswith(("neg_", "talk", "sil")) for g in segs) and not spill(d)]
+    cond = {}
+    for g in kw:
+        c = "_".join(g["name"].split("_")[1:3])
+        cond.setdefault(c, [0, 0])
+        cond[c][0] += int(hit[g["name"]])
+        cond[c][1] += 1
+    return {"kw_prompts": len(kw), "kw_prompts_hit": int(sum(hit.values())),
+            "recall": round(sum(hit.values()) / len(kw), 4) if kw else None,
+            "by_condition": {c: f"{a}/{b}" for c, (a, b) in cond.items()},
+            "neg_prompt_false_activations": len(fa), "fa_prompts": fa}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
@@ -125,6 +147,20 @@ def main():
               "refractory_s": REFRACTORY_S, "runs": {}}
     for rd in args.runs:
         run = pathlib.Path(rd)
+        if run.suffix == ".wav":  # a single held-out chunk (e.g. ambient c002): pure false-activation exposure
+            with wave.open(str(run)) as w:
+                audio = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)
+            t, p, _, _ = posteriors(model, fe.to_int8(fe.features(audio)))
+            hours = len(audio) / FS / 3600
+            rr = {"seconds": round(len(audio) / FS, 1), "sweep": []}
+            for n in ns:
+                for thr in thrs:
+                    d = detect(t, p, thr, n)
+                    rr["sweep"].append({"n": n, "threshold": thr, "detections": len(d), "false_activations": len(d),
+                                        "exposure_hours": round(hours, 4), "fa_per_hour": round(len(d) / hours, 2),
+                                        "fa_times_s": [round(x, 1) for x in d][:50]})
+            report["runs"][f"{run.parent.name}/{run.name}"] = rr
+            continue
         audio = load_run_audio(run)
         t, p, _, _ = posteriors(model, fe.to_int8(fe.features(audio)))
         hours = len(audio) / FS / 3600
@@ -161,16 +197,23 @@ def main():
                     "fa_locations": fa_where, "extra_detections_within_keyword_prompts": len(in_kw),
                     "detection_lag_s": {"median": round(float(np.median(lags)), 3), "min": round(float(np.min(lags)), 3),
                                         "max": round(float(np.max(lags)), 3)} if lags else None,
+                    "prompt_score": prompt_score(dets, segs) if segs else None,
                 })
         report["runs"][run.name] = rr
     out = model.parent / f"eval_{args.tag}.json"
     out.write_text(json.dumps(report, indent=2), encoding="utf-8")
     for name, rr in report["runs"].items():
-        print(f"== {name}: {rr['seconds']} s, keywords located {rr['keywords_located']}, no-speech prompts {rr['keyword_prompts_without_speech']}")
+        print(f"== {name}: {rr['seconds']} s" + (f", keywords located {rr['keywords_located']}, no-speech prompts "
+                                                 f"{rr['keyword_prompts_without_speech']}" if "keywords_located" in rr else " (FA exposure)"))
         for s in rr["sweep"]:
-            print(f"  N={s['n']} thr={s['threshold']:.2f}  recall={s['recall']}  FA={s['false_activations']} "
-                  f"(exp {s['exposure_hours']} h)  extra_in_kw={s['extra_detections_within_keyword_prompts']}  "
-                  f"lag={s['detection_lag_s']}  by_cond={s['recall_by_condition']}  FA@={s['fa_locations'][:8]}")
+            ps = s.get("prompt_score")
+            if ps:
+                print(f"  N={s['n']} thr={s['threshold']:.2f}  PROMPT recall {ps['kw_prompts_hit']}/{ps['kw_prompts']}  "
+                      f"neg-prompt FA {ps['neg_prompt_false_activations']} {ps['fa_prompts'][:8]}  by_cond={ps['by_condition']} | "
+                      f"LABELLER recall={s['recall']} lag={s['detection_lag_s']}")
+            else:
+                print(f"  N={s['n']} thr={s['threshold']:.2f}  detections={s['detections']}  FA={s['false_activations']} "
+                      f"(exposure {s['exposure_hours']} h, {s['fa_per_hour']}/h)")
     print("->", out)
 
 

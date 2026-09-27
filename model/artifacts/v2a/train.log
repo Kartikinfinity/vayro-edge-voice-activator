@@ -1,0 +1,18 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790513418.538069     697 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790513424.356352     697 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+E0000 00:00:1790513431.965026     697 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/keras/src/trainers/epoch_iterator.py:74: UserWarning: `shuffle=True` was passed, but will be ignored since the data `x` was provided as a tf.data.Dataset. The Dataset is expected to already be shuffled (via `.shuffle(buffer_size)`).
+  self.data_adapter = data_adapters.get_data_adapter(
+train 203625 (pos 12315), val 45569 (pos 1488), pos weight 15.53
+Epoch 1/30
+796/796 - 85s - 107ms/step - auc: 0.9698 - loss: 0.4186 - pr_auc: 0.7284 - val_auc: 0.9857 - val_loss: 0.0421 - val_pr_auc: 0.8209
+Epoch 2/30
+796/796 - 66s - 82ms/step - auc: 0.9926 - loss: 0.1804 - pr_auc: 0.8754 - val_auc: 0.9920 - val_loss: 0.0332 - val_pr_auc: 0.8832
+Epoch 3/30
+796/796 - 62s - 78ms/step - auc: 0.9949 - loss: 0.1426 - pr_auc: 0.9045 - val_auc: 0.9925 - val_loss: 0.0545 - val_pr_auc: 0.8637
+Epoch 4/30
+796/796 - 50s - 63ms/step - auc: 0.9960 - loss: 0.1201 - pr_auc: 0.9205 - val_auc: 0.9949 - val_loss: 0.0805 - val_pr_auc: 0.8556
+Epoch 5/30
+796/796 - 56s - 71ms/step - auc: 0.9965 - loss: 0.1085 - pr_auc: 0.9299 - val_auc: 0.9902 - val_loss: 0.1078 - val_pr_auc: 0.8235

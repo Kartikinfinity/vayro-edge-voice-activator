@@ -56,6 +56,38 @@ menu "PS26172 configuration"
         int "IN-2 detection pulse GPIO (§B5)"
         default 15
 
+    config PS_NET_ENABLE
+        bool "Wi-Fi + warm TCP streaming to the ASR server (M5)"
+        default n
+
+    config PS_WIFI_SSID
+        string "Wi-Fi SSID (set in the local, gitignored firmware/sdkconfig.wifi)"
+        default ""
+
+    config PS_WIFI_PASSWORD
+        string "Wi-Fi password (set in the local, gitignored firmware/sdkconfig.wifi)"
+        default ""
+
+    config PS_SERVER_HOST
+        string "ASR ingest server IPv4 address"
+        default "192.168.1.100"
+
+    config PS_SERVER_PORT
+        int "ASR ingest server TCP port"
+        default 5005
+
+    config PS_PREROLL_MS
+        int "Stream starts this many ms before the trigger (§8.3: D + lead-in + jitter)"
+        default 624
+
+    config PS_STREAM_MAX_MS
+        int "Device-side hard timeout for one stream (ms, §8.7)"
+        default 10000
+
+    config PS_WIFI_PS_NONE
+        bool "Disable Wi-Fi modem sleep (lower, symmetric latency)"
+        default y
+
     config PS_SAMPLE_RATE_HZ
         int "Sample rate (Hz) — frontend.json sample_rate_hz"
         default 16000
