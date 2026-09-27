@@ -1,0 +1,17 @@
+{
+  "applied_at": "2026-09-27T18:46",
+  "declared_rule_file": "model/artifacts/selection_rule_v2.json",
+  "validation_results_prompt_score_S01_s2": {
+    "v2a": {"0.80": "19/25 recall, 5/16 FA", "0.90": "16/25, 5/16", "0.95": "16/25, 4/16", "0.98": "15/25, 3/16"},
+    "v2b": {"0.80": "17/25 recall, 3/16 FA", "0.90": "16/25, 4/16", "0.95": "14/25, 3/16", "0.98": "12/25, 2/16"},
+    "v0_reference": {"0.90": "20/25, 6/16", "0.95": "17/25, 4/16"}
+  },
+  "declared_rule_outcome": "v2b @ 0.98 (12/25 recall, 2/16 FA)",
+  "amendment": {
+    "rule": "highest keyword-prompt recall subject to confusable-prompt FA <= 3/16 (N=3); ties -> higher threshold",
+    "outcome": "v2b @ 0.80 (17/25 recall, 3/16 FA)",
+    "reason": "Validation set is tiny (25 kw / 16 confusable prompts): FA differences of 1-2 are not significant, and pure lexicographic FA-first collapsed recall to 48 %. The declared rule used adversarial confusables as a proxy for the architecture's criterion (FA/h on held-out ambient), which it does not measure. Amended BEFORE any held-out evaluation; held-out sets (ambient c002, overnight ambient, new sessions/speakers) remain untouched and are the test.",
+    "honesty_note": "Both the declared outcome and the amendment are reported; the amendment is a post-hoc choice on validation data."
+  },
+  "selected": {"model": "v2b", "threshold": 0.80, "N": 3, "stride_frames": 6, "refractory_s": 2.0}
+}

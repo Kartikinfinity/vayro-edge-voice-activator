@@ -13,6 +13,7 @@ param(
     [string]$Port = "",
     [string]$ExtraDefaults = "",   # absolute path of an additional sdkconfig defaults file (e.g. compile checks)
     [string]$BuildTag = "",        # suffix for a separate build directory
+    [switch]$NoNet,                # ignore sdkconfig.wifi (build without networking)
     [Parameter(ValueFromRemainingArguments = $true)][string[]]$IdfArgs
 )
 if (-not $IdfArgs) { Write-Error "No idf.py action given (e.g. build, flash, size)."; exit 2 }
@@ -34,8 +35,11 @@ if ($LASTEXITCODE -ne 0) { exit 1 }
 $fw = "$Repo\firmware"
 $bdir = "$fw\build_$Console"
 $defaults = "sdkconfig.defaults;sdkconfig.board;sdkconfig.console_$Console"
+# Model operating point generated with the model (tools/gen_model_source.py).
+if (Test-Path "$fw\sdkconfig.model") { $defaults += ";sdkconfig.model" }
 # Local network credentials (gitignored, never committed): enables M5 streaming when present.
-if (Test-Path "$fw\sdkconfig.wifi") { $defaults += ";sdkconfig.wifi" }
+if ((Test-Path "$fw\sdkconfig.wifi") -and -not $NoNet) { $defaults += ";sdkconfig.wifi" }
+if ($NoNet) { $bdir = "$bdir`_nonet" }
 if ($ExtraDefaults) { $defaults += ";$ExtraDefaults" }
 if ($BuildTag) { $bdir = "$bdir`_$BuildTag" }
 # An existing sdkconfig wins over sdkconfig.defaults*, so a changed wiring/policy file would be

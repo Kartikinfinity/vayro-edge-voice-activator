@@ -1,0 +1,207 @@
+{
+  "run": "v2b",
+  "utc": "2026-09-27T13:13:37+00:00",
+  "tensorflow": "2.21.0",
+  "params": 10665,
+  "macs_per_inference": 212584,
+  "tflite_int8_bytes": 28024,
+  "tflite_sha256": "f7c913efdbb28f64177c3574416e4ce775c4e5ef5065725062addd21d9ad1848",
+  "ops": [
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "RESHAPE"
+  ],
+  "input_quant": [
+    0.007567401975393295,
+    4
+  ],
+  "output_quant": [
+    0.00390625,
+    -128
+  ],
+  "train_windows": 203625,
+  "train_pos": 12315,
+  "val_windows": 45569,
+  "val_pos": 1488,
+  "epochs_run": 16,
+  "train_seconds": 421.6,
+  "val_window_metrics_NOTE": "per-window, not per-utterance; not FA/h \u2014 see eval_stream.py for stream metrics",
+  "val_float_vs_int8_max_abs_prob_diff": 0.15114396810531616,
+  "val_int8_frr_at_window_fpr": {
+    "0.01": [
+      0.04973118279569892,
+      0.29296875
+    ],
+    "0.001": [
+      0.34408602150537637,
+      0.98828125
+    ]
+  },
+  "data_meta": {
+    "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+    "seed": 26172,
+    "args": {
+      "out": "/home/kartik/ps26172_data/ds_v2",
+      "seed": 26172,
+      "pos_reps": 2,
+      "libri_stride": 1,
+      "ambient_streams": 400,
+      "real_copies": 6,
+      "tts_root": "/home/kartik/ps26172_data/tts_v2"
+    },
+    "win_frames": 100,
+    "sources_json_sha256": "c653dbba1783e9e3c9bc69bc7dbe95e6fd0def5b633d73789b8df40cb3303ba5",
+    "src_codes": {
+      "tts_pos": 0,
+      "tts_prefix": 1,
+      "tts_neg": 2,
+      "libri": 3,
+      "ambient": 4,
+      "real_pos": 5,
+      "real_neg": 6
+    },
+    "splits": {
+      "train": {
+        "windows": 203625,
+        "positives": 12315,
+        "bed_seconds": 3709.1,
+        "by_source": {
+          "tts_pos": 11832,
+          "tts_prefix": 7888,
+          "tts_neg": 11056,
+          "libri": 121608,
+          "ambient": 34000,
+          "real_pos": 483,
+          "real_neg": 16758
+        }
+      },
+      "val": {
+        "windows": 45569,
+        "positives": 1488,
+        "bed_seconds": 57.0,
+        "by_source": {
+          "tts_pos": 1488,
+          "tts_prefix": 992,
+          "tts_neg": 1472,
+          "libri": 33117,
+          "ambient": 8500,
+          "real_pos": 0,
+          "real_neg": 0
+        }
+      }
+    }
+  },
+  "history": {
+    "auc": [
+      0.97207,
+      0.99347,
+      0.99538,
+      0.99649,
+      0.99716,
+      0.99731,
+      0.99783,
+      0.99808,
+      0.99817,
+      0.99844,
+      0.99842,
+      0.99859,
+      0.99859,
+      0.99857,
+      0.99892,
+      0.99887
+    ],
+    "loss": [
+      0.20064,
+      0.0929,
+      0.07472,
+      0.0647,
+      0.05712,
+      0.05218,
+      0.04881,
+      0.04516,
+      0.04327,
+      0.03993,
+      0.03856,
+      0.03657,
+      0.03566,
+      0.0336,
+      0.03189,
+      0.0315
+    ],
+    "pr_auc": [
+      0.76142,
+      0.90566,
+      0.93125,
+      0.94404,
+      0.95053,
+      0.95819,
+      0.95915,
+      0.96392,
+      0.96525,
+      0.97041,
+      0.97083,
+      0.9724,
+      0.97389,
+      0.97609,
+      0.97834,
+      0.97935
+    ],
+    "val_auc": [
+      0.98983,
+      0.96799,
+      0.99408,
+      0.9965,
+      0.99588,
+      0.9949,
+      0.96514,
+      0.99263,
+      0.97052,
+      0.98959,
+      0.98869,
+      0.99235,
+      0.99216,
+      0.99022,
+      0.98015,
+      0.9911
+    ],
+    "val_loss": [
+      0.03858,
+      0.04541,
+      0.0313,
+      0.05223,
+      0.03467,
+      0.03891,
+      0.03908,
+      0.02717,
+      0.03463,
+      0.02974,
+      0.02576,
+      0.0301,
+      0.02557,
+      0.03142,
+      0.02828,
+      0.0295
+    ],
+    "val_pr_auc": [
+      0.87214,
+      0.8537,
+      0.91513,
+      0.89807,
+      0.89773,
+      0.89923,
+      0.89256,
+      0.92503,
+      0.89707,
+      0.88908,
+      0.92007,
+      0.91251,
+      0.92198,
+      0.92004,
+      0.91432,
+      0.91319
+    ]
+  },
+  "export": "static batch=1 (model/train/export.py)"
+}

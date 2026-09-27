@@ -16,3 +16,146 @@ Epoch 4/30
 796/796 - 50s - 63ms/step - auc: 0.9960 - loss: 0.1201 - pr_auc: 0.9205 - val_auc: 0.9949 - val_loss: 0.0805 - val_pr_auc: 0.8556
 Epoch 5/30
 796/796 - 56s - 71ms/step - auc: 0.9965 - loss: 0.1085 - pr_auc: 0.9299 - val_auc: 0.9902 - val_loss: 0.1078 - val_pr_auc: 0.8235
+Epoch 6/30
+796/796 - 24s - 30ms/step - auc: 0.9971 - loss: 0.0988 - pr_auc: 0.9373 - val_auc: 0.9934 - val_loss: 0.1239 - val_pr_auc: 0.8372
+Epoch 7/30
+796/796 - 26s - 33ms/step - auc: 0.9972 - loss: 0.0910 - pr_auc: 0.9394 - val_auc: 0.9911 - val_loss: 0.0426 - val_pr_auc: 0.8700
+Epoch 8/30
+796/796 - 23s - 29ms/step - auc: 0.9973 - loss: 0.0884 - pr_auc: 0.9431 - val_auc: 0.9920 - val_loss: 0.0440 - val_pr_auc: 0.9038
+Epoch 9/30
+796/796 - 24s - 30ms/step - auc: 0.9978 - loss: 0.0800 - pr_auc: 0.9494 - val_auc: 0.9940 - val_loss: 0.0600 - val_pr_auc: 0.8962
+Epoch 10/30
+796/796 - 24s - 30ms/step - auc: 0.9978 - loss: 0.0761 - pr_auc: 0.9501 - val_auc: 0.9640 - val_loss: 0.0482 - val_pr_auc: 0.8553
+Epoch 11/30
+796/796 - 25s - 32ms/step - auc: 0.9978 - loss: 0.0724 - pr_auc: 0.9540 - val_auc: 0.9911 - val_loss: 0.0469 - val_pr_auc: 0.8784
+Epoch 12/30
+796/796 - 25s - 31ms/step - auc: 0.9979 - loss: 0.0712 - pr_auc: 0.9543 - val_auc: 0.9940 - val_loss: 0.0405 - val_pr_auc: 0.8973
+Epoch 13/30
+796/796 - 25s - 31ms/step - auc: 0.9982 - loss: 0.0675 - pr_auc: 0.9575 - val_auc: 0.9873 - val_loss: 0.0600 - val_pr_auc: 0.8448
+Epoch 14/30
+796/796 - 24s - 30ms/step - auc: 0.9982 - loss: 0.0645 - pr_auc: 0.9578 - val_auc: 0.9881 - val_loss: 0.0297 - val_pr_auc: 0.9096
+Epoch 15/30
+796/796 - 24s - 31ms/step - auc: 0.9983 - loss: 0.0606 - pr_auc: 0.9614 - val_auc: 0.9954 - val_loss: 0.0385 - val_pr_auc: 0.8858
+Epoch 16/30
+796/796 - 24s - 31ms/step - auc: 0.9984 - loss: 0.0582 - pr_auc: 0.9622 - val_auc: 0.9884 - val_loss: 0.0316 - val_pr_auc: 0.9070
+Epoch 17/30
+796/796 - 23s - 29ms/step - auc: 0.9985 - loss: 0.0571 - pr_auc: 0.9625 - val_auc: 0.9954 - val_loss: 0.0434 - val_pr_auc: 0.8998
+Epoch 18/30
+796/796 - 23s - 29ms/step - auc: 0.9985 - loss: 0.0553 - pr_auc: 0.9638 - val_auc: 0.9883 - val_loss: 0.0332 - val_pr_auc: 0.9061
+Epoch 19/30
+796/796 - 24s - 30ms/step - auc: 0.9986 - loss: 0.0523 - pr_auc: 0.9641 - val_auc: 0.9930 - val_loss: 0.0351 - val_pr_auc: 0.9035
+Epoch 20/30
+796/796 - 23s - 30ms/step - auc: 0.9985 - loss: 0.0525 - pr_auc: 0.9657 - val_auc: 0.9935 - val_loss: 0.0368 - val_pr_auc: 0.8994
+Epoch 21/30
+796/796 - 24s - 30ms/step - auc: 0.9986 - loss: 0.0500 - pr_auc: 0.9645 - val_auc: 0.9936 - val_loss: 0.0345 - val_pr_auc: 0.9042
+Epoch 22/30
+796/796 - 41s - 52ms/step - auc: 0.9987 - loss: 0.0483 - pr_auc: 0.9655 - val_auc: 0.9955 - val_loss: 0.0328 - val_pr_auc: 0.9208
+Epoch 23/30
+796/796 - 24s - 30ms/step - auc: 0.9987 - loss: 0.0488 - pr_auc: 0.9663 - val_auc: 0.9950 - val_loss: 0.0357 - val_pr_auc: 0.9110
+Epoch 24/30
+796/796 - 24s - 30ms/step - auc: 0.9988 - loss: 0.0461 - pr_auc: 0.9676 - val_auc: 0.9933 - val_loss: 0.0363 - val_pr_auc: 0.9080
+Epoch 25/30
+796/796 - 24s - 30ms/step - auc: 0.9987 - loss: 0.0468 - pr_auc: 0.9681 - val_auc: 0.9917 - val_loss: 0.0353 - val_pr_auc: 0.9122
+Epoch 26/30
+796/796 - 23s - 29ms/step - auc: 0.9987 - loss: 0.0460 - pr_auc: 0.9691 - val_auc: 0.9943 - val_loss: 0.0372 - val_pr_auc: 0.9056
+Epoch 27/30
+796/796 - 24s - 30ms/step - auc: 0.9988 - loss: 0.0447 - pr_auc: 0.9693 - val_auc: 0.9944 - val_loss: 0.0356 - val_pr_auc: 0.9114
+Epoch 28/30
+796/796 - 24s - 30ms/step - auc: 0.9988 - loss: 0.0442 - pr_auc: 0.9697 - val_auc: 0.9944 - val_loss: 0.0347 - val_pr_auc: 0.9109
+Epoch 29/30
+796/796 - 23s - 29ms/step - auc: 0.9988 - loss: 0.0440 - pr_auc: 0.9697 - val_auc: 0.9944 - val_loss: 0.0344 - val_pr_auc: 0.9107
+Epoch 30/30
+796/796 - 24s - 30ms/step - auc: 0.9988 - loss: 0.0452 - pr_auc: 0.9694 - val_auc: 0.9937 - val_loss: 0.0342 - val_pr_auc: 0.9117
+Saved artifact at '/tmp/tmpvoax427x'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 100, 1, 40), dtype=tf.float32, name='features')
+Output Type:
+  TensorSpec(shape=(None, 1), dtype=tf.float32, name=None)
+Captures:
+  136687967244880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967245072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967248144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967247568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967246992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967247952: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967248336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967249104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967248720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967247760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967246800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967250256: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967250448: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967247376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967247184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967251600: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967252752: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967252560: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967252176: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967253328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967251792: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967254480: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967254672: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967253904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967251984: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967253520: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967253136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967252944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967254096: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967255632: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967255056: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967255248: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967254864: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967256400: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967255824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967251408: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967256016: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967256208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967255440: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687967254288: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965521296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965521488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965520528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965521104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965522064: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965520720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  136687965521872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+{
+  "params": 10665,
+  "macs_per_inference": 212584,
+  "tflite_int8_bytes": 29064,
+  "ops": [
+    "CONV_2D",
+    "DELEGATE",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "PACK",
+    "RESHAPE",
+    "SHAPE",
+    "STRIDED_SLICE"
+  ],
+  "epochs_run": 30,
+  "train_seconds": 936.6,
+  "val_float_vs_int8_max_abs_prob_diff": 0.2517741918563843,
+  "val_int8_frr_at_window_fpr": {
+    "0.01": [
+      0.034274193548387094,
+      0.31640625
+    ],
+    "0.001": [
+      0.32661290322580644,
+      0.99609375
+    ]
+  }
+}
