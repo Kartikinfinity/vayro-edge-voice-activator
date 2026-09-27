@@ -1,0 +1,5 @@
+# TFLite Micro runtime (Apache-2.0) + esp-nn int8 kernels (Apache-2.0), architecture §6.2.
+# Exact pins; the resolved graph (with hashes) is frozen in firmware/dependencies.lock.
+dependencies:
+  idf: ">=5.1"
+  espressif/esp-tflite-micro: "==1.4.1"

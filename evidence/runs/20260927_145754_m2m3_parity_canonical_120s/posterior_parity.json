@@ -1,0 +1,15 @@
+{
+  "run": "20260927_145754_m2m3_parity_canonical_120s",
+  "model": "model/artifacts/v0/model_int8.tflite",
+  "inferences_compared": 1984,
+  "raw_output_bit_exact": 1984,
+  "raw_output_mismatched": 0,
+  "max_abs_raw_diff": 0,
+  "note": "host features come from the host twin; any feature-level mismatch (M2) propagates here",
+  "device_inference_cycles_mean_of_1s_means": 448178.0,
+  "device_inference_cycles_max": 756202,
+  "device_frontend_cycles_mean": 111758.0,
+  "device_triggers": 0,
+  "est_inference_cpu_pct_one_core_240MHz": 3.11,
+  "est_frontend_cpu_pct_one_core_240MHz": 4.66
+}

@@ -1,0 +1,145 @@
+{
+  "run": "v0",
+  "utc": "2026-09-27T08:31:02+00:00",
+  "tensorflow": "2.21.0",
+  "params": 10665,
+  "macs_per_inference": 212584,
+  "tflite_int8_bytes": 28024,
+  "tflite_sha256": "c3e4233bb5cba48fdc8b8a79e087ab772d19b06ae27b96080bb6b58db12b26d6",
+  "ops": [
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "RESHAPE"
+  ],
+  "input_quant": [
+    0.007536764722317457,
+    5
+  ],
+  "output_quant": [
+    0.00390625,
+    -128
+  ],
+  "train_windows": 181570,
+  "train_pos": 11898,
+  "val_windows": 44815,
+  "val_pos": 1422,
+  "epochs_run": 7,
+  "train_seconds": 153.9,
+  "val_window_metrics_NOTE": "per-window, not per-utterance; not FA/h \u2014 see eval_stream.py for stream metrics",
+  "val_float_vs_int8_max_abs_prob_diff": 0.09394973516464233,
+  "val_int8_frr_at_window_fpr": {
+    "0.01": [
+      0.029535864978902954,
+      0.76953125
+    ],
+    "0.001": [
+      0.3234880450070324,
+      0.99609375
+    ]
+  },
+  "data_meta": {
+    "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+    "seed": 26172,
+    "args": {
+      "out": "/home/kartik/ps26172_data/ds_v0",
+      "seed": 26172,
+      "pos_reps": 2,
+      "libri_stride": 1,
+      "ambient_streams": 400
+    },
+    "win_frames": 100,
+    "sources_json_sha256": "e5ef33cf3cabfd59432697fc06abcf0c3e84deaa900f5a800199430947f00f5e",
+    "src_codes": {
+      "tts_pos": 0,
+      "tts_prefix": 1,
+      "tts_neg": 2,
+      "libri": 3,
+      "ambient": 4
+    },
+    "splits": {
+      "train": {
+        "windows": 181570,
+        "positives": 11898,
+        "bed_seconds": 115.1,
+        "by_source": {
+          "tts_pos": 11898,
+          "tts_prefix": 7932,
+          "tts_neg": 6132,
+          "libri": 121608,
+          "ambient": 34000
+        }
+      },
+      "val": {
+        "windows": 44815,
+        "positives": 1422,
+        "bed_seconds": 57.0,
+        "by_source": {
+          "tts_pos": 1422,
+          "tts_prefix": 948,
+          "tts_neg": 828,
+          "libri": 33117,
+          "ambient": 8500
+        }
+      }
+    }
+  },
+  "history": {
+    "auc": [
+      0.9892,
+      0.99641,
+      0.99714,
+      0.99734,
+      0.99776,
+      0.99785,
+      0.99799
+    ],
+    "loss": [
+      0.23851,
+      0.1079,
+      0.09013,
+      0.08506,
+      0.07224,
+      0.06987,
+      0.06472
+    ],
+    "pr_auc": [
+      0.86945,
+      0.92861,
+      0.94163,
+      0.94628,
+      0.94977,
+      0.95244,
+      0.95611
+    ],
+    "val_auc": [
+      0.99774,
+      0.99749,
+      0.79895,
+      0.99498,
+      0.98832,
+      0.95588,
+      0.99335
+    ],
+    "val_loss": [
+      0.05656,
+      0.05591,
+      0.16547,
+      0.02939,
+      0.06729,
+      0.05263,
+      0.09519
+    ],
+    "val_pr_auc": [
+      0.92848,
+      0.90969,
+      0.59896,
+      0.92769,
+      0.87822,
+      0.80369,
+      0.8651
+    ]
+  },
+  "export": "static batch=1 (model/train/export.py)"
+}

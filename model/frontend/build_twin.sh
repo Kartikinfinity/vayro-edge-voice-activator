@@ -10,7 +10,7 @@ INC="-I$C -I$C/include -I$C/kissfft"
 for f in "$C"/ps_frontend.c "$C"/tensorflow/lite/experimental/microfrontend/lib/*.c; do
   gcc -O2 -fPIC -std=gnu17 $INC -c "$f" -o "$OBJ/$(basename "$f").o"
 done
-for f in "$C"/tensorflow/lite/experimental/microfrontend/lib/*.cc; do
+for f in "$C"/*.cc "$C"/tensorflow/lite/experimental/microfrontend/lib/*.cc; do
   g++ -O2 -fPIC -std=gnu++17 $INC -c "$f" -o "$OBJ/$(basename "$f").o"
 done
 g++ -shared -o "$REPO/model/frontend/libpsfe.so" "$OBJ"/*.o -lm

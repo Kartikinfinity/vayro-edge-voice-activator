@@ -1,0 +1,69 @@
+﻿forbidden_deps: PASS (D:\ps26172)
+frontend.json sha256=5bd00bc673ecb2b3… -> firmware\components\microfrontend\include\ps_frontend_config.h
+Executing action: size
+Running ninja in directory D:\ps26172\firmware\build_usbjtag
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag/ps26172_fw.bin"
+
+ps26172_fw.bin binary size 0x5d050 bytes. Smallest app partition is 0x100000 bytes. 0xa2fb0 bytes (64%) free.
+
+
+[2/4] Performing build step for 'bootloader'
+
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag\bootloader\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/ps26172/firmware/build_usbjtag/bootloader/bootloader.bin"
+
+
+Bootloader binary size 0x5170 bytes. 0x2e90 bytes (36%) free.
+
+
+
+[3/4] No install step for 'bootloader'
+
+[4/4] Completed 'bootloader'
+
+Running ninja in directory D:\ps26172\firmware\build_usbjtag
+Executing "ninja size"...
+[0/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag && D:\esp\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_SIZE_TOOL=D:/esp/.espressif/python_env/idf5.5_py3.12_env/Scripts/python.exe;-m;esp_idf_size -D MAP_FILE=D:/ps26172/firmware/build_usbjtag/ps26172_fw.map -D OUTPUT_JSON= -P D:/esp/esp-idf-v5.5.5/tools/cmake/run_size_tool.cmake"
+
+                            Memory Type Usage Summary                             
+
+┌─────────────────────┬──────────────┬──────────┬────────────────┬───────────────┐
+
+│ Memory Type/Section │ Used [bytes] │ Used [%] │ Remain [bytes] │ Total [bytes] │
+
+├─────────────────────┼──────────────┼──────────┼────────────────┼───────────────┤
+
+│ Flash Code          │       212412 │          │                │               │
+
+│    .text            │       212412 │          │                │               │
+
+│ DIRAM               │       159695 │    46.73 │         182065 │        341760 │
+
+│    .bss             │        86784 │    25.39 │                │               │
+
+│    .text            │        60027 │    17.56 │                │               │
+
+│    .data            │        11856 │     3.47 │                │               │
+
+│    .vectors         │         1028 │      0.3 │                │               │
+
+│ Flash Data          │        95536 │          │                │               │
+
+│    .rodata          │        95280 │          │                │               │
+
+│    .appdesc         │          256 │          │                │               │
+
+│ RTC SLOW            │           32 │     0.39 │           8160 │          8192 │
+
+│    .force_slow      │           32 │     0.39 │                │               │
+
+│ RTC FAST            │           24 │     0.29 │           8168 │          8192 │
+
+│    .rtc_reserved    │           24 │     0.29 │                │               │
+
+└─────────────────────┴──────────────┴──────────┴────────────────┴───────────────┘
+
+Total image size: 380891 bytes (.bin may be padded larger)
+System.Management.Automation.RemoteException
+Note: The reported total sizes may be smaller than those in the technical reference manual due to reserved memory and application configuration. The total flash size available for the application is not included by default, as it cannot be reliably determined due to the presence of other data like the bootloader, partition table, and application partition size.
+System.Management.Automation.RemoteException

@@ -1,7 +1,7 @@
 # Vendored TFLM microfrontend (Apache-2.0) + KissFFT (BSD-3). Provenance: PROVENANCE.md.
 set(lib tensorflow/lite/experimental/microfrontend/lib)
 idf_component_register(
-    SRCS "ps_frontend.c"
+    SRCS "ps_frontend.c" "ps_frontend_diag.cc" "ps_frontend_tables.c"
          "${lib}/fft.cc" "${lib}/fft_util.cc" "${lib}/kiss_fft_int16.cc"
          "${lib}/filterbank.c" "${lib}/filterbank_util.c"
          "${lib}/frontend.c" "${lib}/frontend_util.c"

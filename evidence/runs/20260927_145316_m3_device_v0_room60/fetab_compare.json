@@ -1,0 +1,42 @@
+{
+  "window": {
+    "device": "b78b64c2",
+    "host": "b78b64c2",
+    "equal": true
+  },
+  "fb_freq_starts": {
+    "device": "e73b27bb",
+    "host": "e73b27bb",
+    "equal": true
+  },
+  "fb_weight_starts": {
+    "device": "7a035269",
+    "host": "7a035269",
+    "equal": true
+  },
+  "fb_widths": {
+    "device": "b8666abd",
+    "host": "b8666abd",
+    "equal": true
+  },
+  "fb_weights": {
+    "device": "9b412b6a",
+    "host": "6c637b80",
+    "equal": false
+  },
+  "pcan_lut": {
+    "device": "bf96a121",
+    "host": "55f6bcc3",
+    "equal": false
+  },
+  "fft_twiddles": {
+    "device": "595c34d1",
+    "host": "595c34d1",
+    "equal": true
+  },
+  "fft_super_twiddles": {
+    "device": "92f59174",
+    "host": "92f59174",
+    "equal": true
+  }
+}

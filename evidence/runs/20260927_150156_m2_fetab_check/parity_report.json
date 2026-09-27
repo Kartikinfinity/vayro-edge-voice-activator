@@ -1,0 +1,21 @@
+{
+  "run": "20260927_150156_m2_fetab_check",
+  "frontend_sha256_twin": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+  "frontend_sha256_device": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+  "sha_match": true,
+  "audio_samples": 480480,
+  "frames_compared": 3001,
+  "frames_device_total": 3001,
+  "frame_index_contiguous": true,
+  "frame_boundaries_equal": true,
+  "frames_bit_exact": 3001,
+  "frames_mismatched": 0,
+  "values_mismatched": 0,
+  "max_abs_diff": 0,
+  "first_mismatch_frame": null,
+  "device_uint16_range": [
+    0,
+    610
+  ],
+  "PASS": true
+}

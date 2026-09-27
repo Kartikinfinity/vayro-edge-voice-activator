@@ -56,6 +56,36 @@ int ps_fe_process(const int16_t *samples, size_t n, size_t *consumed, uint16_t *
     return 1;
 }
 
+size_t ps_fe_state_ptr_tables(const struct FrontendState *s, uint32_t out[PS_FE_N_TABLES]); /* ps_frontend_diag.cc */
+
+size_t ps_fe_state_table_sizes(const struct FrontendState *s, size_t *n_weights, size_t *n_lut);
+void ps_fe_state_copy_tables(struct FrontendState *s, int to_state, int16_t *weights, int16_t *unweights, int16_t *lut);
+
+size_t ps_fe_table_hashes(uint32_t out[PS_FE_N_TABLES])
+{
+    return s_ready ? ps_fe_state_ptr_tables(&s_state, out) : 0;
+}
+
+int ps_fe_table_sizes(size_t *n_weights, size_t *n_lut)
+{
+    return s_ready ? (int)ps_fe_state_table_sizes(&s_state, n_weights, n_lut) : 0;
+}
+
+void ps_fe_get_tables(int16_t *weights, int16_t *unweights, int16_t *lut)
+{
+    ps_fe_state_copy_tables(&s_state, 0, weights, unweights, lut);
+}
+
+int ps_fe_set_tables(const int16_t *weights, const int16_t *unweights, const int16_t *lut, size_t n_weights, size_t n_lut)
+{
+    size_t nw, nl;
+    if (!s_ready || !ps_fe_state_table_sizes(&s_state, &nw, &nl) || nw != n_weights || nl != n_lut) {
+        return -1;
+    }
+    ps_fe_state_copy_tables(&s_state, 1, (int16_t *)weights, (int16_t *)unweights, (int16_t *)lut);
+    return 0;
+}
+
 size_t ps_fe_process_all(const int16_t *samples, size_t n, uint16_t *out, size_t max_frames)
 {
     size_t frames = 0;

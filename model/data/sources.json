@@ -1,0 +1,31 @@
+{
+  "_doc": "Hand-maintained data manifest (reviewed). 'bed' = device-recorded room audio (audio_16bit*.wav, int16 = I2S word >> 16) used as background for mixing and as ambient negatives. Splits are by recording/time block, never by random window. Held-out blocks are NEVER used for training or threshold selection.",
+  "runs_root": "/mnt/d/ps26172/evidence/runs",
+  "excluded_runs": {
+    "20260926_213821_m1_smoke_warm": "captured with Philips framing (1-bit misalignment, E-18) — not device-representative",
+    "20260926_214456_m1_align_sweep_warm": "Philips framing during streaming",
+    "20260926_221709_m1_sessionA_cold": "contains speaker S01 speech; S01 is the held-out test speaker",
+    "20260926_221804_m1_fan_off": "stalled link, 65 frames",
+    "20260927_125042_m1_scriptfile_selftest": "stalled link (board not reset)",
+    "20260927_125350_m1_link_fix_60s": "10 short sessions (watchdog bug)",
+    "20260927_130649_kw_S01": "speaker S01 — TEST ONLY (speaker-held-out)"
+  },
+  "bed_train": [
+    "20260926_214931_m1_msb_settle_warm/audio_16bit.wav",
+    "20260926_215314_m1_script_selftest/audio_16bit.wav",
+    "20260927_124810_m1_chunk_selftest/audio_16bit_c000.wav",
+    "20260927_124810_m1_chunk_selftest/audio_16bit_c001.wav",
+    "20260927_125228_m1_reset_fix_selftest/audio_16bit.wav",
+    "20260927_125547_m1_link_fix_60s_b/audio_16bit.wav",
+    "20260927_134535_ambient_day_20260927/audio_16bit_c000.wav"
+  ],
+  "_bed_train_note": "ambient_day c000 = 13:45-14:15 household audio (may include speaker S01 talking normally; never the keyword by instruction). Later ambient_day chunks are reserved: c001-c003 train in the final build, c004+ HELD-OUT for the false-activation test.",
+  "bed_val": [
+    "20260927_134200_m2_parity_60s/audio_16bit.wav"
+  ],
+  "bed_skip_start_s": 3.0,
+  "librispeech_root": "/home/kartik/ps26172_data/LibriSpeech/dev-clean",
+  "librispeech_val_speakers": 8,
+  "tts_root": "/home/kartik/ps26172_data/tts",
+  "test_real_kw_runs": ["20260927_130649_kw_S01"]
+}

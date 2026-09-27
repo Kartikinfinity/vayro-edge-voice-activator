@@ -1,0 +1,13 @@
+{
+  "run": "20260927_145316_m3_device_v0_room60",
+  "model": "model/artifacts/v0/model_int8.tflite",
+  "inferences_compared": 984,
+  "raw_output_bit_exact": 984,
+  "raw_output_mismatched": 0,
+  "max_abs_raw_diff": 0,
+  "note": "host features come from the host twin; any feature-level mismatch (M2) propagates here",
+  "device_inference_cycles_mean_of_1s_means": null,
+  "device_inference_cycles_max": null,
+  "device_frontend_cycles_mean": null,
+  "device_triggers": 0
+}

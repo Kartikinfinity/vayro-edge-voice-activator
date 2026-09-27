@@ -50,6 +50,9 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | DEC-12 | Training environment = WSL Ubuntu, uv-managed CPython 3.12 venv (`~/.venvs/ps26172`), TensorFlow CPU, Piper TTS; public negatives = LibriSpeech dev-clean | User-approved downloads 2026-09-27. Script `tools/setup_train_env.sh`; versions frozen to `model/env/requirements.lock`. |
 | DEC-13 | Ambient recording: afternoon (~13:30–18:00) + overnight, through this mic | User-approved 2026-09-27, including household sound. Local only, used only as non-keyword data. |
 | DEC-14 | TTS input text = **"Hey Vyro"** (English voices) and **"हे वाइरो"** (Hindi voice); the keyword itself is unchanged | espeak-ng phonemes via Piper (`model/data/tts_probe.py`): "Hey Vayro" → /veɪɹoʊ/ (wrong, VAY-ro) in all 3 English voices; "Hey Vyro" → /vaɪɹoʊ/ ✓; "हे वाइरो" → /ʋaːɪɾoː/ ✓. Human listening check pending. |
+| DEC-16 | **Canonical front-end tables:** the host twin's filterbank weights/unweights and PCAN gain LUT are exported (`model/frontend/export_tables.py` → `ps_frontend_tables.c`) and copied into the device state after `ps_fe_init()`. Applied only if their recorded frontend.json SHA-256 matches. | M2 parity found 3 values in 3 of 5 998 frames differing (bands 34–35). The table-hash diagnostic (`@FETAB`) showed **fb_weights (log1pf) differ** between newlib and glibc; the PCAN LUT pre-fix comparison was inconclusive because its hash then included uninitialised LUT slots (fixed). After the fix: 8/8 table hashes EQUAL and features bit-exact (12 000/12 000 and 3 001/3 001 frames). |
+| DEC-17 | Model export uses a **static batch-1 graph** (`model/train/export.py`): ops = CONV_2D, DEPTHWISE_CONV_2D, RESHAPE, FULLY_CONNECTED, LOGISTIC | Keras 3 `Flatten`/`Reshape` with a dynamic batch emitted SHAPE/STRIDED_SLICE/PACK. The static export gives identical posteriors (verified on S01). |
+| DEC-18 | Model selection needs a **real-speech validation set separate from the test set** | v1 beat v0 on synthetic validation (PR-AUC 0.949 vs 0.929) but was worse on real speaker S01 (18/23 vs 22/23 at thr 0.9). Choosing by S01 would be test-set selection. |
 | DEC-15 | Front end = TFLM microfrontend **vendored unmodified** (tflite-micro `aab6e2fd`, KissFFT from esp-tflite-micro v1.4.1), wrapped by `ps_frontend.c`; every parameter set explicitly from `model/frontend.json` (SHA-256 `5bd00bc673ecb2b3…`) | Resolves C-02/C-03. The same sources build the firmware and the host twin (`model/frontend/libpsfe.so`). Upstream defaults differ from §7.2 (25 ms window, PCAN off), so none are relied on. |
 
 ## 5. Conflicts and open issues
@@ -98,9 +101,10 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 |---|---|
 | M0 toolchain, pinned build, X25 gate | **DONE** 2026-09-26 — ESP-IDF v5.5.5; `tools/idf.ps1 -Console uart build` green, gate PASS, image 241 095 B |
 | M1 physical audio | IN PROGRESS — flashed and running; alignment fixed (DEC-06); EXP-10 done; **scripted cold-boot Session A (user) and 10 min integrity run pending** |
-| M2 front end + parity | IN PROGRESS — microfrontend vendored; firmware builds with on-device front end + feature streaming + per-hop cycle counts; host twin built and smoke-tested; parity test written. **Device parity run pending (needs the board).** |
-| M3 data | IN PROGRESS — kw_S01 recorded (143 s, integrity clean; 24/25 kw windows ≥11 dB above floor); TTS voices + spellings ready; LibriSpeech dev-clean downloaded |
-| M4–M6 | NOT STARTED |
+| M2 front end + parity | **DONE** 2026-09-27 — bit-exact device vs host features after DEC-16 (runs `…145754`, `…150156`) |
+| M3 local KWS | **ON DEVICE** — v0 (windowed DS-CNN, 10 665 params, 212 584 MACs, 28 024 B int8) runs on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with host TFLite reference (1 984/1 984). Offline on held-out real speaker S01: 22/23 at thr 0.9, N=3. **Live spoken test pending.** |
+| M4 trigger | Decision logic (N-mean, threshold, 2 s refractory, IN-2 GPIO 15 pulse, `@KW` log) implemented on device; exit test pending (live keywords) |
+| M5–M6 | NOT STARTED |
 
 ## 9. Blockers
 

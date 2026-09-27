@@ -1,0 +1,8 @@
+[train] tts: 3516 clips -> 25962 windows, 41 s
+[train] librispeech: 2128 utt -> 121608 windows
+[train] ambient: 34000 windows (bed 1912 s)
+train {'windows': 181570, 'positives': 11898, 'bed_seconds': 1912.1, 'by_source': {'tts_pos': 11898, 'tts_prefix': 7932, 'tts_neg': 6132, 'libri': 121608, 'ambient': 34000}}
+[val] tts: 444 clips -> 3198 windows, 4 s
+[val] librispeech: 575 utt -> 33117 windows
+[val] ambient: 8500 windows (bed 57 s)
+val {'windows': 44815, 'positives': 1422, 'bed_seconds': 57.0, 'by_source': {'tts_pos': 1422, 'tts_prefix': 948, 'tts_neg': 828, 'libri': 33117, 'ambient': 8500}}

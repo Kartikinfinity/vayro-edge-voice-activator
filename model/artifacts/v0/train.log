@@ -1,0 +1,115 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790497694.820281     409 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790497698.754987     409 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+E0000 00:00:1790497702.049747     409 cuda_platform.cc:52] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/keras/src/trainers/epoch_iterator.py:74: UserWarning: `shuffle=True` was passed, but will be ignored since the data `x` was provided as a tf.data.Dataset. The Dataset is expected to already be shuffled (via `.shuffle(buffer_size)`).
+  self.data_adapter = data_adapters.get_data_adapter(
+train 181570 (pos 11898), val 44815 (pos 1422), pos weight 14.26
+Epoch 1/30
+710/710 - 27s - 37ms/step - auc: 0.9892 - loss: 0.2385 - pr_auc: 0.8694 - val_auc: 0.9977 - val_loss: 0.0566 - val_pr_auc: 0.9285
+Epoch 2/30
+710/710 - 21s - 30ms/step - auc: 0.9964 - loss: 0.1079 - pr_auc: 0.9286 - val_auc: 0.9975 - val_loss: 0.0559 - val_pr_auc: 0.9097
+Epoch 3/30
+710/710 - 21s - 29ms/step - auc: 0.9971 - loss: 0.0901 - pr_auc: 0.9416 - val_auc: 0.7989 - val_loss: 0.1655 - val_pr_auc: 0.5990
+Epoch 4/30
+710/710 - 22s - 31ms/step - auc: 0.9973 - loss: 0.0851 - pr_auc: 0.9463 - val_auc: 0.9950 - val_loss: 0.0294 - val_pr_auc: 0.9277
+Epoch 5/30
+710/710 - 21s - 30ms/step - auc: 0.9978 - loss: 0.0722 - pr_auc: 0.9498 - val_auc: 0.9883 - val_loss: 0.0673 - val_pr_auc: 0.8782
+Epoch 6/30
+710/710 - 21s - 29ms/step - auc: 0.9978 - loss: 0.0699 - pr_auc: 0.9524 - val_auc: 0.9559 - val_loss: 0.0526 - val_pr_auc: 0.8037
+Epoch 7/30
+710/710 - 22s - 31ms/step - auc: 0.9980 - loss: 0.0647 - pr_auc: 0.9561 - val_auc: 0.9934 - val_loss: 0.0952 - val_pr_auc: 0.8651
+Saved artifact at '/tmp/tmp1pr1dp11'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 100, 1, 40), dtype=tf.float32, name='features')
+Output Type:
+  TensorSpec(shape=(None, 1), dtype=tf.float32, name=None)
+Captures:
+  139546236309904: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236310096: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236313168: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312592: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312016: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312976: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236313360: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236314128: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236313744: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312784: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236311824: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236315280: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236315472: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312400: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236312208: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236316624: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236317776: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236317584: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236317200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236318352: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236316816: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236319504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236319696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236318928: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236317008: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236318544: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236318160: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236317968: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236319120: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236320656: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236320080: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236320272: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236321040: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236319312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236321616: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236320464: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236321232: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236316432: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236321424: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236320848: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236174608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236175760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236174800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236175376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236176336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236174992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139546236176144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+{
+  "params": 10665,
+  "macs_per_inference": 212584,
+  "tflite_int8_bytes": 29064,
+  "ops": [
+    "CONV_2D",
+    "DELEGATE",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "PACK",
+    "RESHAPE",
+    "SHAPE",
+    "STRIDED_SLICE"
+  ],
+  "epochs_run": 7,
+  "train_seconds": 153.9,
+  "val_float_vs_int8_max_abs_prob_diff": 0.09394973516464233,
+  "val_int8_frr_at_window_fpr": {
+    "0.01": [
+      0.029535864978902954,
+      0.76953125
+    ],
+    "0.001": [
+      0.3234880450070324,
+      0.99609375
+    ]
+  }
+}

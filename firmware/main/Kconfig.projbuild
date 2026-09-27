@@ -28,6 +28,34 @@ menu "PS26172 configuration"
         bool "Invert BCK"
         default n
 
+    config PS_KWS_ENABLE
+        bool "Run the keyword model on-device"
+        default y
+
+    config PS_KWS_ARENA_BYTES
+        int "TFLM tensor arena (bytes)"
+        default 40960
+
+    config PS_KWS_STRIDE_FRAMES
+        int "Inference every N feature frames (DEC-11: 6 = 60 ms)"
+        default 6
+
+    config PS_KWS_AVG_N
+        int "Decision: mean of the last N posteriors (§8.6 sliding window)"
+        default 3
+
+    config PS_KWS_THRESHOLD_PCT
+        int "Decision threshold on the smoothed posterior (percent)"
+        default 90
+
+    config PS_KWS_REFRACTORY_MS
+        int "Refractory period after a trigger (ms) — X14"
+        default 2000
+
+    config PS_INST_DETECT_GPIO
+        int "IN-2 detection pulse GPIO (§B5)"
+        default 15
+
     config PS_SAMPLE_RATE_HZ
         int "Sample rate (Hz) — frontend.json sample_rate_hz"
         default 16000

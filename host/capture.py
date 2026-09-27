@@ -26,7 +26,7 @@ import serial
 from serial.tools import list_ports
 
 SYNC = b"\xA5\x5A\x26\x17"
-T_AUDIO, T_TEXT, T_FEATURES = 1, 2, 3
+T_AUDIO, T_TEXT, T_FEATURES, T_POSTERIOR = 1, 2, 3, 4
 HDR, CRC_LEN, MAX_PAYLOAD = 8, 2, 1024
 ESP_VIDS = {0x303A: "Espressif native USB-Serial-JTAG", 0x10C4: "Silicon Labs CP210x",
             0x1A86: "WCH CH34x", 0x0403: "FTDI"}
@@ -201,6 +201,8 @@ def main():
                     help="attach to an already-running board WITHOUT resetting it (default: warm reset, so every run "
                          "starts from a fresh boot; attaching after an earlier run stalled the USB link, run 20260926_221804)")
     ap.add_argument("--chunk-s", type=float, default=0, help="rotate WAV files every N seconds (long recordings)")
+    ap.add_argument("--keep-awake", action="store_true",
+                    help="Windows: hold ES_SYSTEM_REQUIRED while recording (released on exit; no settings changed)")
     ap.add_argument("--fs", type=int, default=16000)
     ap.add_argument("--out-root", default=str(ROOT / "evidence" / "runs"))
     args = ap.parse_args()
@@ -222,6 +224,14 @@ def main():
         args.seconds = t + 0.5
     if not args.seconds:
         sys.exit("Give --seconds or --script")
+
+    if sys.platform == "win32":
+        import ctypes
+        # HIGH_PRIORITY_CLASS: host CPU load (training/eval) once stalled the reader for >0.3 s and lost 0.23 s of
+        # audio (run 20260927_134535, gap at 2293.9 s). The reader is light, so priority costs nothing.
+        ctypes.windll.kernel32.SetPriorityClass(ctypes.windll.kernel32.GetCurrentProcess(), 0x00000080)
+        if args.keep_awake:
+            ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000001)  # ES_CONTINUOUS | ES_SYSTEM_REQUIRED
 
     port, port_kind = (args.port, "user-specified") if args.port else find_port()
     stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -248,7 +258,7 @@ def main():
     boot_raw = bytearray()
     sessions = [Session(out, 1, args.fs, args.chunk_s)]
     crc_errors = bad_len = 0
-    events, last_stats = [], None
+    events, last_stats, last_perf = [], None, None
     log = open(out / "device_log.txt", "w", encoding="utf-8")
     t_start = time.time()
     t_first_audio = None
@@ -263,7 +273,7 @@ def main():
     expect_boot, seen_boot, reset_retries, auto_resets = not args.attach, False, 0, 0
     recv_samples, wd_t, wd_recv = 0, time.time(), 0  # stall watchdog: real (non-gap) samples received
     streaming = False  # watchdog windows start at the first audio frame of each boot (boot probes take ~3 s)
-    feat_file, feat_session, feat_frames = None, 0, 0
+    side_files, side_session, feat_frames, post_frames = {}, {}, 0, 0
     try:
         while True:
             if not got_frame and time.time() - last_kick > 0.25:
@@ -337,19 +347,23 @@ def main():
                     if t_first_audio is None:
                         t_first_audio = time.time()
                     s.add(first_idx, n, payload[8:])
-                elif ftype == T_FEATURES:
-                    # Device front-end output (M2 parity test): u32 frame_idx, u32 end_sample, u16 bands, bands x u16.
-                    # Stored per boot session so they align with that session's audio file.
+                elif ftype in (T_FEATURES, T_POSTERIOR):
+                    # Device front-end output (u32 frame_idx, u32 end_sample, u16 bands, bands x u16) and model
+                    # output (u32 frame, i8 raw, u8 trigger). Stored per boot session to align with its audio file.
                     if not seen_boot and expect_boot:
                         continue
-                    if feat_file is None or feat_session != len(sessions):
-                        if feat_file:
-                            feat_file.close()
-                        feat_session = len(sessions)
-                        sfx = "" if feat_session == 1 else f"_s{feat_session}"
-                        feat_file = open(out / f"features_device{sfx}.bin", "wb")
-                    feat_file.write(payload)
-                    feat_frames += 1
+                    kind = "features" if ftype == T_FEATURES else "posteriors"
+                    if side_session.get(kind) != len(sessions):
+                        if side_files.get(kind):
+                            side_files[kind].close()
+                        side_session[kind] = len(sessions)
+                        sfx = "" if len(sessions) == 1 else f"_s{len(sessions)}"
+                        side_files[kind] = open(out / f"{kind}_device{sfx}.bin", "wb")
+                    side_files[kind].write(payload)
+                    if ftype == T_FEATURES:
+                        feat_frames += 1
+                    else:
+                        post_frames += 1
                 elif ftype == T_TEXT:
                     text = payload.decode("utf-8", "replace")
                     log.write(f"{time.time() - t_start:9.3f} {text}" + ("" if text.endswith("\n") else "\n"))
@@ -361,6 +375,8 @@ def main():
                             seen_boot = True
                         if rec["type"] == "STATS":
                             last_stats = rec
+                        elif rec["type"] == "PERF":
+                            last_perf = rec
                         else:
                             print("\n" + text.strip(), end="")
 
@@ -406,8 +422,8 @@ def main():
         log.close()
         for s in sessions:
             s.close()
-        if feat_file:
-            feat_file.close()
+        for fh in side_files.values():
+            fh.close()
     print()
 
     (out / "boot_raw.txt").write_text(boot_raw.decode("latin-1"), encoding="utf-8")
@@ -437,9 +453,12 @@ def main():
         "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); "
                               "speaker reaction lag is not compensated — analysis trims segment starts",
         "device_feature_frames": feat_frames,
+        "device_posterior_frames": post_frames,
+        "device_kw_triggers": [e for e in events if e["type"] == "KW"],
         "crc_errors": crc_errors,
         "bad_length_frames": bad_len,
         "device_last_stats": last_stats,
+        "device_last_perf": last_perf,
         "device_boot": next((e for e in events if e["type"] == "BOOT"), None),
         "device_cfg": next((e for e in events if e["type"] == "CFG"), None),
         "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16",

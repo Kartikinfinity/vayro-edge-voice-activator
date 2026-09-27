@@ -65,6 +65,15 @@ class Frontend:
                                         out.ctypes.data_as(ctypes.POINTER(ctypes.c_uint16)), max_frames)
         return out[:n]
 
+    TABLE_NAMES = ["window", "fb_freq_starts", "fb_weight_starts", "fb_widths", "fb_weights", "pcan_lut",
+                   "fft_twiddles", "fft_super_twiddles"]
+
+    def table_hashes(self):
+        """FNV-1a per init-time table (same order/format as the device's @FETAB line)."""
+        out = (ctypes.c_uint32 * len(self.TABLE_NAMES))()
+        self._lib.ps_fe_table_hashes(out)
+        return [f"{v:08x}" for v in out]
+
     @staticmethod
     def to_int8(feats: np.ndarray) -> np.ndarray:
         q = ((feats.astype(np.int32) * 256) + 333) // 666 - 128

@@ -10,3 +10,4 @@ evidence/runs/**/*.wav
 
 model/frontend/libpsfe.so
 model/data/tts_probe/
+model/artifacts/*/model.keras

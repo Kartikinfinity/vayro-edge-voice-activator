@@ -22,6 +22,9 @@
 #include "freertos/queue.h"
 #include "freertos/task.h"
 #include "instrument.h"
+#include "driver/gpio.h"
+#include "esp_err.h"
+#include "kws_engine.h"
 #include "ps_frontend.h"
 #include "ps_frontend_config.h"
 #include "sdkconfig.h"
@@ -238,6 +241,91 @@ static void enqueue_features(uint32_t frame_idx, uint32_t end_sample, const uint
     xQueueSend(s_tx_q, &k, 0);
 }
 
+#if CONFIG_PS_KWS_ENABLE
+/* ---- SS-4/SS-5: windowed KWS inference + decision logic (§8.6, DEC-11) ----------------------
+ * Schedule, smoothing and refractory mirror model/eval/eval_stream.py exactly, so device posteriors
+ * and triggers can be compared one-to-one with the host evaluation. */
+#define KWS_WIN 100
+#define LINK_TYPE_POSTERIOR 4 /* u32 frame, i8 raw model output, u8 trigger */
+static int8_t s_fring[KWS_WIN][PS_FE_MEL_BANDS];
+static int8_t s_win[KWS_WIN * PS_FE_MEL_BANDS];
+static kws_info_t s_kws;
+static volatile uint32_t s_inf_count;
+static volatile uint32_t s_inf_cyc_mean;
+static volatile uint32_t s_inf_cyc_max;
+static volatile uint32_t s_kw_triggers;
+
+static void enqueue_posterior(uint32_t frame, int8_t raw, uint8_t trig)
+{
+    uint8_t k;
+    if (xQueueReceive(s_free_q, &k, 0) != pdTRUE) {
+        s_pool_drops++;
+        return;
+    }
+    uint8_t *pl = s_pool[k].buf + LINK_HDR_BYTES;
+    memcpy(pl, &frame, 4);
+    pl[4] = (uint8_t)raw;
+    pl[5] = trig;
+    s_pool[k].len = (uint16_t)link_build_frame(s_pool[k].buf, LINK_TYPE_POSTERIOR, pl, 6);
+    xQueueSend(s_tx_q, &k, 0);
+}
+
+static void kws_on_frame(uint32_t f, const uint16_t *feat)
+{
+    static float ring_p[CONFIG_PS_KWS_AVG_N]; /* zero-initialised: matches np.convolve(..., "full") start-up */
+    static uint32_t n_inf, last_trig_frame, cyc_max;
+    static uint64_t cyc_sum;
+    static bool any_trig, detect_high;
+
+    if (detect_high) { /* ~10 ms IN-2 pulse: raised at a trigger, lowered on the next frame */
+        gpio_set_level(CONFIG_PS_INST_DETECT_GPIO, 0);
+        detect_high = false;
+    }
+    int8_t *row = s_fring[f % KWS_WIN];
+    for (int b = 0; b < PS_FE_MEL_BANDS; b++) {
+        row[b] = ps_fe_to_int8(feat[b]);
+    }
+    if (f < KWS_WIN - 1 || (f - (KWS_WIN - 1)) % CONFIG_PS_KWS_STRIDE_FRAMES) {
+        return;
+    }
+    for (int i = 0; i < KWS_WIN; i++) {
+        memcpy(s_win + i * PS_FE_MEL_BANDS, s_fring[(f - (KWS_WIN - 1) + i) % KWS_WIN], PS_FE_MEL_BANDS);
+    }
+    int8_t raw;
+    uint32_t cyc;
+    const float p = kws_infer(s_win, &raw, &cyc);
+    ring_p[n_inf % CONFIG_PS_KWS_AVG_N] = p;
+    n_inf++;
+    float avg = 0;
+    for (int i = 0; i < CONFIG_PS_KWS_AVG_N; i++) {
+        avg += ring_p[i];
+    }
+    avg /= CONFIG_PS_KWS_AVG_N;
+    uint8_t trig = 0;
+    if (avg >= CONFIG_PS_KWS_THRESHOLD_PCT / 100.0f &&
+        (!any_trig || f - last_trig_frame >= CONFIG_PS_KWS_REFRACTORY_MS / PS_FE_HOP_MS)) {
+        trig = 1;
+        any_trig = true;
+        last_trig_frame = f;
+        gpio_set_level(CONFIG_PS_INST_DETECT_GPIO, 1);
+        detect_high = true;
+        s_kw_triggers++;
+        link_text("@KW frame=%" PRIu32 " t_ms=%" PRIu32 " p=%.3f avg=%.3f raw=%d\n", f,
+                  (uint32_t)((PS_FE_WINDOW_MS) + f * PS_FE_HOP_MS), (double)p, (double)avg, raw);
+    }
+    enqueue_posterior(f, raw, trig);
+    cyc_sum += cyc;
+    cyc_max = cyc > cyc_max ? cyc : cyc_max;
+    if (n_inf % 50 == 0) {
+        s_inf_cyc_mean = (uint32_t)(cyc_sum / 50);
+        s_inf_cyc_max = cyc_max;
+        cyc_sum = 0;
+        cyc_max = 0;
+    }
+    s_inf_count = n_inf;
+}
+#endif
+
 static void reader_task(void *arg)
 {
     const i2s_std_slot_mask_t mask = (i2s_std_slot_mask_t)(uintptr_t)arg;
@@ -271,15 +359,22 @@ static void reader_task(void *arg)
         }
         const uint32_t c0 = esp_cpu_get_cycle_count();
         size_t off = 0;
+        int new_frame = 0; /* hop == window step, so at most one feature frame per hop */
         while (off < HOP) {
             size_t used = 0;
             const int produced = ps_fe_process(i16 + off, HOP - off, &used, feat);
             off += used;
             if (produced) {
                 enqueue_features(fe_frames++, idx + (uint32_t)off, feat);
+                new_frame = 1;
             }
         }
         const uint32_t dc = esp_cpu_get_cycle_count() - c0; /* includes enqueue: an upper bound */
+#if CONFIG_PS_KWS_ENABLE
+        if (new_frame) {
+            kws_on_frame(fe_frames - 1, feat); /* inference timed separately (I-2 attribution) */
+        }
+#endif
         fe_cyc_sum += dc;
         fe_cyc_max = dc > fe_cyc_max ? dc : fe_cyc_max;
         if (++fe_hops == 100) {
@@ -406,6 +501,33 @@ void app_main(void)
               (double)PS_FE_MEL_HIGH_HZ, PS_FE_PCAN_ENABLE);
     ESP_ERROR_CHECK(ps_fe_init(&s_fe_params) == 0 ? ESP_OK : ESP_FAIL);
     inst_mem_report("fe_init");
+    /* M2 parity fix (DEC-16): replace the libm-computed filterbank weights / PCAN LUT with the host twin's
+     * canonical tables, only if they were exported from this exact frontend.json. */
+    const int tables_ok = strcmp(ps_fe_tables_fe_sha256, PS_FE_JSON_SHA256) == 0 &&
+                          ps_fe_set_tables(ps_fe_tables_weights, ps_fe_tables_unweights, ps_fe_tables_lut,
+                                           ps_fe_tables_n_weights, ps_fe_tables_n_lut) == 0;
+    link_text("@FETAB canonical_tables_applied=%d\n", tables_ok);
+    {
+        uint32_t h[PS_FE_N_TABLES];
+        ps_fe_table_hashes(h);
+        link_text("@FETAB names=" PS_FE_TABLE_NAMES " hashes=%08" PRIx32 ",%08" PRIx32 ",%08" PRIx32 ",%08" PRIx32
+                  ",%08" PRIx32 ",%08" PRIx32 ",%08" PRIx32 ",%08" PRIx32 "\n",
+                  h[0], h[1], h[2], h[3], h[4], h[5], h[6], h[7]);
+    }
+#if CONFIG_PS_KWS_ENABLE
+    gpio_reset_pin(CONFIG_PS_INST_DETECT_GPIO);
+    gpio_set_direction(CONFIG_PS_INST_DETECT_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_level(CONFIG_PS_INST_DETECT_GPIO, 0);
+    const esp_err_t kerr = kws_init(&s_kws);
+    link_text("@KWS init=%s run=%s model_sha256=%.16s model_bytes=%u arena_bytes=%u arena_used=%u win=%d bands=%d "
+              "stride=%d avg_n=%d thr_pct=%d refractory_ms=%d detect_gpio=%d\n",
+              esp_err_to_name(kerr), kerr == ESP_OK ? s_kws.run : "-", kerr == ESP_OK ? s_kws.model_sha256 : "-",
+              (unsigned)s_kws.model_bytes, (unsigned)s_kws.arena_bytes, (unsigned)s_kws.arena_used_bytes,
+              s_kws.win_frames, s_kws.bands, CONFIG_PS_KWS_STRIDE_FRAMES, CONFIG_PS_KWS_AVG_N,
+              CONFIG_PS_KWS_THRESHOLD_PCT, CONFIG_PS_KWS_REFRACTORY_MS, CONFIG_PS_INST_DETECT_GPIO);
+    ESP_ERROR_CHECK(kerr);
+    inst_mem_report("kws_init");
+#endif
 
     s_free_q = xQueueCreate(POOL_N, sizeof(uint8_t));
     s_tx_q = xQueueCreate(POOL_N, sizeof(uint8_t));
@@ -419,15 +541,25 @@ void app_main(void)
 
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(1000));
+        /* Two lines: one line exceeded LINK_TEXT_MAX (240) and silently lost its tail (run 20260927_145316). */
+        const int64_t t_ms = esp_timer_get_time() / 1000;
         link_text("@STATS t_ms=%" PRId64 " samples=%" PRIu32 " pool_drops=%" PRIu32 " link_drops=%" PRIu32
                   " i2s_ovf=%" PRIu32 " short_reads=%" PRIu32 " level_dbfs=%.1f peak16=%" PRId32
-                  " heap_free=%u heap_min=%u hwm_reader=%u hwm_tx=%u hwm_main=%u fe_frames=%" PRIu32
-                  " fe_cyc_mean=%" PRIu32 " fe_cyc_max=%" PRIu32 "\n",
-                  esp_timer_get_time() / 1000, s_samples, s_pool_drops, link_dropped_frames(),
-                  ac_overflow_count(), s_short_reads, s_level_db10 / 10.0, s_peak16,
-                  (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
-                  (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL),
-                  (unsigned)uxTaskGetStackHighWaterMark(s_reader), (unsigned)uxTaskGetStackHighWaterMark(s_tx),
-                  (unsigned)uxTaskGetStackHighWaterMark(NULL), s_fe_frames, s_fe_cyc_mean, s_fe_cyc_max);
+                  " heap_free=%u heap_min=%u\n",
+                  t_ms, s_samples, s_pool_drops, link_dropped_frames(), ac_overflow_count(), s_short_reads,
+                  s_level_db10 / 10.0, s_peak16, (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+                  (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL));
+        link_text("@PERF t_ms=%" PRId64 " hwm_reader=%u hwm_tx=%u hwm_main=%u fe_frames=%" PRIu32
+                  " fe_cyc_mean=%" PRIu32 " fe_cyc_max=%" PRIu32
+#if CONFIG_PS_KWS_ENABLE
+                  " inf_count=%" PRIu32 " inf_cyc_mean=%" PRIu32 " inf_cyc_max=%" PRIu32 " kw_triggers=%" PRIu32
+#endif
+                  "\n",
+                  t_ms, (unsigned)uxTaskGetStackHighWaterMark(s_reader), (unsigned)uxTaskGetStackHighWaterMark(s_tx),
+                  (unsigned)uxTaskGetStackHighWaterMark(NULL), s_fe_frames, s_fe_cyc_mean, s_fe_cyc_max
+#if CONFIG_PS_KWS_ENABLE
+                  , s_inf_count, s_inf_cyc_mean, s_inf_cyc_max, s_kw_triggers
+#endif
+                  );
     }
 }
