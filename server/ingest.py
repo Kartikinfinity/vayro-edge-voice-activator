@@ -161,10 +161,18 @@ def main():
     srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     srv.bind(("0.0.0.0", args.port))
     srv.listen(1)
+    srv.settimeout(1.0)  # accept() otherwise blocks Ctrl+C on Windows (a stuck server once shared port 5005)
     print(f"ingest listening on 0.0.0.0:{args.port}; writing to {out}", flush=True)
-    while True:
-        conn, addr = srv.accept()
-        threading.Thread(target=serve, args=(conn, addr, out, args), daemon=True).start()
+    try:
+        while True:
+            try:
+                conn, addr = srv.accept()
+            except socket.timeout:
+                continue
+            conn.settimeout(None)
+            threading.Thread(target=serve, args=(conn, addr, out, args), daemon=True).start()
+    except KeyboardInterrupt:
+        print("ingest stopped", flush=True)
 
 
 if __name__ == "__main__":
