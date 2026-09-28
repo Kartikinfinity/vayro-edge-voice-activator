@@ -1,0 +1,52 @@
+{
+  "run": "20260928_192727_m6_cmd_S01",
+  "model": "D:/ps26172_ext/vosk/vosk-model-small-en-in-0.4",
+  "endpoint": "asr",
+  "grammar": "",
+  "rows": [
+    {
+      "t": 10.5,
+      "streamed": true,
+      "act": 1,
+      "endpoint_s": 4.776,
+      "endpoint_by": "asr",
+      "after_trigger": "right here what",
+      "transcript": "right here what"
+    },
+    {
+      "t": 14.88,
+      "streamed": false
+    },
+    {
+      "t": 23.1,
+      "streamed": true,
+      "act": 2,
+      "endpoint_s": 4.776,
+      "endpoint_by": "asr",
+      "after_trigger": "listen",
+      "transcript": "listen"
+    },
+    {
+      "t": 28.5,
+      "streamed": true,
+      "act": 3,
+      "endpoint_s": 4.776,
+      "endpoint_by": "asr",
+      "after_trigger": "",
+      "transcript": ""
+    },
+    {
+      "t": 31.8,
+      "streamed": false
+    },
+    {
+      "t": 38.7,
+      "streamed": true,
+      "act": 4,
+      "endpoint_s": 4.776,
+      "endpoint_by": "asr",
+      "after_trigger": "open the door",
+      "transcript": "open the door"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# M6 validation v2 (fresh speech, big ASR model + server VAD endpointing). Say each line ONCE at ~30-50 cm, normal
+# voice, then wait. Do not repeat a prompt even if you think it was missed (a miss is a result).
+sil_start | 3 | Stay quiet
+v2_01 | 9 | Hey Vayro ... turn off the light
+v2_02 | 9 | Hey Vayro ... switch on the fan
+v2_03 | 9 | Hey Vayro ... what is the weather today
+v2_04 | 9 | Hey Vayro ... set an alarm for six thirty
+v2_05 | 9 | Hey Vayro ... stop the music
+v2_06 | 9 | Hey Vayro ... close the door
+v2_07 | 9 | Hey Vayro ... turn on the light
+v2_08 | 9 | Hey Vayro ... play some music
+v2_09 | 9 | Hey Vayro ... open the door
+v2_10 | 9 | Hey Vayro ... what is the time
+sil_end | 3 | Stay quiet

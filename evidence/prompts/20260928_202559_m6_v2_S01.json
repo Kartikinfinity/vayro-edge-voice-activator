@@ -1,0 +1,90 @@
+{
+  "label": "m6_v2_S01",
+  "script": "D:/ps26172/host/scripts/m6_commands_v2.txt",
+  "segments": [
+    {
+      "name": "sil_start",
+      "prompt": "Stay quiet",
+      "t0_wall": "2026-09-28T20:26:02.907",
+      "t0_epoch": 1790607362.907,
+      "seconds": 3.0
+    },
+    {
+      "name": "v2_01",
+      "prompt": "Hey Vayro ... turn off the light",
+      "t0_wall": "2026-09-28T20:26:05.907",
+      "t0_epoch": 1790607365.908,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_02",
+      "prompt": "Hey Vayro ... switch on the fan",
+      "t0_wall": "2026-09-28T20:26:14.908",
+      "t0_epoch": 1790607374.909,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_03",
+      "prompt": "Hey Vayro ... what is the weather today",
+      "t0_wall": "2026-09-28T20:26:23.909",
+      "t0_epoch": 1790607383.91,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_04",
+      "prompt": "Hey Vayro ... set an alarm for six thirty",
+      "t0_wall": "2026-09-28T20:26:32.911",
+      "t0_epoch": 1790607392.911,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_05",
+      "prompt": "Hey Vayro ... stop the music",
+      "t0_wall": "2026-09-28T20:26:41.912",
+      "t0_epoch": 1790607401.912,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_06",
+      "prompt": "Hey Vayro ... close the door",
+      "t0_wall": "2026-09-28T20:26:50.913",
+      "t0_epoch": 1790607410.913,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_07",
+      "prompt": "Hey Vayro ... turn on the light",
+      "t0_wall": "2026-09-28T20:26:59.914",
+      "t0_epoch": 1790607419.914,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_08",
+      "prompt": "Hey Vayro ... play some music",
+      "t0_wall": "2026-09-28T20:27:08.914",
+      "t0_epoch": 1790607428.915,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_09",
+      "prompt": "Hey Vayro ... open the door",
+      "t0_wall": "2026-09-28T20:27:17.915",
+      "t0_epoch": 1790607437.915,
+      "seconds": 9.0
+    },
+    {
+      "name": "v2_10",
+      "prompt": "Hey Vayro ... what is the time",
+      "t0_wall": "2026-09-28T20:27:26.915",
+      "t0_epoch": 1790607446.916,
+      "seconds": 9.0
+    },
+    {
+      "name": "sil_end",
+      "prompt": "Stay quiet",
+      "t0_wall": "2026-09-28T20:27:35.917",
+      "t0_epoch": 1790607455.917,
+      "seconds": 3.0
+    }
+  ]
+}

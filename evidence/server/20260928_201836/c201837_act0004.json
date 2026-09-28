@@ -1,0 +1,60 @@
+{
+  "activation": 4,
+  "kw_frame": 46587,
+  "t_detect_device_us": 469600655,
+  "preroll_ms": 624,
+  "first_sample": 7444416,
+  "raw_posterior": 108,
+  "t_start_rx_us": 126536491230,
+  "t_audio0_rx_us": 126536498667,
+  "offset_us": 126066887947,
+  "rtt_us": 3559,
+  "pings": 53,
+  "packets": 58,
+  "seq_gaps": 0,
+  "last_seq": 58,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T20:26:20.175",
+  "asr_endpoint_at_s": 1.696,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 126538190255,
+  "device_samples_sent": 37120,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 126538193315,
+  "asr_transcript": "hello sir joseph",
+  "asr_after_trigger": "sir joseph",
+  "asr_words": [
+    {
+      "conf": 0.405544,
+      "end": 0.51,
+      "start": 5.5e-05,
+      "word": "hello"
+    },
+    {
+      "conf": 0.462745,
+      "end": 0.81,
+      "start": 0.57,
+      "word": "sir"
+    },
+    {
+      "conf": 0.536845,
+      "end": 1.329537,
+      "start": 0.81,
+      "word": "joseph"
+    }
+  ],
+  "asr_final_latency_ms": 120.04,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -31.6,
+  "vad_thr_dbfs": -51.6,
+  "asr_preroll_speech_dbfs": -31.6,
+  "asr_gain_db": 11.6,
+  "asr_grammar": false,
+  "audio_seconds": 2.32,
+  "L1_start_ms": 2.628,
+  "L1_audio0_ms": 10.065,
+  "clock_uncertainty_ms_half_rtt": 1.78,
+  "file_stem": "c201837_act0004"
+}

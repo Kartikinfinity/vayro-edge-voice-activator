@@ -10,8 +10,8 @@ Latency (architecture §10.2):
   L1_audio0 = t_rx(first audio packet) - (t_detect_device + offset)
 L2 (keyword acoustic end -> server) is derived offline from the streamed audio (see server/latency_report.py).
 
-Endpointing (M5): the server sends END once `--stream-s` seconds of audio AFTER the trigger have arrived.
-M6 replaces this with the ASR's own endpoint (server/asr.py).
+Endpointing: M5 (no --asr) sends END once `--stream-s` s of audio AFTER the trigger have arrived. M6 (--asr) ends on
+the server VAD (VadEndpointer, default) or on the Vosk utterance endpoint (--endpoint asr), with a hard cap.
 
 Usage (host venv): python server/ingest.py --port 5005 [--stream-s 3.0]
 """
@@ -98,6 +98,69 @@ class AsrFrontEnd:
         return np.clip(np.round(y * self.gain), -32768, 32767).astype(np.int16).tobytes()
 
 
+class VadEndpointer:
+    """Server-side utterance endpointing on the raw stream (architecture §9.5 names WebRTC-VAD; this is an energy VAD
+    in the speech band so no extra package is needed — a recorded deviation). Why not the ASR's endpoint: in run
+    20260928_192727 the decoder's real-time path heard most commands as noise, so Vosk only endpointed on its 5 s
+    rule and the long streams hid the next keywords from the device.
+    Rule (fixed before evaluation): 20 ms frames, 300-4000 Hz level; threshold = keyword level in the pre-roll
+    (p95 of 50 ms frames) - 20 dB, not below -60 dBFS; speech onset = 3 consecutive frames above it after the
+    trigger; END after `hang_s` of trailing non-speech, or at `idle_s` if no speech started; the caller caps it."""
+
+    def __init__(self, preroll_samples, hang_s=0.7, idle_s=1.5):
+        import numpy as np
+        from scipy import signal
+        self.np, self.signal = np, signal
+        self.sos = signal.butter(4, [300, 4000], btype="band", fs=16000, output="sos")
+        self.zi = signal.sosfilt_zi(self.sos) * 0.0
+        self.pre = preroll_samples
+        self.hang, self.idle = int(hang_s * 50), int(idle_s * 50)
+        self.buf = np.zeros(0)
+        self.seen = 0
+        self.thr = None
+        self.kw_dbfs = None
+        self.run = 0
+        self.speech = False
+        self.trailing = 0
+        self.post_frames = 0
+        self.reason = None
+
+    def _db(self, v):
+        return 20 * self.np.log10(max(float(v), 1.0) * self.np.sqrt(2) / 32768)
+
+    def __call__(self, pcm_bytes):
+        """Feed raw int16 bytes; returns True once the utterance has ended."""
+        np = self.np
+        x = np.frombuffer(pcm_bytes, dtype=np.int16).astype(np.float64)
+        y, self.zi = self.signal.sosfilt(self.sos, x, zi=self.zi)
+        self.buf = np.concatenate([self.buf, y])
+        if self.thr is None:
+            if len(self.buf) < self.pre:
+                return False
+            p = self.buf[: self.pre]
+            n = len(p) // 800
+            lev = np.sqrt(np.mean(p[: n * 800].reshape(n, 800) ** 2, axis=1)) if n else np.ones(1)
+            self.kw_dbfs = round(self._db(np.percentile(lev, 95)), 1)
+            self.thr = max(self.kw_dbfs - 20.0, -60.0)
+            self.buf = self.buf[self.pre:]
+        done = False
+        while len(self.buf) >= 320:
+            f, self.buf = self.buf[:320], self.buf[320:]
+            self.post_frames += 1
+            loud = self._db(np.sqrt(np.mean(f ** 2))) >= self.thr
+            self.run = self.run + 1 if loud else 0
+            if not self.speech:
+                if self.run >= 3:
+                    self.speech, self.trailing = True, 0
+                elif self.post_frames >= self.idle:
+                    done, self.reason = True, "no_speech"
+            else:
+                self.trailing = 0 if loud else self.trailing + 1
+                if self.trailing >= self.hang:
+                    done, self.reason = True, "trailing_silence"
+        return done
+
+
 class Session:
     def __init__(self, conn, out, args):
         self.conn, self.out, self.args = conn, out, args
@@ -108,6 +171,7 @@ class Session:
         # inflated L1_audio0 in run 20260928_175052).
         self.next_rec = new_recognizer() if ASR_MODEL is not None else None
         self.asr_fe = None
+        self.vad = None
         self.tx_lock = threading.Lock()
         self.conn_stamp = dt.datetime.now().strftime("c%H%M%S")
 
@@ -132,7 +196,9 @@ class Session:
             if ASR_MODEL is not None:
                 self.rec, self.next_rec = self.next_rec, None
                 self.asr_fe = AsrFrontEnd(pre_ms * 16)
+                self.vad = VadEndpointer(pre_ms * 16) if self.args.endpoint == "vad" else None
                 self.act["asr_endpoint_at_s"] = None
+                self.act["endpoint_by"] = None
         elif flags == F_CONT and self.act:
             a = self.act
             if a["t_audio0_rx_us"] is None:
@@ -145,15 +211,23 @@ class Session:
             after_trigger_s = len(a["pcm"]) / 2 / 16000 - a["preroll_ms"] / 1000
             end_now = False
             if self.rec is not None:
-                # M6 endpointing: Vosk reports an utterance endpoint (trailing silence) -> END, once at least
-                # --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
+                # M6 endpointing (--endpoint): the VAD (default) or Vosk's own utterance endpoint -> END, once at
+                # least --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
                 blk = self.asr_fe(payload)
+                ended_by = None
                 if blk and self.rec.AcceptWaveform(blk):
                     seg = json.loads(self.rec.Result())
                     a.setdefault("asr_segments", []).append(seg)
-                    if after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
-                        a["asr_endpoint_at_s"] = round(after_trigger_s, 3)
-                        end_now = True
+                    if self.vad is None:
+                        ended_by = "asr"
+                if self.vad is not None and self.vad(payload):
+                    ended_by = "vad_" + self.vad.reason
+                if ended_by and after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
+                    a["asr_endpoint_at_s"] = round(after_trigger_s, 3)
+                    a["endpoint_by"] = ended_by
+                    end_now = True
+                if after_trigger_s >= self.args.stream_s_max and a["endpoint_by"] is None:
+                    a["endpoint_by"] = "cap"
                 end_now = end_now or after_trigger_s >= self.args.stream_s_max
             else:
                 end_now = after_trigger_s >= self.args.stream_s
@@ -184,6 +258,8 @@ class Session:
             a["asr_words"] = words
             a["asr_final_latency_ms"] = round((now_us() - t0) / 1000, 2)
             a["asr_conditioning"] = "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)"
+            if self.vad is not None:
+                a["vad_kw_dbfs"], a["vad_thr_dbfs"] = self.vad.kw_dbfs, self.vad.thr
             a["asr_preroll_speech_dbfs"] = self.asr_fe.speech_dbfs
             a["asr_gain_db"] = round(20 * math.log10(self.asr_fe.gain), 1) if self.asr_fe.gain else None
             a["asr_grammar"] = bool(ASR_GRAMMAR)
@@ -214,7 +290,7 @@ class Session:
             wr.writerow(a)
         if "asr_transcript" in a:
             print(f"    ASR: \"{a['asr_transcript']}\"  | after trigger: \"{a['asr_after_trigger']}\"  "
-                  f"(endpoint at {a['asr_endpoint_at_s']} s after trigger)", flush=True)
+                  f"(endpoint at {a['asr_endpoint_at_s']} s after trigger by {a.get('endpoint_by')})", flush=True)
         print(f"[{a['wall_time']}] activation {a['activation']}: {a['audio_seconds']} s audio, "
               f"L1_start {a.get('L1_start_ms')} ms, L1_audio0 {a.get('L1_audio0_ms')} ms "
               f"(±{a.get('clock_uncertainty_ms_half_rtt')} ms clock), end={a['device_end_reason']}, "
@@ -260,6 +336,8 @@ def main():
     ap.add_argument("--min-after-s", type=float, default=0.5, help="with --asr: minimum post-trigger audio before END")
     ap.add_argument("--stream-s-max", type=float, default=6.0, help="with --asr: hard cap after the trigger")
     ap.add_argument("--grammar", default="", help="with --asr: JSON phrase list restricting recognition (e.g. server/commands.json)")
+    ap.add_argument("--endpoint", choices=["vad", "asr"], default="vad",
+                    help="with --asr: END on the server VAD (default) or on the Vosk utterance endpoint")
     args = ap.parse_args()
     if args.asr:
         global ASR_MODEL, ASR_GRAMMAR

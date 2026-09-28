@@ -1,0 +1,55 @@
+{
+  "activation": 1,
+  "kw_frame": 1047,
+  "t_detect_device_us": 10500000,
+  "preroll_ms": 624,
+  "first_sample": 158016,
+  "raw_posterior": 127,
+  "t_start_rx_us": 0,
+  "t_audio0_rx_us": 0,
+  "offset_us": null,
+  "rtt_us": null,
+  "pings": 0,
+  "packets": 137,
+  "seq_gaps": 0,
+  "last_seq": 137,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T20:17:13.222",
+  "asr_endpoint_at_s": 4.776,
+  "endpoint_by": "asr",
+  "t_end_sent_us": 125991992356,
+  "device_samples_sent": 87680,
+  "device_min_slack_ms": 0.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 0,
+  "asr_transcript": "right here what",
+  "asr_after_trigger": "right here what",
+  "asr_words": [
+    {
+      "conf": 0.497355,
+      "end": 1.77,
+      "start": 1.375811,
+      "word": "right"
+    },
+    {
+      "conf": 0.770306,
+      "end": 4.5,
+      "start": 4.17,
+      "word": "here"
+    },
+    {
+      "conf": 1.0,
+      "end": 5.37,
+      "start": 5.04,
+      "word": "what"
+    }
+  ],
+  "asr_final_latency_ms": 56.41,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "asr_preroll_speech_dbfs": -31.4,
+  "asr_gain_db": 11.4,
+  "asr_grammar": false,
+  "audio_seconds": 5.48,
+  "file_stem": "replay_act0001"
+}

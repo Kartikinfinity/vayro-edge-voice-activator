@@ -1,0 +1,90 @@
+{
+  "activation": 3,
+  "kw_frame": 45135,
+  "t_detect_device_us": 455080443,
+  "preroll_ms": 624,
+  "first_sample": 7212096,
+  "raw_posterior": 127,
+  "t_start_rx_us": 126521973242,
+  "t_audio0_rx_us": 126521973242,
+  "offset_us": 126066887947,
+  "rtt_us": 3559,
+  "pings": 52,
+  "packets": 166,
+  "seq_gaps": 0,
+  "last_seq": 166,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T20:26:05.657",
+  "asr_endpoint_at_s": null,
+  "endpoint_by": "cap",
+  "t_end_sent_us": 126527996532,
+  "device_samples_sent": 106240,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 126528002643,
+  "asr_transcript": "try room out delight turn off the light",
+  "asr_after_trigger": "out delight turn off the light",
+  "asr_words": [
+    {
+      "conf": 0.340835,
+      "end": 0.207551,
+      "start": 0.0,
+      "word": "try"
+    },
+    {
+      "conf": 0.889639,
+      "end": 0.599999,
+      "start": 0.207551,
+      "word": "room"
+    },
+    {
+      "conf": 0.339961,
+      "end": 1.168836,
+      "start": 0.99,
+      "word": "out"
+    },
+    {
+      "conf": 0.793551,
+      "end": 1.83,
+      "start": 1.168836,
+      "word": "delight"
+    },
+    {
+      "conf": 0.511437,
+      "end": 3.96,
+      "start": 3.72,
+      "word": "turn"
+    },
+    {
+      "conf": 0.753106,
+      "end": 4.139469,
+      "start": 3.96,
+      "word": "off"
+    },
+    {
+      "conf": 0.931034,
+      "end": 4.259885,
+      "start": 4.141472,
+      "word": "the"
+    },
+    {
+      "conf": 0.651368,
+      "end": 4.59,
+      "start": 4.26,
+      "word": "light"
+    }
+  ],
+  "asr_final_latency_ms": 49.21,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -34.2,
+  "vad_thr_dbfs": -54.2,
+  "asr_preroll_speech_dbfs": -34.1,
+  "asr_gain_db": 14.1,
+  "asr_grammar": false,
+  "audio_seconds": 6.64,
+  "L1_start_ms": 4.852,
+  "L1_audio0_ms": 4.852,
+  "clock_uncertainty_ms_half_rtt": 1.78,
+  "file_stem": "c201837_act0003"
+}

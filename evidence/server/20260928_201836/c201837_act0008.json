@@ -1,0 +1,66 @@
+{
+  "activation": 8,
+  "kw_frame": 53403,
+  "t_detect_device_us": 537760745,
+  "preroll_ms": 624,
+  "first_sample": 8534976,
+  "raw_posterior": 125,
+  "t_start_rx_us": 126604649336,
+  "t_audio0_rx_us": 126604657264,
+  "offset_us": 126066886718,
+  "rtt_us": 3794,
+  "pings": 60,
+  "packets": 57,
+  "seq_gaps": 0,
+  "last_seq": 57,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T20:27:28.332",
+  "asr_endpoint_at_s": 1.656,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 126606312456,
+  "device_samples_sent": 36480,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 126606319556,
+  "asr_transcript": "what is it that",
+  "asr_after_trigger": "what is it that",
+  "asr_words": [
+    {
+      "conf": 0.883029,
+      "end": 0.929813,
+      "start": 0.629813,
+      "word": "what"
+    },
+    {
+      "conf": 0.877953,
+      "end": 1.110132,
+      "start": 0.93,
+      "word": "is"
+    },
+    {
+      "conf": 0.737029,
+      "end": 1.260277,
+      "start": 1.110132,
+      "word": "it"
+    },
+    {
+      "conf": 0.414318,
+      "end": 1.65,
+      "start": 1.260277,
+      "word": "that"
+    }
+  ],
+  "asr_final_latency_ms": 135.95,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -24.8,
+  "vad_thr_dbfs": -44.8,
+  "asr_preroll_speech_dbfs": -24.8,
+  "asr_gain_db": 4.8,
+  "asr_grammar": false,
+  "audio_seconds": 2.28,
+  "L1_start_ms": 1.873,
+  "L1_audio0_ms": 9.801,
+  "clock_uncertainty_ms_half_rtt": 1.897,
+  "file_stem": "c201837_act0008"
+}

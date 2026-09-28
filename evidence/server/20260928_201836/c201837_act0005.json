@@ -1,0 +1,60 @@
+{
+  "activation": 5,
+  "kw_frame": 48915,
+  "t_detect_device_us": 492880559,
+  "preroll_ms": 624,
+  "first_sample": 7816896,
+  "raw_posterior": 124,
+  "t_start_rx_us": 126559769615,
+  "t_audio0_rx_us": 126559773579,
+  "offset_us": 126066887947,
+  "rtt_us": 3559,
+  "pings": 56,
+  "packets": 56,
+  "seq_gaps": 0,
+  "last_seq": 56,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T20:26:43.453",
+  "asr_endpoint_at_s": 1.616,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 126561388639,
+  "device_samples_sent": 35840,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 126561391907,
+  "asr_transcript": "stop the music",
+  "asr_after_trigger": "stop the music",
+  "asr_words": [
+    {
+      "conf": 0.652004,
+      "end": 0.93,
+      "start": 0.54,
+      "word": "stop"
+    },
+    {
+      "conf": 1.0,
+      "end": 1.05,
+      "start": 0.930997,
+      "word": "the"
+    },
+    {
+      "conf": 1.0,
+      "end": 1.68,
+      "start": 1.05,
+      "word": "music"
+    }
+  ],
+  "asr_final_latency_ms": 216.78,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -24.9,
+  "vad_thr_dbfs": -44.9,
+  "asr_preroll_speech_dbfs": -24.9,
+  "asr_gain_db": 4.9,
+  "asr_grammar": false,
+  "audio_seconds": 2.24,
+  "L1_start_ms": 1.109,
+  "L1_audio0_ms": 5.073,
+  "clock_uncertainty_ms_half_rtt": 1.78,
+  "file_stem": "c201837_act0005"
+}

@@ -1,0 +1,19 @@
+ASR model loaded from D:\ps26172_ext\vosk\vosk-model-en-in-0.5 in 18.6 s
+ingest listening on 0.0.0.0:5005; writing to D:\ps26172\evidence\server\20260928_201836
+device connected from 192.168.1.9:51157
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at None s after trigger by cap)
+[2026-09-28T20:21:50.841] activation 1: 6.64 s audio, L1_start 2.079 ms, L1_audio0 6.527 ms (±1.921 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0001.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at None s after trigger by cap)
+[2026-09-28T20:23:53.300] activation 2: 6.64 s audio, L1_start 1.751 ms, L1_audio0 21.857 ms (±1.925 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0002.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at None s after trigger by cap)
+[2026-09-28T20:26:05.657] activation 3: 6.64 s audio, L1_start 4.852 ms, L1_audio0 4.852 ms (±1.78 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0003.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 1.696 s after trigger by vad_trailing_silence)
+[2026-09-28T20:26:20.175] activation 4: 2.32 s audio, L1_start 2.628 ms, L1_audio0 10.065 ms (±1.78 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0004.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 1.616 s after trigger by vad_trailing_silence)
+[2026-09-28T20:26:43.453] activation 5: 2.24 s audio, L1_start 1.109 ms, L1_audio0 5.073 ms (±1.78 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0005.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 2.216 s after trigger by vad_trailing_silence)
+[2026-09-28T20:27:01.873] activation 6: 2.84 s audio, L1_start 1.271 ms, L1_audio0 9.221 ms (±1.78 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0006.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 1.616 s after trigger by vad_trailing_silence)
+[2026-09-28T20:27:18.493] activation 7: 2.24 s audio, L1_start 1.403 ms, L1_audio0 5.54 ms (±1.897 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0007.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 1.656 s after trigger by vad_trailing_silence)
+[2026-09-28T20:27:28.332] activation 8: 2.28 s audio, L1_start 1.873 ms, L1_audio0 9.801 ms (±1.897 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c201837_act0008.wav
