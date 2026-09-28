@@ -1,0 +1,370 @@
+{
+  "run": "20260928_193953_household_eve_20260928",
+  "n": 3,
+  "models": {
+    "v2b": {
+      "threshold": 0.8,
+      "fa": 39,
+      "hours": 2.469,
+      "fa_times": {
+        "s1": [
+          92.6,
+          161.5,
+          309.3,
+          823.9,
+          1242.2,
+          1270.7,
+          1323.0,
+          1786.7,
+          1810.1
+        ],
+        "s2": [],
+        "s3": [],
+        "s4": [],
+        "s5": [
+          196.6,
+          319.0,
+          839.3,
+          1136.2,
+          1169.5,
+          1953.7,
+          2712.3,
+          2788.4,
+          3032.1,
+          3128.3,
+          3253.9,
+          3257.0,
+          3313.4,
+          3375.7,
+          3424.3,
+          3439.1,
+          3478.3,
+          3786.0,
+          4285.7,
+          4427.2,
+          4761.3,
+          4871.5,
+          5015.8,
+          5465.0,
+          5831.0,
+          5847.7,
+          5868.4,
+          5956.0,
+          6055.9,
+          6172.4
+        ]
+      },
+      "fa_per_hour": 15.8
+    },
+    "v3": {
+      "threshold": 0.6,
+      "fa": 49,
+      "hours": 2.469,
+      "fa_times": {
+        "s1": [
+          205.0
+        ],
+        "s2": [],
+        "s3": [],
+        "s4": [],
+        "s5": [
+          124.2,
+          571.3,
+          580.4,
+          626.8,
+          1136.2,
+          1429.4,
+          1860.6,
+          1980.2,
+          1985.6,
+          2712.5,
+          2863.1,
+          2935.4,
+          3005.1,
+          3112.7,
+          3375.8,
+          3402.8,
+          3478.2,
+          3563.9,
+          3785.9,
+          3789.7,
+          4285.7,
+          4290.2,
+          4714.6,
+          4766.2,
+          4871.5,
+          4912.6,
+          4994.3,
+          5018.9,
+          5110.2,
+          5211.9,
+          5350.7,
+          5465.0,
+          5831.0,
+          5844.8,
+          5847.3,
+          5896.3,
+          5921.9,
+          5939.5,
+          5959.8,
+          5986.7,
+          6172.4,
+          6191.7,
+          6254.4,
+          6266.8,
+          6283.7,
+          6339.2,
+          6369.6,
+          6380.3
+        ]
+      },
+      "fa_per_hour": 19.85
+    }
+  },
+  "sessions": {
+    "s1": {
+      "files": [
+        "audio_16bit_c000.wav",
+        "audio_16bit_c001.wav"
+      ],
+      "seconds": 2044.8,
+      "excluded_s": 0,
+      "device_live_triggers_outside_exclusions": [
+        92.6,
+        161.5,
+        309.3,
+        823.8,
+        1242.2,
+        1270.7,
+        1323.0,
+        1786.7,
+        1810.0
+      ]
+    },
+    "s2": {
+      "files": [
+        "audio_16bit_s2_c000.wav"
+      ],
+      "seconds": 39.5,
+      "excluded_s": 0,
+      "device_live_triggers_outside_exclusions": []
+    },
+    "s3": {
+      "files": [
+        "audio_16bit_s3_c000.wav"
+      ],
+      "seconds": 160.9,
+      "excluded_s": 0,
+      "device_live_triggers_outside_exclusions": []
+    },
+    "s4": {
+      "files": [
+        "audio_16bit_s4_c000.wav"
+      ],
+      "seconds": 49.9,
+      "excluded_s": 0,
+      "device_live_triggers_outside_exclusions": []
+    },
+    "s5": {
+      "files": [
+        "audio_16bit_s5_c000.wav",
+        "audio_16bit_s5_c001.wav",
+        "audio_16bit_s5_c002.wav",
+        "audio_16bit_s5_c003.wav"
+      ],
+      "seconds": 6705.0,
+      "excluded_s": 112.0,
+      "device_live_triggers_outside_exclusions": [
+        196.5,
+        319.0,
+        839.2,
+        1136.2,
+        1169.4,
+        1953.7,
+        2712.3,
+        2788.3,
+        3032.1,
+        3128.3,
+        3253.8,
+        3256.9,
+        3313.4,
+        3375.6,
+        3424.3,
+        3439.1,
+        3478.2,
+        3786.0,
+        4285.6,
+        4427.2,
+        4761.3,
+        4871.5,
+        5015.7,
+        5464.9,
+        5831.0,
+        5847.7,
+        5868.4,
+        5955.9,
+        6055.9,
+        6172.4
+      ]
+    }
+  },
+  "exclude": [
+    "s5:440:552"
+  ],
+  "m6_v2_prompts": [
+    {
+      "prompt": "v2_01",
+      "text": "Hey Vayro ... turn off the light",
+      "audio_s": 451.63,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.996
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.996
+      }
+    },
+    {
+      "prompt": "v2_02",
+      "text": "Hey Vayro ... switch on the fan",
+      "audio_s": 460.64,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.922,
+        "max_mean3": 0.902
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.995
+      }
+    },
+    {
+      "prompt": "v2_03",
+      "text": "Hey Vayro ... what is the weather today",
+      "audio_s": 469.64,
+      "v2b": {
+        "hit": false,
+        "max_p": 0.777,
+        "max_mean3": 0.482
+      },
+      "v3": {
+        "hit": false,
+        "max_p": 0.902,
+        "max_mean3": 0.591
+      }
+    },
+    {
+      "prompt": "v2_04",
+      "text": "Hey Vayro ... set an alarm for six thirty",
+      "audio_s": 478.64,
+      "v2b": {
+        "hit": false,
+        "max_p": 0.742,
+        "max_mean3": 0.474
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.993
+      }
+    },
+    {
+      "prompt": "v2_05",
+      "text": "Hey Vayro ... stop the music",
+      "audio_s": 487.64,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.992,
+        "max_mean3": 0.983
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.977,
+        "max_mean3": 0.97
+      }
+    },
+    {
+      "prompt": "v2_06",
+      "text": "Hey Vayro ... close the door",
+      "audio_s": 496.64,
+      "v2b": {
+        "hit": false,
+        "max_p": 0.855,
+        "max_mean3": 0.618
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.991
+      }
+    },
+    {
+      "prompt": "v2_07",
+      "text": "Hey Vayro ... turn on the light",
+      "audio_s": 505.64,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.961,
+        "max_mean3": 0.931
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.992,
+        "max_mean3": 0.991
+      }
+    },
+    {
+      "prompt": "v2_08",
+      "text": "Hey Vayro ... play some music",
+      "audio_s": 514.64,
+      "v2b": {
+        "hit": false,
+        "max_p": 0.168,
+        "max_mean3": 0.087
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.988,
+        "max_mean3": 0.984
+      }
+    },
+    {
+      "prompt": "v2_09",
+      "text": "Hey Vayro ... open the door",
+      "audio_s": 523.64,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.996,
+        "max_mean3": 0.996
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.766,
+        "max_mean3": 0.727
+      }
+    },
+    {
+      "prompt": "v2_10",
+      "text": "Hey Vayro ... what is the time",
+      "audio_s": 532.64,
+      "v2b": {
+        "hit": true,
+        "max_p": 0.988,
+        "max_mean3": 0.986
+      },
+      "v3": {
+        "hit": true,
+        "max_p": 0.953,
+        "max_mean3": 0.936
+      }
+    }
+  ],
+  "m6_v2_hits": {
+    "v2b": 6,
+    "v3": 9
+  }
+}
