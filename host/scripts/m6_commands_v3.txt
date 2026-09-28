@@ -1,0 +1,15 @@
+# M6 validation v3 / v4 ship-rule (d): fresh S01 session recorded AFTER v4 is frozen, with the USB capture running so
+# v2b and v4 can be replayed on the same audio. New commands (not used in v1/v2). Say each line ONCE at ~30-50 cm,
+# normal voice, as you would naturally (a short pause after "Hey Vayro" or none). Do not repeat a missed prompt.
+sil_start | 4 | Stay quiet
+v3_01 | 9 | Hey Vayro ... turn on the fan
+v3_02 | 9 | Hey Vayro ... switch off the light
+v3_03 | 9 | Hey Vayro ... what time is it
+v3_04 | 9 | Hey Vayro ... play the next song
+v3_05 | 9 | Hey Vayro ... set a timer for five minutes
+v3_06 | 9 | Hey Vayro ... open the window
+v3_07 | 9 | Hey Vayro ... increase the volume
+v3_08 | 9 | Hey Vayro ... what is the temperature
+v3_09 | 9 | Hey Vayro ... call my mother
+v3_10 | 9 | Hey Vayro ... good night
+sil_end | 4 | Stay quiet
