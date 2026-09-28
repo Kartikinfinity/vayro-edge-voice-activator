@@ -34,7 +34,7 @@ from model.frontend.psfe import Frontend  # noqa: E402
 FS, HOP, FE_WIN, WIN = 16000, 160, 480, 100
 WARM = int(2.5 * FS)
 SOS = signal.butter(4, [125, 6500], btype="band", fs=FS, output="sos")
-SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4, "real_pos": 5, "real_neg": 6}
+SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4, "real_pos": 5, "real_neg": 6, "hard_neg": 7, "night_neg": 8}
 
 
 def read_wav16(path):
@@ -127,8 +127,36 @@ def add_real_run(b, run, rng, copies):
     return len(kws)
 
 
+def add_long_run_negatives(b, spec, rng):
+    """Device-recorded long ambient run (training hours only): (1) HARD negatives = windows where the
+    deployed model's device posterior was >= posterior_min (the moments that fooled it, incl. its live false
+    activations), each +/-3 frames, replicated `hard_reps` times; (2) general negatives every `stride` frames.
+    Device frame f in hour chunk k maps to chunk-local frame f - 360000*k (1 h = 360 000 hops)."""
+    run = pathlib.Path(spec["run_dir"])
+    dev = np.fromfile(run / "posteriors_device.bin", dtype=np.dtype([("frame", "<u4"), ("raw", "i1"), ("trig", "u1")]))
+    p = (dev["raw"].astype(np.float32) + 128) / 256
+    hard_frames = dev["frame"][p >= spec["posterior_min"]].astype(np.int64)
+    n_hard = n_gen = 0
+    for k in spec["chunks"]:
+        with wave.open(str(run / f"audio_16bit_c{k:03d}.wav")) as w:
+            audio = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)
+        feats = b.fe.to_int8(b.fe.features(audio))
+        lo = WIN - 1 + 250  # skip the first 2.5 s: twin state restarts at the chunk boundary
+        local = hard_frames - 360000 * k
+        local = local[(local >= lo) & (local < len(feats))]
+        ends = sorted({int(e + d) for e in local for d in (-3, 0, 3) if lo <= e + d < len(feats)})
+        for _ in range(spec["hard_reps"]):
+            b.add(feats, ends, 0, "hard_neg")
+        n_hard += len(ends)
+        gen = range(lo, len(feats), spec["stride"])
+        b.add(feats, gen, 0, "night_neg")
+        n_gen += len(gen)
+    return n_hard, n_gen
+
+
 def build_split(split, cfg, fe, rng, args):
-    beds = Beds([pathlib.Path(cfg["runs_root"]) / f for f in cfg[f"bed_{split}"]], cfg["bed_skip_start_s"], rng)
+    bed_files = cfg[f"bed_{split}"] + (cfg.get(args.extra_beds, []) if split == "train" and args.extra_beds else [])
+    beds = Beds([pathlib.Path(cfg["runs_root"]) / f for f in bed_files], cfg["bed_skip_start_s"], rng)
     b = Builder(fe, beds, rng)
     t0 = time.time()
     tts_root = pathlib.Path(args.tts_root or cfg["tts_root"]).expanduser()
@@ -158,6 +186,12 @@ def build_split(split, cfg, fe, rng, args):
         b.add(feats, range(end_frame(WARM) + 10, fe_end + 30, 8), 0, "libri")
     print(f"[{split}] librispeech: {len(flacs[::args.libri_stride])} utt -> {len(b.y) - n0} windows", flush=True)
 
+    for spec in (cfg.get("long_run_negatives", []) if split == "train" and args.long_negatives else []):
+        n0 = len(b.y)
+        nh, ng = add_long_run_negatives(b, spec, rng)
+        print(f"[{split}] long-run negatives {pathlib.Path(spec['run_dir']).name} chunks {spec['chunks']}: "
+              f"{nh} hard windows x{spec['hard_reps']}, {ng} general -> {len(b.y) - n0} windows", flush=True)
+
     for rn in cfg.get(f"real_{split}_runs", []):
         n0 = len(b.y)
         nk = add_real_run(b, pathlib.Path(cfg["runs_root"]) / rn, rng, args.real_copies)
@@ -179,6 +213,8 @@ def main():
     ap.add_argument("--libri-stride", type=int, default=1)
     ap.add_argument("--ambient-streams", type=int, default=400)
     ap.add_argument("--real-copies", type=int, default=6)
+    ap.add_argument("--long-negatives", action="store_true", help="add sources.json long_run_negatives (v3)")
+    ap.add_argument("--extra-beds", default="", help="sources.json key with additional training bed files (v3: bed_train_night)")
     ap.add_argument("--tts-root", default="", help="override sources.json tts_root (e.g. ~/ps26172_data/tts_v2)")
     args = ap.parse_args()
     cfg = json.loads((ROOT / "model" / "data" / "sources.json").read_text(encoding="utf-8"))

@@ -1,0 +1,8 @@
+{
+  "declared_at": "2026-09-28T06:55",
+  "model": "v3 = v2 architecture/data + night beds (ambient_night c000-c004) + hard negatives mined from those TRAINING hours (every window where the v2b device posterior >= 0.30, replicated x3) + general night negatives; pos weight 4",
+  "not_used_for_training": ["S01 session 2 (validation)", "S01 session 3 (test)", "ambient_night c005-c009 (held-out)", "any recording made on 2026-09-28"],
+  "threshold_rule": "on S01 session 2 prompt score, N=3: the HIGHEST threshold in {0.5,0.6,0.7,0.8,0.9,0.95,0.98} with keyword-prompt recall >= 20/25; if none reaches 20/25, the threshold with maximum recall (ties -> higher)",
+  "ship_rule": "ship v3 instead of v2b only if BOTH: (a) lower FA/h than v2b@0.80 on a NEW held-out active-household recording made on 2026-09-28, and (b) S01 session 3 keyword-prompt recall >= 21/25. Otherwise ship v2b@0.80.",
+  "reported_regardless": "both models on: S01 s3, ambient_night c005-c009, the new active-household recording, and any new-speaker sessions"
+}
