@@ -214,6 +214,7 @@ class Session:
                 # M6 endpointing (--endpoint): the VAD (default) or Vosk's own utterance endpoint -> END, once at
                 # least --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
                 blk = self.asr_fe(payload)
+                a.setdefault("asr_pcm", bytearray()).extend(blk)
                 ended_by = None
                 if blk and self.rec.AcceptWaveform(blk):
                     seg = json.loads(self.rec.Result())
@@ -276,11 +277,17 @@ class Session:
         # plain act0001.wav names overwrote earlier activations (session 20260927_192112, 19:30-19:52 files lost).
         stem = f"{self.conn_stamp}_act{a['activation']:04d}"
         a["file_stem"] = stem
-        with wave.open(str(self.out / f"{stem}.wav"), "wb") as w:
-            w.setnchannels(1)
-            w.setsampwidth(2)
-            w.setframerate(16000)
-            w.writeframes(pcm)
+        asr_pcm = bytes(a.pop("asr_pcm", b""))
+        # <stem>.wav is the raw device stream (bit-exact, integrity checks); <stem>_asr.wav is what the ASR heard
+        # (high-pass + keyword-referenced gain) — audible for playback, since raw speech sits at about -30..-40 dBFS.
+        for name, data in ((f"{stem}.wav", pcm), (f"{stem}_asr.wav", asr_pcm)):
+            if not data:
+                continue
+            with wave.open(str(self.out / name), "wb") as w:
+                w.setnchannels(1)
+                w.setsampwidth(2)
+                w.setframerate(16000)
+                w.writeframes(data)
         (self.out / f"{stem}.json").write_text(json.dumps(a, indent=2), encoding="utf-8")
         new = not (self.out / "activations.csv").exists()
         with open(self.out / "activations.csv", "a", newline="", encoding="utf-8") as f:
