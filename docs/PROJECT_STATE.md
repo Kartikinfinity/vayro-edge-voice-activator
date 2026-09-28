@@ -123,8 +123,14 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 - **Demo IP risk** (E-41): server address is a build-time constant.
 - No logic analyser (I-1 NOT RUN; software instruments I-2/I-3 used).
 
-## 10. Next task
+## 10. Next task (as of 28 Sep 23:17)
 
-1. Big-model ASR: replay `20260928_192727_m6_cmd_S01` streams, then restart the server with it and run a fresh live command test (new prompts, each said once).
-2. After the household capture ends: v2b vs v3 on it; EXP-1 streaming peak (product build + synthetic triggers); ≥10 min EXP-2.
-3. Final firmware, SBOM, evidence pack; 29 Sep: PPT + demo video.
+State: capture firmware (v2b) flashed; ASR server running (Vosk en-in-0.5, VAD endpoint) → `evidence/server/20260928_231705`.
+Done tonight: EXP-1 streaming S4 249 615 B after DEC-24 (E-53, passes both 256 k readings); EXP-2 12 min C3 4.82 %,
+core 1 max 9.04 % (E-56); v4 rule checks (a)(b)(c) pass (E-55).
+
+1. **29 Sep morning — rule (d):** user runs `host/capture.py --script-file host/scripts/m6_commands_v3.txt` (fresh S01 session,
+   each prompt once) → `model/eval/prompt_hits.py --run <run> --models v2b:0.8,v4:0.7 --prefix v3_` → ship v4 iff hits ≥ v2b.
+2. Final firmware with the chosen model (`tools/gen_model_source.py`): product build (DEC-24) + demo/capture build; if v4,
+   short EXP-1/EXP-2 confirmation runs (same architecture → same arena).
+3. Demo video (user), PPT, evidence pack (SBOM done: `docs/SBOM.md`).
