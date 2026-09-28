@@ -32,6 +32,7 @@ ap.add_argument("--n", type=int, default=3)
 ap.add_argument("--exclude", nargs="*", default=[], help="session:start_s:end_s")
 ap.add_argument("--prompts", default="", help="host/prompter.py JSON log of the M6 v2 prompts")
 ap.add_argument("--prompt-anchor", default="", help="session:audio_s:wall_iso of one known instant")
+ap.add_argument("--out", default="household_compare_20260928.json", help="file name under model/artifacts/")
 args = ap.parse_args()
 run = pathlib.Path(args.run)
 
@@ -104,7 +105,7 @@ if args.prompts and args.prompt_anchor:
     report["m6_v2_prompts"] = rows
     report["m6_v2_hits"] = {name: sum(r[name]["hit"] for r in rows) for name, _ in models}
 
-out = ROOT / "model" / "artifacts" / "household_compare_20260928.json"
+out = ROOT / "model" / "artifacts" / args.out
 out.write_text(json.dumps(report, indent=2), encoding="utf-8")
 print(json.dumps({k: report[k] for k in ("sessions", "models")}, indent=1))
 if "m6_v2_prompts" in report:

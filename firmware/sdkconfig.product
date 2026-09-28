@@ -14,7 +14,7 @@ CONFIG_PS_READER_STACK=3584
 # §B4 Wi-Fi buffer trims (IDF defaults: static RX 10, dynamic RX 32, dynamic TX 32).
 CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=4
 CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=16
-CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=16
+# (was 16; DEC-24 sets 8 below)
 # §B4 lwIP trims.
 CONFIG_LWIP_TCP_SND_BUF_DEFAULT=4096
 CONFIG_LWIP_TCP_WND_DEFAULT=4096
@@ -25,3 +25,13 @@ CONFIG_LWIP_MAX_SOCKETS=4
 CONFIG_FREERTOS_PLACE_FUNCTIONS_INTO_FLASH=y
 CONFIG_RINGBUF_PLACE_FUNCTIONS_INTO_FLASH=y
 CONFIG_HEAP_PLACE_FUNCTION_INTO_FLASH=y
+
+# DEC-24 (28 Sep, EXP-1 streaming peak S4 = 259 255 B: passes 256 KiB by 2.9 KB, fails 256 kB by 3.3 KB).
+# Product-only trims with no functional change: debug heap poisoning off; no AMPDU aggregation (32 kB/s uplink does not
+# need it; each BA session holds extra buffers); at most 8 queued Wi-Fi TX buffers; IPv6 off (IPv4 LAN only).
+CONFIG_HEAP_POISONING_DISABLED=y
+# CONFIG_HEAP_POISONING_LIGHT is not set
+# CONFIG_ESP_WIFI_AMPDU_TX_ENABLED is not set
+# CONFIG_ESP_WIFI_AMPDU_RX_ENABLED is not set
+CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=8
+# CONFIG_LWIP_IPV6 is not set
