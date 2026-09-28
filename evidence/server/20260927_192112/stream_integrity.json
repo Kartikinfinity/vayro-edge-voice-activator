@@ -1,0 +1,195 @@
+{
+  "capture": "20260927_195253_kw_S01_s3",
+  "streams": 24,
+  "bit_exact": 23,
+  "results": [
+    {
+      "file": "act0001.wav",
+      "located": true,
+      "offset_s": 15.576,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0002.wav",
+      "located": true,
+      "offset_s": 21.216,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0003.wav",
+      "located": true,
+      "offset_s": 25.896,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0004.wav",
+      "located": true,
+      "offset_s": 29.436,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0005.wav",
+      "located": true,
+      "offset_s": 35.616,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0006.wav",
+      "located": true,
+      "offset_s": 38.856,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0007.wav",
+      "located": true,
+      "offset_s": 48.816,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0008.wav",
+      "located": true,
+      "offset_s": 52.536,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0009.wav",
+      "located": true,
+      "offset_s": 61.956,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0010.wav",
+      "located": true,
+      "offset_s": 65.736,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0011.wav",
+      "located": true,
+      "offset_s": 68.796,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0012.wav",
+      "located": true,
+      "offset_s": 72.876,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0013.wav",
+      "located": true,
+      "offset_s": 77.496,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0014.wav",
+      "located": true,
+      "offset_s": 80.736,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0015.wav",
+      "located": true,
+      "offset_s": 85.896,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0016.wav",
+      "located": true,
+      "offset_s": 89.976,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0017.wav",
+      "located": true,
+      "offset_s": 95.856,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0018.wav",
+      "located": true,
+      "offset_s": 102.396,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0019.wav",
+      "located": true,
+      "offset_s": 109.596,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0020.wav",
+      "located": true,
+      "offset_s": 112.716,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0021.wav",
+      "located": true,
+      "offset_s": 116.496,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0022.wav",
+      "located": true,
+      "offset_s": 163.056,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0023.wav",
+      "located": true,
+      "offset_s": 171.636,
+      "samples": 58240,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "act0024.wav",
+      "located": false
+    }
+  ]
+}

@@ -38,6 +38,40 @@ def now_us():
 
 
 ASR_MODEL = None  # vosk.Model, loaded once when --asr is given (M6)
+ASR_GRAMMAR = None  # optional JSON phrase list (--grammar)
+
+
+def new_recognizer():
+    from vosk import KaldiRecognizer
+    rec = KaldiRecognizer(ASR_MODEL, 16000, ASR_GRAMMAR) if ASR_GRAMMAR else KaldiRecognizer(ASR_MODEL, 16000)
+    rec.SetWords(True)
+    return rec
+
+
+class AsrFrontEnd:
+    """ASR-side conditioning of the device stream (M6 finding: raw device audio at about -40 dBFS speech with 60-70 Hz
+    fan rumble at about -30 dBFS decoded to nothing; a steep 150 Hz high-pass + gain restored a LibriSpeech control
+    at device level). The KWS path on the device is unaffected — this runs on the server only."""
+
+    def __init__(self):
+        import numpy as np
+        from scipy import signal
+        self.np, self.signal = np, signal
+        self.sos = signal.butter(8, 150, btype="high", fs=16000, output="sos")
+        self.zi = signal.sosfilt_zi(self.sos) * 0.0
+        self.gain = 8.0  # +18 dB start; adapted towards speech at about -20 dBFS
+        self.target = 32768 * 10 ** (-20 / 20) / np.sqrt(2)
+
+    def __call__(self, pcm_bytes):
+        np = self.np
+        x = np.frombuffer(pcm_bytes, dtype=np.int16).astype(np.float64)
+        y, self.zi = self.signal.sosfilt(self.sos, x, zi=self.zi)
+        rms = np.sqrt(np.mean(y ** 2))
+        if rms * self.gain > self.target * 0.5:  # speech-like block: adapt gain (fast attack, slow release)
+            want = self.target / max(rms, 1.0)
+            self.gain = min(self.gain, want) if want < self.gain else self.gain * 1.02
+        self.gain = float(np.clip(self.gain, 1.0, 40.0))
+        return np.clip(np.round(y * self.gain), -32768, 32767).astype(np.int16).tobytes()
 
 
 class Session:
@@ -46,6 +80,10 @@ class Session:
         self.offset_us, self.rtt_us, self.pings = None, None, 0
         self.act = None
         self.rec = None
+        # Pre-created so that START handling never blocks the receive loop (creating a recognizer took ~190 ms and
+        # inflated L1_audio0 in run 20260928_175052).
+        self.next_rec = new_recognizer() if ASR_MODEL is not None else None
+        self.asr_fe = None
         self.tx_lock = threading.Lock()
         self.conn_stamp = dt.datetime.now().strftime("c%H%M%S")
 
@@ -68,9 +106,8 @@ class Session:
                         "pcm": bytearray(), "packets": 0, "seq_gaps": 0, "last_seq": 0, "end_sent": False,
                         "overrun": False, "wall_time": dt.datetime.now().isoformat(timespec="milliseconds")}
             if ASR_MODEL is not None:
-                from vosk import KaldiRecognizer
-                self.rec = KaldiRecognizer(ASR_MODEL, 16000)
-                self.rec.SetWords(True)
+                self.rec, self.next_rec = self.next_rec, None
+                self.asr_fe = AsrFrontEnd()
                 self.act["asr_endpoint_at_s"] = None
         elif flags == F_CONT and self.act:
             a = self.act
@@ -86,7 +123,7 @@ class Session:
             if self.rec is not None:
                 # M6 endpointing: Vosk reports an utterance endpoint (trailing silence) -> END, once at least
                 # --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
-                if self.rec.AcceptWaveform(payload):
+                if self.rec.AcceptWaveform(self.asr_fe(payload)):
                     seg = json.loads(self.rec.Result())
                     a.setdefault("asr_segments", []).append(seg)
                     if after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
@@ -121,7 +158,10 @@ class Session:
             a["asr_after_trigger"] = " ".join(w["word"] for w in words if w["start"] >= pre - 0.15)
             a["asr_words"] = words
             a["asr_final_latency_ms"] = round((now_us() - t0) / 1000, 2)
+            a["asr_conditioning"] = "8th-order 150 Hz high-pass + AGC to about -20 dBFS (server side)"
+            a["asr_grammar"] = bool(ASR_GRAMMAR)
             self.rec = None
+            self.next_rec = new_recognizer()  # ready before the next START
         pcm = bytes(a.pop("pcm"))
         a["audio_seconds"] = round(len(pcm) / 2 / 16000, 3)
         if a["offset_us"] is not None:
@@ -192,9 +232,12 @@ def main():
     ap.add_argument("--asr", default="", help="Vosk model directory: enables M6 ASR + ASR endpointing")
     ap.add_argument("--min-after-s", type=float, default=0.5, help="with --asr: minimum post-trigger audio before END")
     ap.add_argument("--stream-s-max", type=float, default=6.0, help="with --asr: hard cap after the trigger")
+    ap.add_argument("--grammar", default="", help="with --asr: JSON phrase list restricting recognition (e.g. server/commands.json)")
     args = ap.parse_args()
     if args.asr:
-        global ASR_MODEL
+        global ASR_MODEL, ASR_GRAMMAR
+        if args.grammar:
+            ASR_GRAMMAR = pathlib.Path(args.grammar).read_text(encoding="utf-8")
         from vosk import Model, SetLogLevel
         SetLogLevel(-1)
         t0 = time.time()

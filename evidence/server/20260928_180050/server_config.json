@@ -1,0 +1,8 @@
+{
+  "port": 5005,
+  "stream_s": 3.0,
+  "asr": "D:\\ps26172_ext\\vosk\\vosk-model-small-en-in-0.4",
+  "min_after_s": 0.8,
+  "stream_s_max": 6.0,
+  "grammar": ""
+}
