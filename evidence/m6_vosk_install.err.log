@@ -1,0 +1,29 @@
+Invoke-WebRequest : The remote name could not be resolved: 'alphacephei.com'
+At C:\Users\user\AppData\Local\Temp\claude\D--sih-final\cf60499b-96e6-4067-8458-d692d0d6318f\scratchpad\vosk_install.p
+s1:4 char:1
++ Invoke-WebRequest -UseBasicParsing -Uri "https://alphacephei.com/vosk ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebExc 
+   eption
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+ 
+Resolve-Path : Cannot find path 'D:\ps26172_ext\vosk\vosk-model-small-en-in-0.4.zip' because it does not exist.
+At 
+C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psm1:110 
+char:36
++                 $pathsToProcess += Resolve-Path $Path | Foreach-Objec ...
++                                    ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (D:\ps26172_ext\...l-en-in-0.4.zip:String) [Resolve-Path], ItemNotFoundE 
+   xception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ResolvePathCommand
+ 
+Expand-Archive : The path 'D:\ps26172_ext\vosk\vosk-model-small-en-in-0.4.zip' either does not exist or is not a valid 
+file system path.
+At C:\Users\user\AppData\Local\Temp\claude\D--sih-final\cf60499b-96e6-4067-8458-d692d0d6318f\scratchpad\vosk_install.p
+s1:6 char:1
++ Expand-Archive -Force "D:\ps26172_ext\vosk\vosk-model-small-en-in-0.4 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (D:\ps26172_ext\...l-en-in-0.4.zip:String) [Expand-Archive], InvalidOpe 
+   rationException
+    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Expand-Archive
+ 

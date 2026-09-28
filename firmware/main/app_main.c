@@ -57,7 +57,11 @@ static const ps_fe_params_t s_fe_params = {
 #define FS        CONFIG_PS_SAMPLE_RATE_HZ
 #define HOP       (FS / 100)  /* 10 ms hop = 160 samples @ 16 kHz (§7.2) */
 #define DESC_NUM  4           /* §7.1: 4 x 160-frame DMA descriptors */
+#if CONFIG_PS_CAPTURE_STREAM
 #define POOL_N    64          /* audio + feature frame per 10 ms hop: 320 ms of slack */
+#else
+#define POOL_N    1           /* product build (EXP-1): no binary capture frames, no link TX task */
+#endif
 #define AUDIO_HDR 8           /* u32 first_sample, u8 bytes_per_sample, u8 slot, u16 n */
 #define FS24      8388608.0   /* 2^23 */
 #define SQRT2     1.4142135623730951
@@ -249,8 +253,7 @@ static void enqueue_features(uint32_t frame_idx, uint32_t end_sample, const uint
  * and triggers can be compared one-to-one with the host evaluation. */
 #define KWS_WIN 100
 #define LINK_TYPE_POSTERIOR 4 /* u32 frame, i8 raw model output, u8 trigger */
-static int8_t s_fring[KWS_WIN][PS_FE_MEL_BANDS];
-static int8_t s_win[KWS_WIN * PS_FE_MEL_BANDS];
+static int8_t s_fring[KWS_WIN][PS_FE_MEL_BANDS]; /* rows go straight into the model input (no window copy) */
 static kws_info_t s_kws;
 static volatile uint32_t s_inf_count;
 static volatile uint32_t s_inf_cyc_mean;
@@ -291,11 +294,11 @@ static void kws_on_frame(uint32_t f, const uint16_t *feat)
         return;
     }
     for (int i = 0; i < KWS_WIN; i++) {
-        memcpy(s_win + i * PS_FE_MEL_BANDS, s_fring[(f - (KWS_WIN - 1) + i) % KWS_WIN], PS_FE_MEL_BANDS);
+        kws_set_row(i, s_fring[(f - (KWS_WIN - 1) + i) % KWS_WIN]);
     }
     int8_t raw;
     uint32_t cyc;
-    const float p = kws_infer(s_win, &raw, &cyc);
+    const float p = kws_invoke(&raw, &cyc);
     ring_p[n_inf % CONFIG_PS_KWS_AVG_N] = p;
     n_inf++;
     float avg = 0;
@@ -320,7 +323,9 @@ static void kws_on_frame(uint32_t f, const uint16_t *feat)
         link_text("@KW frame=%" PRIu32 " t_ms=%" PRIu32 " p=%.3f avg=%.3f raw=%d streamed=%d\n", f,
                   (uint32_t)((PS_FE_WINDOW_MS) + f * PS_FE_HOP_MS), (double)p, (double)avg, raw, streamed);
     }
+#if CONFIG_PS_CAPTURE_STREAM
     enqueue_posterior(f, raw, trig);
+#endif
     cyc_sum += cyc;
     cyc_max = cyc > cyc_max ? cyc : cyc_max;
     if (n_inf % 50 == 0) {
@@ -359,6 +364,9 @@ static void reader_task(void *arg)
             s_short_reads++;
             continue;
         }
+        /* I-1 (MLPerf-Tiny style duty cycle, §4.9): high from here to the end of this hop's work
+         * (convert + ring + front end + inference + decision [+ capture framing in capture builds]). */
+        gpio_set_level(CONFIG_PS_INST_ACTIVE_GPIO, 1);
 
         /* Front end on the int16 samples the model will see (word >> 16, DEC-09). */
         for (int i = 0; i < HOP; i++) {
@@ -373,7 +381,12 @@ static void reader_task(void *arg)
             const int produced = ps_fe_process(i16 + off, HOP - off, &used, feat);
             off += used;
             if (produced) {
-                enqueue_features(fe_frames++, idx + (uint32_t)off, feat);
+                const uint32_t fi = fe_frames++;
+#if CONFIG_PS_CAPTURE_STREAM
+                enqueue_features(fi, idx + (uint32_t)off, feat);
+#else
+                (void)fi;
+#endif
                 new_frame = 1;
             }
         }
@@ -412,6 +425,7 @@ static void reader_task(void *arg)
             pk = 0;
         }
 
+#if CONFIG_PS_CAPTURE_STREAM
         uint8_t k;
         if (xQueueReceive(s_free_q, &k, 0) != pdTRUE) {
             s_pool_drops++;
@@ -438,9 +452,57 @@ static void reader_task(void *arg)
         }
         s_pool[k].len = (uint16_t)link_build_frame(s_pool[k].buf, LINK_TYPE_AUDIO, pl, AUDIO_HDR + HOP * 3);
         xQueueSend(s_tx_q, &k, 0);
+#endif
         idx += HOP;
         s_samples = idx;
+        gpio_set_level(CONFIG_PS_INST_ACTIVE_GPIO, 0);
     }
+}
+
+/* I-3 (§4.9): FreeRTOS run-time stats -> per-core busy % (100 - idle share) and per-task shares over each
+ * report interval. Scopes: C1 ~ i2s_reader share of core 1; C3 = mean busy of both cores. */
+static void cpu_report(void)
+{
+    static TaskStatus_t st[32];
+    static uint32_t prev_rt[32];
+    static char prev_name[32][configMAX_TASK_NAME_LEN];
+    static uint32_t prev_total;
+    uint32_t total = 0;
+    const UBaseType_t n = uxTaskGetSystemState(st, 32, &total);
+    const uint32_t dt = total - prev_total;
+    if (prev_total && dt) {
+        uint32_t idle[2] = {0, 0}, reader = 0, stream = 0, net = 0, wifi = 0, tcpip = 0;
+        for (UBaseType_t i = 0; i < n; i++) {
+            uint32_t prev = 0;
+            for (int j = 0; j < 32; j++) {
+                if (strncmp(prev_name[j], st[i].pcTaskName, configMAX_TASK_NAME_LEN) == 0) {
+                    prev = prev_rt[j];
+                    break;
+                }
+            }
+            const uint32_t d = st[i].ulRunTimeCounter - prev;
+            if (strcmp(st[i].pcTaskName, "IDLE0") == 0) idle[0] = d;
+            else if (strcmp(st[i].pcTaskName, "IDLE1") == 0) idle[1] = d;
+            else if (strcmp(st[i].pcTaskName, "i2s_reader") == 0) reader = d;
+            else if (strcmp(st[i].pcTaskName, "streamer") == 0) stream = d;
+            else if (strcmp(st[i].pcTaskName, "netlink") == 0) net = d;
+            else if (strcmp(st[i].pcTaskName, "wifi") == 0) wifi = d;
+            else if (strcmp(st[i].pcTaskName, "tcpip_thread") == 0) tcpip = d;
+        }
+        const float per = (float)dt; /* run-time counter ticks per core over the interval */
+        link_text("@CPU interval_ms=%" PRIu32 " core0_busy=%.2f core1_busy=%.2f reader=%.2f streamer=%.2f netlink=%.2f "
+                  "wifi=%.2f tcpip=%.2f\n",
+                  dt / 1000, 100.0 - 100.0 * idle[0] / per, 100.0 - 100.0 * idle[1] / per, 100.0 * reader / per,
+                  100.0 * stream / per, 100.0 * net / per, 100.0 * wifi / per, 100.0 * tcpip / per);
+    }
+    for (UBaseType_t i = 0; i < n && i < 32; i++) {
+        strncpy(prev_name[i], st[i].pcTaskName, configMAX_TASK_NAME_LEN);
+        prev_rt[i] = st[i].ulRunTimeCounter;
+    }
+    for (UBaseType_t i = n; i < 32; i++) {
+        prev_name[i][0] = 0;
+    }
+    prev_total = total;
 }
 
 static void tx_task(void *arg)
@@ -526,6 +588,9 @@ void app_main(void)
     gpio_reset_pin(CONFIG_PS_INST_DETECT_GPIO);
     gpio_set_direction(CONFIG_PS_INST_DETECT_GPIO, GPIO_MODE_OUTPUT);
     gpio_set_level(CONFIG_PS_INST_DETECT_GPIO, 0);
+    gpio_reset_pin(CONFIG_PS_INST_ACTIVE_GPIO);
+    gpio_set_direction(CONFIG_PS_INST_ACTIVE_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_level(CONFIG_PS_INST_ACTIVE_GPIO, 0);
     const esp_err_t kerr = kws_init(&s_kws);
     link_text("@KWS init=%s run=%s model_sha256=%.16s model_bytes=%u arena_bytes=%u arena_used=%u win=%d bands=%d "
               "stride=%d avg_n=%d thr_pct=%d refractory_ms=%d detect_gpio=%d\n",
@@ -555,13 +620,31 @@ void app_main(void)
     for (uint8_t k = 0; k < POOL_N; k++) {
         xQueueSend(s_free_q, &k, 0);
     }
+#if CONFIG_PS_CAPTURE_STREAM
     xTaskCreatePinnedToCore(tx_task, "link_tx", 4096, NULL, 5, &s_tx, 0);
-    xTaskCreatePinnedToCore(reader_task, "i2s_reader", 4096, (void *)(uintptr_t)chosen, 20, &s_reader, 1);
+#endif
+    xTaskCreatePinnedToCore(reader_task, "i2s_reader", CONFIG_PS_READER_STACK, (void *)(uintptr_t)chosen, 20,
+                            &s_reader, 1);
     vTaskDelay(pdMS_TO_TICKS(200));
     inst_mem_report("streaming");
 
+    uint32_t tick = 0;
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(1000));
+        if (++tick % 10 == 0) {
+            cpu_report();
+        }
+#if CONFIG_PS_NET_ENABLE
+        /* Test hook (EXP-1/EXP-7): host sends 'T' -> stream exactly as on a detection, marked synthetic, so
+         * peak memory and transport latency can be measured without speech. Never counted as a detection. */
+        for (int c = link_poll_byte(); c >= 0; c = link_poll_byte()) {
+            if (c == 'T') {
+                const ns_trigger_t nt = {.kw_frame = 0xFFFFFFFFu, .trig_sample = ring_w(),
+                                         .t_detect_us = esp_timer_get_time(), .raw = 0};
+                link_text("@KW synthetic=1 streamed=%d\n", ns_trigger(&nt) ? 1 : 0);
+            }
+        }
+#endif
         /* Two lines: one line exceeded LINK_TEXT_MAX (240) and silently lost its tail (run 20260927_145316). */
         const int64_t t_ms = esp_timer_get_time() / 1000;
         link_text("@STATS t_ms=%" PRId64 " samples=%" PRIu32 " pool_drops=%" PRIu32 " link_drops=%" PRIu32
@@ -576,7 +659,8 @@ void app_main(void)
                   " inf_count=%" PRIu32 " inf_cyc_mean=%" PRIu32 " inf_cyc_max=%" PRIu32 " kw_triggers=%" PRIu32
 #endif
                   "\n",
-                  t_ms, (unsigned)uxTaskGetStackHighWaterMark(s_reader), (unsigned)uxTaskGetStackHighWaterMark(s_tx),
+                  t_ms, (unsigned)uxTaskGetStackHighWaterMark(s_reader),
+                  s_tx ? (unsigned)uxTaskGetStackHighWaterMark(s_tx) : 0u,
                   (unsigned)uxTaskGetStackHighWaterMark(NULL), s_fe_frames, s_fe_cyc_mean, s_fe_cyc_max
 #if CONFIG_PS_KWS_ENABLE
                   , s_inf_count, s_inf_cyc_mean, s_inf_cyc_max, s_kw_triggers

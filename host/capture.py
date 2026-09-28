@@ -203,6 +203,9 @@ def main():
     ap.add_argument("--chunk-s", type=float, default=0, help="rotate WAV files every N seconds (long recordings)")
     ap.add_argument("--keep-awake", action="store_true",
                     help="Windows: hold ES_SYSTEM_REQUIRED while recording (released on exit; no settings changed)")
+    ap.add_argument("--wall-s", type=float, default=0,
+                    help="stop after this many WALL seconds regardless of audio (product builds stream no audio)")
+    ap.add_argument("--send", default="", help='timed host->device bytes, e.g. "T@20,T@35" (T = synthetic trigger)')
     ap.add_argument("--fs", type=int, default=16000)
     ap.add_argument("--out-root", default=str(ROOT / "evidence" / "runs"))
     args = ap.parse_args()
@@ -222,8 +225,11 @@ def main():
         t += dur
     if script:
         args.seconds = t + 0.5
+    if args.wall_s and not args.seconds:
+        args.seconds = 1e9  # text-only run: bounded by --wall-s
     if not args.seconds:
-        sys.exit("Give --seconds or --script")
+        sys.exit("Give --seconds, --wall-s or --script")
+    sends = sorted((float(at), ch.encode()) for ch, _, at in (s.strip().partition("@") for s in args.send.split(",") if s.strip()))
 
     if sys.platform == "win32":
         import ctypes
@@ -381,6 +387,12 @@ def main():
                             print("\n" + text.strip(), end="")
 
             now = time.time()
+            while sends and got_frame and now - t_start >= sends[0][0]:
+                at, ch = sends.pop(0)
+                ser.write(ch)
+                print(f"\n  -> sent {ch.decode()!r} at host t={now - t_start:.1f} s", flush=True)
+            if args.wall_s and now - t_start >= args.wall_s:
+                break
             # Stall watchdog: <80 % of real-time audio over 10 s (after the first audio) -> reset the board
             # into a new session. Such gaps stay in the WAV timeline and in the summary.
             if streaming and now - wd_t >= 10.0:
@@ -417,7 +429,7 @@ def main():
                       f" link_drops={last_stats.get('link_drops')} crc_err={crc_errors}   ", end="", flush=True)
             if sum(s.samples for s in sessions) >= target:
                 break
-            if t_first_audio is None and now - t_start > 20:
+            if t_first_audio is None and not args.wall_s and now - t_start > 20:
                 print("\nNo audio frames within 20 s. Is the M1 firmware flashed and the port correct?")
                 break
     except KeyboardInterrupt:

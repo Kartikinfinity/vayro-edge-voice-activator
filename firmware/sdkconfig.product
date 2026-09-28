@@ -1,0 +1,27 @@
+# EXP-1 PRODUCT configuration (architecture §3.6/§B4). Applied on top of the normal defaults:
+#   powershell -File tools\idf.ps1 -Console usbjtag -ExtraDefaults D:\ps26172\firmware\sdkconfig.product -BuildTag product build
+# Data-collection streams off: only text telemetry on USB; capture TX pool 64 -> 4 slots (-30 KB .bss).
+# CONFIG_PS_CAPTURE_STREAM is not set
+CONFIG_PS_LINK_TX_RING=2048
+# Tensor arena sized to the measured need (13 404 B used of 40 960; E-24) + ~22 % margin.
+CONFIG_PS_KWS_ARENA_BYTES=16384
+# §8.3 contingency row "window 5": ring 0.75 s (24 000 B), pre-roll 571 ms. Trigger met by measurement:
+# detection lag keyword-end -> trigger max 144 ms (E-37) < 221 ms design value of that row. (-8 000 B)
+CONFIG_PS_RING_MS=750
+CONFIG_PS_PREROLL_MS=571
+# i2s_reader stack: measured high-water mark 1 356 B free of 4 096 with KWS (run 20260928_074250).
+CONFIG_PS_READER_STACK=3584
+# §B4 Wi-Fi buffer trims (IDF defaults: static RX 10, dynamic RX 32, dynamic TX 32).
+CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=4
+CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=16
+CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM=16
+# §B4 lwIP trims.
+CONFIG_LWIP_TCP_SND_BUF_DEFAULT=4096
+CONFIG_LWIP_TCP_WND_DEFAULT=4096
+CONFIG_LWIP_MAX_SOCKETS=4
+# C-10: move code out of internal SRAM (IRAM counts against the strict S4 reading).
+# CONFIG_ESP_WIFI_IRAM_OPT is not set
+# CONFIG_ESP_WIFI_RX_IRAM_OPT is not set
+CONFIG_FREERTOS_PLACE_FUNCTIONS_INTO_FLASH=y
+CONFIG_RINGBUF_PLACE_FUNCTIONS_INTO_FLASH=y
+CONFIG_HEAP_PLACE_FUNCTION_INTO_FLASH=y

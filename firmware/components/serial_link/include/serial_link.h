@@ -37,3 +37,6 @@ esp_err_t link_write_frame(const uint8_t *frame, size_t n);
 void link_text(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 uint32_t link_dropped_frames(void);
+
+/* Non-blocking: next byte from the host, or -1. Used for test commands (e.g. 'T' = synthetic trigger). */
+int link_poll_byte(void);

@@ -1,0 +1,221 @@
+{
+  "run": "v3",
+  "utc": "2026-09-28T01:31:53+00:00",
+  "tensorflow": "2.21.0",
+  "params": 10665,
+  "macs_per_inference": 212584,
+  "tflite_int8_bytes": 28024,
+  "tflite_sha256": "9819618f6777da1b34bf0801d5b1a3c1e5c2fae2879eee46c1df2481e4c06004",
+  "ops": [
+    "CONV_2D",
+    "DEPTHWISE_CONV_2D",
+    "FULLY_CONNECTED",
+    "LOGISTIC",
+    "RESHAPE"
+  ],
+  "input_quant": [
+    0.007475490216165781,
+    6
+  ],
+  "output_quant": [
+    0.00390625,
+    -128
+  ],
+  "train_windows": 242432,
+  "train_pos": 12315,
+  "val_windows": 45569,
+  "val_pos": 1488,
+  "epochs_run": 17,
+  "train_seconds": 545.8,
+  "val_window_metrics_NOTE": "per-window, not per-utterance; not FA/h \u2014 see eval_stream.py for stream metrics",
+  "val_float_vs_int8_max_abs_prob_diff": 0.14780639111995697,
+  "val_int8_frr_at_window_fpr": {
+    "0.01": [
+      0.043682795698924734,
+      0.234375
+    ],
+    "0.001": [
+      0.3333333333333333,
+      0.9840624928474426
+    ]
+  },
+  "data_meta": {
+    "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+    "seed": 26172,
+    "args": {
+      "out": "/home/kartik/ps26172_data/ds_v3",
+      "seed": 26172,
+      "pos_reps": 2,
+      "libri_stride": 1,
+      "ambient_streams": 400,
+      "real_copies": 6,
+      "long_negatives": true,
+      "extra_beds": "bed_train_night",
+      "tts_root": "/home/kartik/ps26172_data/tts_v2"
+    },
+    "win_frames": 100,
+    "sources_json_sha256": "fa485672715d70639949e303bcaa695002302c3d9bf23ae1e1632475bb533875",
+    "src_codes": {
+      "tts_pos": 0,
+      "tts_prefix": 1,
+      "tts_neg": 2,
+      "libri": 3,
+      "ambient": 4,
+      "real_pos": 5,
+      "real_neg": 6,
+      "hard_neg": 7,
+      "night_neg": 8
+    },
+    "splits": {
+      "train": {
+        "windows": 242432,
+        "positives": 12315,
+        "bed_seconds": 21694.1,
+        "by_source": {
+          "tts_pos": 11832,
+          "tts_prefix": 7888,
+          "tts_neg": 11056,
+          "libri": 121608,
+          "ambient": 34000,
+          "real_pos": 483,
+          "real_neg": 16758,
+          "hard_neg": 8832,
+          "night_neg": 29975
+        }
+      },
+      "val": {
+        "windows": 45569,
+        "positives": 1488,
+        "bed_seconds": 57.0,
+        "by_source": {
+          "tts_pos": 1488,
+          "tts_prefix": 992,
+          "tts_neg": 1472,
+          "libri": 33117,
+          "ambient": 8500,
+          "real_pos": 0,
+          "real_neg": 0,
+          "hard_neg": 0,
+          "night_neg": 0
+        }
+      }
+    }
+  },
+  "history": {
+    "auc": [
+      0.97599,
+      0.99412,
+      0.99577,
+      0.99674,
+      0.99739,
+      0.99771,
+      0.99794,
+      0.99832,
+      0.99812,
+      0.9985,
+      0.99854,
+      0.99856,
+      0.99885,
+      0.99877,
+      0.99891,
+      0.99896,
+      0.99913
+    ],
+    "loss": [
+      0.16917,
+      0.07962,
+      0.06371,
+      0.0533,
+      0.04805,
+      0.04418,
+      0.04039,
+      0.03686,
+      0.03584,
+      0.03272,
+      0.03135,
+      0.02999,
+      0.0275,
+      0.027,
+      0.02674,
+      0.02528,
+      0.02404
+    ],
+    "pr_auc": [
+      0.76104,
+      0.89956,
+      0.92541,
+      0.94254,
+      0.94935,
+      0.95563,
+      0.96099,
+      0.96361,
+      0.96404,
+      0.96892,
+      0.97026,
+      0.97276,
+      0.97473,
+      0.97476,
+      0.97573,
+      0.97662,
+      0.97774
+    ],
+    "val_auc": [
+      0.99259,
+      0.99179,
+      0.98798,
+      0.98378,
+      0.99617,
+      0.99564,
+      0.99362,
+      0.98672,
+      0.9943,
+      0.98916,
+      0.99434,
+      0.99073,
+      0.9889,
+      0.99171,
+      0.99513,
+      0.99301,
+      0.98168
+    ],
+    "val_loss": [
+      0.02989,
+      0.03057,
+      0.02828,
+      0.03107,
+      0.03007,
+      0.02667,
+      0.02367,
+      0.02347,
+      0.0242,
+      0.02347,
+      0.02381,
+      0.02468,
+      0.02546,
+      0.02989,
+      0.03096,
+      0.02839,
+      0.02501
+    ],
+    "val_pr_auc": [
+      0.89163,
+      0.8945,
+      0.90089,
+      0.90377,
+      0.92711,
+      0.93106,
+      0.93391,
+      0.93217,
+      0.93705,
+      0.93465,
+      0.93392,
+      0.92822,
+      0.92978,
+      0.92045,
+      0.92852,
+      0.92461,
+      0.9281
+    ]
+  },
+  "export": "static batch=1 (model/train/export.py)"
+}

@@ -28,6 +28,17 @@ menu "PS26172 configuration"
         bool "Invert BCK"
         default n
 
+    config PS_CAPTURE_STREAM
+        bool "Stream audio/features/posteriors over USB (data collection & evaluation builds)"
+        default y
+        help
+            Product builds (EXP-1) turn this off: only text telemetry remains on USB, and the 32 KB
+            capture TX pool shrinks to 4 slots.
+
+    config PS_LINK_TX_RING
+        int "USB link driver TX ring buffer (bytes)"
+        default 16384
+
     config PS_KWS_ENABLE
         bool "Run the keyword model on-device"
         default y
@@ -52,6 +63,10 @@ menu "PS26172 configuration"
         int "Refractory period after a trigger (ms) — X14"
         default 2000
 
+    config PS_INST_ACTIVE_GPIO
+        int "IN-3/I-1 pipeline-active GPIO (high while the always-on pipeline works on a hop, §4.9)"
+        default 16
+
     config PS_INST_DETECT_GPIO
         int "IN-2 detection pulse GPIO (§B5)"
         default 15
@@ -75,6 +90,14 @@ menu "PS26172 configuration"
     config PS_SERVER_PORT
         int "ASR ingest server TCP port"
         default 5005
+
+    config PS_RING_MS
+        int "Unified audio ring length (ms) — §8.3 table (1000 default; 750 with window-5-class smoothing)"
+        default 1000
+
+    config PS_READER_STACK
+        int "i2s_reader task stack (bytes; runs front end + inference)"
+        default 4096
 
     config PS_PREROLL_MS
         int "Stream starts this many ms before the trigger (§8.3: D + lead-in + jitter)"

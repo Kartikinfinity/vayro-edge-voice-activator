@@ -1,0 +1,8 @@
+{
+  "applied_at": "2026-09-28T07:45",
+  "rule_file": "model/artifacts/selection_rule_v3.json",
+  "validation_S01_s2_prompt_score_N3": {"0.50": "20/25, 7/16", "0.60": "20/25, 6/16", "0.70": "19/25, 5/16", "0.80": "15/25, 4/16", "0.90": "15/25, 5/16", "0.95": "15/25, 4/16", "0.98": "13/25, 2/16"},
+  "outcome": "highest threshold with recall >= 20/25 -> v3 @ 0.60",
+  "selected": {"model": "v3", "threshold": 0.60, "N": 3, "stride_frames": 6, "refractory_s": 2.0},
+  "ship_decision": "PENDING per ship_rule (new held-out active-household recording + S01 s3 recall >= 21/25)"
+}

@@ -47,7 +47,7 @@ if ($BuildTag) { $bdir = "$bdir`_$BuildTag" }
 $sdk = "$bdir\sdkconfig"
 if (Test-Path $sdk) {
     $stamp = (Get-Item $sdk).LastWriteTime
-    $newer = $defaults.Split(";") | Where-Object {
+    $newer = @($defaults.Split(";") + "main\Kconfig.projbuild") | Where-Object {
         $p = if ([IO.Path]::IsPathRooted($_)) { $_ } else { "$fw\$_" }
         (Get-Item $p).LastWriteTime -gt $stamp
     }

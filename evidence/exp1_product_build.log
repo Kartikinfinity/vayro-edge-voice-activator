@@ -1,0 +1,124 @@
+﻿forbidden_deps: PASS (D:\ps26172)
+frontend.json sha256=5bd00bc673ecb2b3… -> firmware\components\microfrontend\include\ps_frontend_config.h
+Executing action: all (aliases: build)
+Running ninja in directory D:\ps26172\firmware\build_usbjtag_product
+Executing "ninja all"...
+[1/9] Performing build step for 'bootloader'
+
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag_product\bootloader\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/ps26172/firmware/build_usbjtag_product/bootloader/bootloader.bin"
+
+
+Bootloader binary size 0x5170 bytes. 0x2e90 bytes (36%) free.
+
+
+
+[2/9] No install step for 'bootloader'
+
+[3/9] Completed 'bootloader'
+
+[4/9] Building C object esp-idf/serial_link/CMakeFiles/__idf_serial_link.dir/serial_link.c.obj
+
+[5/9] Linking C static library esp-idf\serial_link\libserial_link.a
+
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+
+[7/9] Linking CXX executable ps26172_fw.elf
+
+[8/9] Generating binary image from built executable
+
+esptool.py v4.12.0
+
+
+Creating esp32s3 image...
+
+
+Merged 2 ELF sections
+
+
+Successfully created esp32s3 image.
+
+
+Generated D:/ps26172/firmware/build_usbjtag_product/ps26172_fw.bin
+
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag_product\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag_product/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag_product/ps26172_fw.bin"
+
+ps26172_fw.bin binary size 0xe1d20 bytes. Smallest app partition is 0x177000 bytes. 0x952e0 bytes (40%) free.
+
+
+Executing action: size
+Running ninja in directory D:\ps26172\firmware\build_usbjtag_product
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag_product\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 partition --type app D:/ps26172/firmware/build_usbjtag_product/partition_table/partition-table.bin D:/ps26172/firmware/build_usbjtag_product/ps26172_fw.bin"
+
+ps26172_fw.bin binary size 0xe1d20 bytes. Smallest app partition is 0x177000 bytes. 0x952e0 bytes (40%) free.
+
+
+[2/4] Performing build step for 'bootloader'
+
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag_product\bootloader\esp-idf\esptool_py && D:\esp\.espressif\python_env\idf5.5_py3.12_env\Scripts\python.exe D:/esp/esp-idf-v5.5.5/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 D:/ps26172/firmware/build_usbjtag_product/bootloader/bootloader.bin"
+
+
+Bootloader binary size 0x5170 bytes. 0x2e90 bytes (36%) free.
+
+
+
+[3/4] No install step for 'bootloader'
+
+[4/4] Completed 'bootloader'
+
+Running ninja in directory D:\ps26172\firmware\build_usbjtag_product
+Executing "ninja size"...
+[0/1] C:\WINDOWS\system32\cmd.exe /C "cd /D D:\ps26172\firmware\build_usbjtag_product && D:\esp\.espressif\tools\cmake\3.30.2\bin\cmake.exe -D IDF_SIZE_TOOL=D:/esp/.espressif/python_env/idf5.5_py3.12_env/Scripts/python.exe;-m;esp_idf_size -D MAP_FILE=D:/ps26172/firmware/build_usbjtag_product/ps26172_fw.map -D OUTPUT_JSON= -P D:/esp/esp-idf-v5.5.5/tools/cmake/run_size_tool.cmake"
+
+                            Memory Type Usage Summary                             
+
+┌─────────────────────┬──────────────┬──────────┬────────────────┬───────────────┐
+
+│ Memory Type/Section │ Used [bytes] │ Used [%] │ Remain [bytes] │ Total [bytes] │
+
+├─────────────────────┼──────────────┼──────────┼────────────────┼───────────────┤
+
+│ Flash Code          │       691676 │          │                │               │
+
+│    .text            │       691676 │          │                │               │
+
+│ Flash Data          │       158964 │          │                │               │
+
+│    .rodata          │       158708 │          │                │               │
+
+│    .appdesc         │          256 │          │                │               │
+
+│ DIRAM               │       153139 │    44.81 │         188621 │        341760 │
+
+│    .bss             │        78968 │    23.11 │                │               │
+
+│    .text            │        54459 │    15.93 │                │               │
+
+│    .data            │        18684 │     5.47 │                │               │
+
+│    .vectors         │         1028 │      0.3 │                │               │
+
+│ RTC SLOW            │           32 │     0.39 │           8160 │          8192 │
+
+│    .force_slow      │           32 │     0.39 │                │               │
+
+│ RTC FAST            │           24 │     0.29 │           8168 │          8192 │
+
+│    .rtc_reserved    │           24 │     0.29 │                │               │
+
+└─────────────────────┴──────────────┴──────────┴────────────────┴───────────────┘
+
+Total image size: 924843 bytes (.bin may be padded larger)
+System.Management.Automation.RemoteException
+Note: The reported total sizes may be smaller than those in the technical reference manual due to reserved memory and application configuration. The total flash size available for the application is not included by default, as it cannot be reliably determined due to the presence of other data like the bootloader, partition table, and application partition size.
+System.Management.Automation.RemoteException
+
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 4MB --flash_freq 80m 0x0 build_usbjtag_product\bootloader\bootloader.bin 0x8000 build_usbjtag_product\partition_table\partition-table.bin 0x10000 build_usbjtag_product\ps26172_fw.bin
+or from the "D:\ps26172\firmware\build_usbjtag_product" directory
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"

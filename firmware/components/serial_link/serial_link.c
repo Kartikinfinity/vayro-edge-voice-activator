@@ -20,7 +20,7 @@
 #error "serial_link needs the console on UART or USB-Serial-JTAG"
 #endif
 
-#define TX_RING_BYTES 16384
+#define TX_RING_BYTES CONFIG_PS_LINK_TX_RING
 
 static const uint8_t SYNC[4] = {0xA5, 0x5A, 0x26, 0x17};
 static SemaphoreHandle_t s_mtx;
@@ -156,6 +156,16 @@ int32_t link_wait_host(uint32_t timeout_ms)
     uart_flush_input(CONFIG_ESP_CONSOLE_UART_NUM);
 #endif
     return (int32_t)pdTICKS_TO_MS(xTaskGetTickCount() - t0);
+}
+
+int link_poll_byte(void)
+{
+    uint8_t c;
+#if CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG
+    return usb_serial_jtag_read_bytes(&c, 1, 0) > 0 ? c : -1;
+#else
+    return uart_read_bytes(CONFIG_ESP_CONSOLE_UART_NUM, &c, 1, 0) > 0 ? c : -1;
+#endif
 }
 
 uint32_t link_dropped_frames(void)

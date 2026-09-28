@@ -37,11 +37,15 @@ def now_us():
     return time.perf_counter_ns() // 1000
 
 
+ASR_MODEL = None  # vosk.Model, loaded once when --asr is given (M6)
+
+
 class Session:
     def __init__(self, conn, out, args):
         self.conn, self.out, self.args = conn, out, args
         self.offset_us, self.rtt_us, self.pings = None, None, 0
         self.act = None
+        self.rec = None
         self.tx_lock = threading.Lock()
         self.conn_stamp = dt.datetime.now().strftime("c%H%M%S")
 
@@ -63,6 +67,11 @@ class Session:
                         "offset_us": self.offset_us, "rtt_us": self.rtt_us, "pings": self.pings,
                         "pcm": bytearray(), "packets": 0, "seq_gaps": 0, "last_seq": 0, "end_sent": False,
                         "overrun": False, "wall_time": dt.datetime.now().isoformat(timespec="milliseconds")}
+            if ASR_MODEL is not None:
+                from vosk import KaldiRecognizer
+                self.rec = KaldiRecognizer(ASR_MODEL, 16000)
+                self.rec.SetWords(True)
+                self.act["asr_endpoint_at_s"] = None
         elif flags == F_CONT and self.act:
             a = self.act
             if a["t_audio0_rx_us"] is None:
@@ -73,7 +82,20 @@ class Session:
             a["pcm"] += payload
             a["packets"] += 1
             after_trigger_s = len(a["pcm"]) / 2 / 16000 - a["preroll_ms"] / 1000
-            if not a["end_sent"] and after_trigger_s >= self.args.stream_s:
+            end_now = False
+            if self.rec is not None:
+                # M6 endpointing: Vosk reports an utterance endpoint (trailing silence) -> END, once at least
+                # --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
+                if self.rec.AcceptWaveform(payload):
+                    seg = json.loads(self.rec.Result())
+                    a.setdefault("asr_segments", []).append(seg)
+                    if after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
+                        a["asr_endpoint_at_s"] = round(after_trigger_s, 3)
+                        end_now = True
+                end_now = end_now or after_trigger_s >= self.args.stream_s_max
+            else:
+                end_now = after_trigger_s >= self.args.stream_s
+            if not a["end_sent"] and end_now:
                 self.send(F_END, struct.pack("<I", a["activation"]))
                 a["end_sent"] = True
                 a["t_end_sent_us"] = now_us()
@@ -89,6 +111,17 @@ class Session:
         a = self.act
         self.act = None
         a.update(extra)
+        if self.rec is not None:
+            t0 = now_us()
+            segs = a.pop("asr_segments", []) + [json.loads(self.rec.FinalResult())]
+            words = [w for s in segs for w in s.get("result", [])]
+            pre = a["preroll_ms"] / 1000
+            a["asr_transcript"] = " ".join(w["word"] for w in words)
+            # Words starting inside the pre-roll carry the keyword; the rest is the "subsequent audio" (AMB-13).
+            a["asr_after_trigger"] = " ".join(w["word"] for w in words if w["start"] >= pre - 0.15)
+            a["asr_words"] = words
+            a["asr_final_latency_ms"] = round((now_us() - t0) / 1000, 2)
+            self.rec = None
         pcm = bytes(a.pop("pcm"))
         a["audio_seconds"] = round(len(pcm) / 2 / 16000, 3)
         if a["offset_us"] is not None:
@@ -112,6 +145,9 @@ class Session:
             if new:
                 wr.writeheader()
             wr.writerow(a)
+        if "asr_transcript" in a:
+            print(f"    ASR: \"{a['asr_transcript']}\"  | after trigger: \"{a['asr_after_trigger']}\"  "
+                  f"(endpoint at {a['asr_endpoint_at_s']} s after trigger)", flush=True)
         print(f"[{a['wall_time']}] activation {a['activation']}: {a['audio_seconds']} s audio, "
               f"L1_start {a.get('L1_start_ms')} ms, L1_audio0 {a.get('L1_audio0_ms')} ms "
               f"(±{a.get('clock_uncertainty_ms_half_rtt')} ms clock), end={a['device_end_reason']}, "
@@ -152,8 +188,18 @@ def serve(conn, addr, out, args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=5005)
-    ap.add_argument("--stream-s", type=float, default=3.0, help="seconds of audio after the trigger before END")
+    ap.add_argument("--stream-s", type=float, default=3.0, help="without --asr: seconds after the trigger before END")
+    ap.add_argument("--asr", default="", help="Vosk model directory: enables M6 ASR + ASR endpointing")
+    ap.add_argument("--min-after-s", type=float, default=0.5, help="with --asr: minimum post-trigger audio before END")
+    ap.add_argument("--stream-s-max", type=float, default=6.0, help="with --asr: hard cap after the trigger")
     args = ap.parse_args()
+    if args.asr:
+        global ASR_MODEL
+        from vosk import Model, SetLogLevel
+        SetLogLevel(-1)
+        t0 = time.time()
+        ASR_MODEL = Model(args.asr)
+        print(f"ASR model loaded from {args.asr} in {time.time() - t0:.1f} s", flush=True)
     out = ROOT / "evidence" / "server" / dt.datetime.now().strftime("%Y%m%d_%H%M%S")
     out.mkdir(parents=True, exist_ok=True)
     (out / "server_config.json").write_text(json.dumps(vars(args), indent=2), encoding="utf-8")

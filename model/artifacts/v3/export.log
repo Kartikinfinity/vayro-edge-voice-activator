@@ -1,0 +1,68 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790559116.340357    1243 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1790559118.772634    1243 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+Saved artifact at '/tmp/tmpvzvm6_9w'. The following endpoints are available:
+
+* Endpoint 'serve'
+  args_0 (POSITIONAL_ONLY): TensorSpec(shape=(1, 100, 1, 40), dtype=tf.float32, name='features')
+Output Type:
+  TensorSpec(shape=(1, 1), dtype=tf.float32, name=None)
+Captures:
+  139107891196944: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822321744: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822332112: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107891197136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822327312: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822327504: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822323856: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822331728: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822327696: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822333072: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822332496: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822332688: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822332880: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822325200: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334032: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822333456: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822333648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822333840: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822331920: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334416: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334608: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822332304: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822335952: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822335376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822335568: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822335760: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822333264: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822336912: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822336336: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822336528: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822337296: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822334224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822337872: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822336720: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822337488: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822335184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822337680: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822337104: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107822336144: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820766800: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820766992: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820766224: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820765648: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820767376: TensorSpec(shape=(), dtype=tf.resource, name=None)
+  139107820767184: TensorSpec(shape=(), dtype=tf.resource, name=None)
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/convert.py:846: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+/home/kartik/.venvs/ps26172/lib/python3.12/site-packages/tensorflow/lite/python/interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+v3: 28024 B, ops ['CONV_2D', 'DEPTHWISE_CONV_2D', 'FULLY_CONNECTED', 'LOGISTIC', 'RESHAPE'], in [0.007475490216165781, 6], out [0.00390625, -128]

@@ -1,11 +1,13 @@
-/* SS-2 · audio_ring — unified 1.0 s int16 ring, one writer (i2s_reader, core 1) and one cross-core
+/* SS-2 · audio_ring — unified int16 ring, one writer (i2s_reader, core 1) and one cross-core
  * reader (streamer, core 0), architecture §8.4. Retention is a property of *not overwriting yet*:
- * the pre-roll is simply w - N samples. Indices are monotonic sample counts (wrap at 2^32). */
+ * the pre-roll is simply w - N samples. Indices are monotonic sample counts (wrap at 2^32).
+ * Length = CONFIG_PS_RING_MS (1000 ms = 32 000 B default; product 750 ms = 24 000 B, §8.3 table). */
 #pragma once
 #include <stddef.h>
 #include <stdint.h>
+#include "sdkconfig.h"
 
-#define RING_SAMPLES 16000 /* 1.0 s @ 16 kHz = 32 000 B (§3.4C) */
+#define RING_SAMPLES (CONFIG_PS_RING_MS * 16)
 
 void ring_init(void);
 void ring_write(const int16_t *x, size_t n);  /* writer only */

@@ -26,6 +26,11 @@ esp_err_t kws_init(kws_info_t *info);
  * Returns the posterior; *raw = model int8 output; *cycles = CPU cycles of Invoke(). */
 float kws_infer(const int8_t *window, int8_t *raw, uint32_t *cycles);
 
+/* Zero-copy variant (EXP-1: saves the separate 4 KB window buffer): write each of the win_frames rows
+ * (front-end int8 features, oldest first) straight into the model input tensor, then invoke. */
+void kws_set_row(int row, const int8_t *features);
+float kws_invoke(int8_t *raw, uint32_t *cycles);
+
 #ifdef __cplusplus
 }
 #endif

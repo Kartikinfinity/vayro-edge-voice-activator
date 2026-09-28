@@ -1,0 +1,73 @@
+Collecting vosk
+  Obtaining dependency information for vosk from https://files.pythonhosted.org/packages/c0/4c/deb0861f7da9696f8a255f1731bb73e9412cca29c4b3888a3fcb2a930a59/vosk-0.3.45-py3-none-win_amd64.whl.metadata
+  Downloading vosk-0.3.45-py3-none-win_amd64.whl.metadata (1.8 kB)
+Collecting cffi>=1.0 (from vosk)
+  Obtaining dependency information for cffi>=1.0 from https://files.pythonhosted.org/packages/d9/79/615cc094e2fb508cade7de88d3b4f6c4ec2bab695c97bce9153dc65aadf5/cffi-2.1.1-cp312-cp312-win_amd64.whl.metadata
+  Downloading cffi-2.1.1-cp312-cp312-win_amd64.whl.metadata (2.6 kB)
+Collecting requests (from vosk)
+  Obtaining dependency information for requests from https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl.metadata
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting srt (from vosk)
+  Downloading srt-3.5.3.tar.gz (28 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting tqdm (from vosk)
+  Obtaining dependency information for tqdm from https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl.metadata
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+     ---------------------------------------- 57.4/57.4 kB 1.5 MB/s eta 0:00:00
+Collecting websockets (from vosk)
+  Obtaining dependency information for websockets from https://files.pythonhosted.org/packages/50/23/493ecfdaf32898e5ea24dc900e33e5e317f9662d5d9ab2d44b2e111b4e1c/websockets-17.1-cp312-cp312-win_amd64.whl.metadata
+  Downloading websockets-17.1-cp312-cp312-win_amd64.whl.metadata (6.5 kB)
+Collecting pycparser (from cffi>=1.0->vosk)
+  Obtaining dependency information for pycparser from https://files.pythonhosted.org/packages/0c/c3/44f3fbbfa403ea2a7c779186dc20772604442dde72947e7d01069cbe98e3/pycparser-3.0-py3-none-any.whl.metadata
+  Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+Collecting charset_normalizer<4,>=2 (from requests->vosk)
+  Obtaining dependency information for charset_normalizer<4,>=2 from https://files.pythonhosted.org/packages/9d/7a/4c6c298171e6b3e745633180ff59350fc0ca0db1ffd28df1e369e0579f71/charset_normalizer-3.5.1-cp312-cp312-win_amd64.whl.metadata
+  Downloading charset_normalizer-3.5.1-cp312-cp312-win_amd64.whl.metadata (46 kB)
+     ---------------------------------------- 46.7/46.7 kB 2.3 MB/s eta 0:00:00
+Collecting idna<4,>=2.5 (from requests->vosk)
+  Obtaining dependency information for idna<4,>=2.5 from https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl.metadata
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting urllib3<3,>=1.26 (from requests->vosk)
+  Obtaining dependency information for urllib3<3,>=1.26 from https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl.metadata
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests->vosk)
+  Obtaining dependency information for certifi>=2023.5.7 from https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl.metadata
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting colorama (from tqdm->vosk)
+  Obtaining dependency information for colorama from https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl.metadata
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Downloading vosk-0.3.45-py3-none-win_amd64.whl (14.0 MB)
+   ---------------------------------------- 14.0/14.0 MB 54.7 MB/s eta 0:00:00
+Downloading cffi-2.1.1-cp312-cp312-win_amd64.whl (185 kB)
+   --------------------------------------- 185.9/185.9 kB 11.7 MB/s eta 0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+   ---------------------------------------- 73.1/73.1 kB 4.2 MB/s eta 0:00:00
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+   ---------------------------------------- 80.2/80.2 kB 4.4 MB/s eta 0:00:00
+Downloading websockets-17.1-cp312-cp312-win_amd64.whl (217 kB)
+   ---------------------------------------- 217.8/217.8 kB ? eta 0:00:00
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+   ---------------------------------------- 137.0/137.0 kB ? eta 0:00:00
+Downloading charset_normalizer-3.5.1-cp312-cp312-win_amd64.whl (200 kB)
+   --------------------------------------- 200.6/200.6 kB 12.7 MB/s eta 0:00:00
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+   ---------------------------------------- 69.6/69.6 kB 4.0 MB/s eta 0:00:00
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+   ---------------------------------------- 135.7/135.7 kB 7.8 MB/s eta 0:00:00
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+   ---------------------------------------- 48.2/48.2 kB 2.5 MB/s eta 0:00:00
+Building wheels for collected packages: srt
+  Building wheel for srt (pyproject.toml): started
+  Building wheel for srt (pyproject.toml): finished with status 'done'
+  Created wheel for srt: filename=srt-3.5.3-py3-none-any.whl size=22639 sha256=d1a4ae2916e3802235a21d19ab22249df8081ddafbdca59aa9cfa05f56b9945d
+  Stored in directory: c:\users\user\appdata\local\pip\cache\wheels\7e\75\5b\e1d5c3756631e4bda806f6cc9640153b39484bb6f7b0b8def3
+Successfully built srt
+Installing collected packages: websockets, urllib3, srt, pycparser, idna, colorama, charset_normalizer, certifi, tqdm, requests, cffi, vosk
+Successfully installed certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.1 colorama-0.4.6 idna-3.20 pycparser-3.0 requests-2.34.2 srt-3.5.3 tqdm-4.70.1 urllib3-2.8.0 vosk-0.3.45 websockets-17.1
+vosk 0.3.45

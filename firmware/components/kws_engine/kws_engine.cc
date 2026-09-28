@@ -48,6 +48,16 @@ extern "C" esp_err_t kws_init(kws_info_t *info)
     return ESP_OK;
 }
 
+extern "C" void kws_set_row(int row, const int8_t *features)
+{
+    TfLiteTensor *in = g_interp->input(0);
+    const int bands = in->dims->data[3];
+    int8_t *dst = in->data.int8 + row * bands;
+    for (int b = 0; b < bands; b++) {
+        dst[b] = g_kws_input_lut[(int)features[b] + 128];
+    }
+}
+
 extern "C" float kws_infer(const int8_t *window, int8_t *raw, uint32_t *cycles)
 {
     TfLiteTensor *in = g_interp->input(0);
@@ -55,6 +65,11 @@ extern "C" float kws_infer(const int8_t *window, int8_t *raw, uint32_t *cycles)
     for (size_t i = 0; i < in->bytes; i++) {
         dst[i] = g_kws_input_lut[(int)window[i] + 128];
     }
+    return kws_invoke(raw, cycles);
+}
+
+extern "C" float kws_invoke(int8_t *raw, uint32_t *cycles)
+{
     const uint32_t c0 = esp_cpu_get_cycle_count();
     g_interp->Invoke();
     *cycles = esp_cpu_get_cycle_count() - c0;
