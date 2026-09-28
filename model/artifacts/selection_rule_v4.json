@@ -1,7 +1,7 @@
 {
-  "declared_at": "2026-09-28T22:40",
+  "declared_at": "2026-09-28T22:18 (commit 3ffc188)",
   "declared_before": "any v4 dataset build or training",
-  "user_approval": "2026-09-28 ~22:35 (train v4 overnight)",
+  "user_approval": "2026-09-28 ~22:15 (train v4 overnight)",
   "model": "v4 = v3 recipe (TTS v2 + LibriSpeech + S01 session 1 + night beds + night hard negatives, pos weight 4, same architecture 10 665 params) PLUS (1) keyword+continuation positives: a share of the TTS keyword clips is followed, after a 0-250 ms gap, by 0.5-1.5 s of LibriSpeech speech from the SAME split's speakers; labels unchanged (positive = window ending 0-160 ms after the keyword's end); (2) active-household negatives from household_eve_20260928 TRAINING part only: session s1 (all) and session s5 0-3600 s (chunks c000-c001) minus the M6 test window s5 430-562 s; hard negatives where v2b's live device posterior >= 0.30 (x3), general every 60 frames",
   "not_used_for_training": ["S01 session 2 (validation)", "S01 session 3 (test)", "ambient_night c005-c009 (held-out)", "household_eve_20260928 session s5 3600-6705 s (chunks c002-c003, held-out)", "household sessions s2-s4 (39-161 s each, around the capture stalls; unused)", "m6_cmd_S01 and the M6 v2 prompts (s5 430-562 s)", "any recording made after v4 is frozen"],
   "threshold_rule": "unchanged from v3: on S01 session 2 prompt score, N=3, the HIGHEST threshold in {0.5,0.6,0.7,0.8,0.9,0.95,0.98} with keyword-prompt recall >= 20/25; if none reaches 20/25, the threshold with maximum recall (ties -> higher)",
