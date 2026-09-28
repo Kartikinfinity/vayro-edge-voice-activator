@@ -3,8 +3,17 @@
   "declared_before": "any v4 dataset build or training",
   "user_approval": "2026-09-28 ~22:15 (train v4 overnight)",
   "model": "v4 = v3 recipe (TTS v2 + LibriSpeech + S01 session 1 + night beds + night hard negatives, pos weight 4, same architecture 10 665 params) PLUS (1) keyword+continuation positives: a share of the TTS keyword clips is followed, after a 0-250 ms gap, by 0.5-1.5 s of LibriSpeech speech from the SAME split's speakers; labels unchanged (positive = window ending 0-160 ms after the keyword's end); (2) active-household negatives from household_eve_20260928 TRAINING part only: session s1 (all) and session s5 0-3600 s (chunks c000-c001) minus the M6 test window s5 430-562 s; hard negatives where v2b's live device posterior >= 0.30 (x3), general every 60 frames",
-  "not_used_for_training": ["S01 session 2 (validation)", "S01 session 3 (test)", "ambient_night c005-c009 (held-out)", "household_eve_20260928 session s5 3600-6705 s (chunks c002-c003, held-out)", "household sessions s2-s4 (39-161 s each, around the capture stalls; unused)", "m6_cmd_S01 and the M6 v2 prompts (s5 430-562 s)", "any recording made after v4 is frozen"],
+  "not_used_for_training": [
+    "S01 session 2 (validation)",
+    "S01 session 3 (test)",
+    "ambient_night c005-c009 (held-out)",
+    "household_eve_20260928 session s5 3600-6705 s (chunks c002-c003, held-out)",
+    "household sessions s2-s4 (39-161 s each, around the capture stalls; unused)",
+    "m6_cmd_S01 and the M6 v2 prompts (s5 430-562 s)",
+    "any recording made after v4 is frozen"
+  ],
   "threshold_rule": "unchanged from v3: on S01 session 2 prompt score, N=3, the HIGHEST threshold in {0.5,0.6,0.7,0.8,0.9,0.95,0.98} with keyword-prompt recall >= 20/25; if none reaches 20/25, the threshold with maximum recall (ties -> higher)",
   "ship_rule": "ship v4 instead of v2b@0.80 only if ALL of: (a) household held-out (s5 3600-6705 s, 0.8625 h, whole session replayed from boot, detections at t >= 3600 s): v4 FA count < v2b@0.80 FA count on the same audio (v2b: 13, computed before this rule was written, E-51 data); (b) S01 session 3 keyword-prompt recall >= 21/25; (c) held-out night c005-c009: v4 FA <= 2 in 5 h (v2b: 1); (d) a fresh S01 command session recorded after v4 is frozen (host/scripts/m6_commands_v3.txt, each prompt said once, USB capture so both models are replayed on the same audio): v4 prompt hits >= v2b prompt hits. Otherwise ship v2b@0.80.",
-  "reported_regardless": "both models on: S01 s3 (keyword + confusables), night c005-c009, household held-out, the full household recording, the M6 v2 prompts (seen before v4 was built, not used for it), the fresh command session"
+  "reported_regardless": "both models on: S01 s3 (keyword + confusables), night c005-c009, household held-out, the full household recording, the M6 v2 prompts (seen before v4 was built, not used for it), the fresh command session",
+  "amendment_1": "2026-09-28, before any v4 build: (3) household TRAINING chunks without the M6 test (s1 c000-c001, s5 c001) are added to the training beds (sources.json bed_train_v4), so keywords are also mixed over TV/talk. Held-out chunks, the threshold rule and the ship rule are unchanged."
 }

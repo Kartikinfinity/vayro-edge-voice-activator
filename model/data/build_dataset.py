@@ -34,7 +34,8 @@ from model.frontend.psfe import Frontend  # noqa: E402
 FS, HOP, FE_WIN, WIN = 16000, 160, 480, 100
 WARM = int(2.5 * FS)
 SOS = signal.butter(4, [125, 6500], btype="band", fs=FS, output="sos")
-SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4, "real_pos": 5, "real_neg": 6, "hard_neg": 7, "night_neg": 8}
+SRC_CODES = {"tts_pos": 0, "tts_prefix": 1, "tts_neg": 2, "libri": 3, "ambient": 4, "real_pos": 5, "real_neg": 6, "hard_neg": 7, "night_neg": 8,
+             "tts_pos_cont": 9, "house_hard": 10, "house_neg": 11}
 
 
 def read_wav16(path):
@@ -97,6 +98,19 @@ class Builder:
         feats = self.fe.to_int8(self.fe.features(np.clip(np.round(s), -32768, 32767).astype(np.int16)))
         return feats, end_frame(WARM + len(clip))
 
+    def stream_cont(self, clip, cont, gap, snr_db, cont_db, tail_s=0.4):
+        """v4: keyword clip, `gap` samples, then a continuation utterance (a command spoken straight after the
+        keyword, M6 E-49/E-51). The keyword's SNR rule is unchanged; the continuation sits `cont_db` relative to the
+        keyword's band level. Returns the KEYWORD's end frame, so labels stay end-of-keyword."""
+        bed = self.beds.sample(WARM + len(clip) + gap + len(cont) + int(tail_s * FS))
+        g = band_rms(bed) / band_rms(clip) * 10 ** (snr_db / 20)
+        s = bed.copy()
+        s[WARM:WARM + len(clip)] += clip * g
+        o = WARM + len(clip) + gap
+        s[o:o + len(cont)] += cont * (band_rms(clip) / band_rms(cont)) * g * 10 ** (cont_db / 20)
+        feats = self.fe.to_int8(self.fe.features(np.clip(np.round(s), -32768, 32767).astype(np.int16)))
+        return feats, end_frame(WARM + len(clip))
+
     def add(self, feats, ends, label, src):
         for e in ends:
             if WIN - 1 <= e < len(feats):
@@ -154,6 +168,36 @@ def add_long_run_negatives(b, spec, rng):
     return n_hard, n_gen
 
 
+def add_session_negatives(b, spec):
+    """v4: active-household recording made of several capture sessions (one per device boot). Each session's WAV
+    chunks are concatenated and replayed from boot, so device frame numbers in that session's posteriors file are
+    feature-frame indices. Hard negatives = frames where the deployed model's live posterior >= posterior_min
+    (+/-3 frames, x hard_reps); general negatives every `stride` frames; `exclude_s` ranges (the M6 test, where the
+    keyword WAS spoken) and the first 2.5 s after boot are skipped. Only the listed chunks are read, so held-out
+    chunks never enter."""
+    run = pathlib.Path(spec["run_dir"])
+    n_hard = n_gen = 0
+    for sess in spec["sessions"]:
+        audio = np.concatenate([read_wav16(run / w) for w in sess["wavs"]])
+        feats = b.fe.to_int8(b.fe.features(audio))
+        dev = np.fromfile(run / sess["posteriors"], dtype=np.dtype([("frame", "<u4"), ("raw", "i1"), ("trig", "u1")]))
+        p = (dev["raw"].astype(np.float32) + 128) / 256
+        lo = WIN - 1 + 250
+        keep = np.ones(len(feats), bool)
+        keep[:lo] = False
+        for a, z in sess.get("exclude_s", []):
+            keep[max(0, int(a * 100) - WIN):int(z * 100) + WIN] = False  # no window may overlap the excluded span
+        hard = dev["frame"][p >= spec["posterior_min"]].astype(np.int64)
+        ends = sorted({int(e + d) for e in hard for d in (-3, 0, 3) if 0 <= e + d < len(feats) and keep[e + d]})
+        for _ in range(spec["hard_reps"]):
+            b.add(feats, ends, 0, "house_hard")
+        gen = [e for e in range(lo, len(feats), spec["stride"]) if keep[e]]
+        b.add(feats, gen, 0, "house_neg")
+        n_hard += len(ends)
+        n_gen += len(gen)
+    return n_hard, n_gen
+
+
 def build_split(split, cfg, fe, rng, args):
     bed_files = cfg[f"bed_{split}"] + (cfg.get(args.extra_beds, []) if split == "train" and args.extra_beds else [])
     beds = Beds([pathlib.Path(cfg["runs_root"]) / f for f in bed_files], cfg["bed_skip_start_s"], rng)
@@ -161,23 +205,40 @@ def build_split(split, cfg, fe, rng, args):
     t0 = time.time()
     tts_root = pathlib.Path(args.tts_root or cfg["tts_root"]).expanduser()
     rows = [r for r in csv.DictReader(open(tts_root / "manifest.csv", encoding="utf-8")) if r["split"] == split]
+    spk = sorted(p.name for p in pathlib.Path(cfg["librispeech_root"]).iterdir())
+    nv = cfg["librispeech_val_speakers"]
+    spk = spk[-nv:] if split == "val" else spk[:-nv]
+    flacs = [f for s in spk for f in sorted((pathlib.Path(cfg["librispeech_root"]) / s).rglob("*.flac"))]
+
+    def continuation():
+        """0.5-1.5 s of this split's LibriSpeech speech (v4 keyword+command positives)."""
+        a, _ = sf.read(flacs[rng.integers(len(flacs))], dtype="float64")
+        n = int(rng.uniform(0.5, 1.5) * FS)
+        o = int(rng.integers(0, max(1, len(a) - n)))
+        return trim(a[o:o + n]) * 32768
+
+    n_cont = 0
     for r in rows:
         clip, sr = sf.read(tts_root / r["file"], dtype="float64")
         clip = trim(to16k(clip, sr))
         reps = args.pos_reps if r["label"] == "pos" else 1
         for _ in range(reps):
-            feats, fe_end = b.stream(clip, rng.uniform(0, 25))
+            # no RNG draw when the option is off, so earlier datasets (v2, v3) rebuild identically
+            cont_pos = r["label"] == "pos" and args.continuation > 0 and rng.random() < args.continuation
+            if cont_pos:
+                feats, fe_end = b.stream_cont(clip, continuation(), int(rng.uniform(0, 0.25) * FS),
+                                              rng.uniform(0, 25), rng.uniform(-6, 3))
+                n_cont += 1
+            else:
+                feats, fe_end = b.stream(clip, rng.uniform(0, 25))
             if r["label"] == "pos":
-                b.add(feats, fe_end + rng.choice(17, 3, replace=False), 1, "tts_pos")
+                b.add(feats, fe_end + rng.choice(17, 3, replace=False), 1, "tts_pos_cont" if cont_pos else "tts_pos")
                 b.add(feats, [fe_end - 20, fe_end - 35], 0, "tts_prefix")
             else:
                 b.add(feats, [fe_end, fe_end + 8, fe_end + 16, fe_end - 20], 0, "tts_neg")
-    print(f"[{split}] tts: {len(rows)} clips -> {len(b.y)} windows, {time.time() - t0:.0f} s", flush=True)
+    print(f"[{split}] tts: {len(rows)} clips -> {len(b.y)} windows ({n_cont} positive streams with a continuation), "
+          f"{time.time() - t0:.0f} s", flush=True)
 
-    spk = sorted(p.name for p in pathlib.Path(cfg["librispeech_root"]).iterdir())
-    nv = cfg["librispeech_val_speakers"]
-    spk = spk[-nv:] if split == "val" else spk[:-nv]
-    flacs = [f for s in spk for f in sorted((pathlib.Path(cfg["librispeech_root"]) / s).rglob("*.flac"))]
     n0 = len(b.y)
     for f in flacs[:: args.libri_stride]:
         a, _ = sf.read(f, dtype="float64")
@@ -191,6 +252,12 @@ def build_split(split, cfg, fe, rng, args):
         nh, ng = add_long_run_negatives(b, spec, rng)
         print(f"[{split}] long-run negatives {pathlib.Path(spec['run_dir']).name} chunks {spec['chunks']}: "
               f"{nh} hard windows x{spec['hard_reps']}, {ng} general -> {len(b.y) - n0} windows", flush=True)
+
+    for spec in (cfg.get(args.session_negatives, []) if split == "train" and args.session_negatives else []):
+        n0 = len(b.y)
+        nh, ng = add_session_negatives(b, spec)
+        print(f"[{split}] session negatives {pathlib.Path(spec['run_dir']).name}: {nh} hard windows x{spec['hard_reps']}, "
+              f"{ng} general -> {len(b.y) - n0} windows", flush=True)
 
     for rn in cfg.get(f"real_{split}_runs", []):
         n0 = len(b.y)
@@ -216,6 +283,10 @@ def main():
     ap.add_argument("--long-negatives", action="store_true", help="add sources.json long_run_negatives (v3)")
     ap.add_argument("--extra-beds", default="", help="sources.json key with additional training bed files (v3: bed_train_night)")
     ap.add_argument("--tts-root", default="", help="override sources.json tts_root (e.g. ~/ps26172_data/tts_v2)")
+    ap.add_argument("--continuation", type=float, default=0.0,
+                    help="v4: share of TTS positive streams followed by 0.5-1.5 s of speech after a 0-250 ms gap")
+    ap.add_argument("--session-negatives", default="",
+                    help="v4: sources.json key with multi-session long-run negatives (active household)")
     args = ap.parse_args()
     cfg = json.loads((ROOT / "model" / "data" / "sources.json").read_text(encoding="utf-8"))
     out = pathlib.Path(args.out).expanduser()

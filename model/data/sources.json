@@ -25,6 +25,27 @@
      "posterior_min": 0.30, "hard_reps": 3, "stride": 60,
      "_note": "TRAINING hours only (declared split). Hard negatives = where v2b's live device posterior >= 0.30."}
   ],
+  "_household_split_declared": "2026-09-28 22:18 (selection_rule_v4.json, commit 3ffc188), BEFORE any v4 build: household_eve_20260928 session s1 (c000-c001) and session s5 0-3600 s (c000-c001) = TRAINING; s5 3600-6705 s (c002-c003) = HELD-OUT; s2-s4 unused; s5 430-562 s (M6 v2 prompts, keyword spoken) never used as negative or bed.",
+  "session_negatives_v4": [
+    {"run_dir": "/mnt/d/ps26172/evidence/runs/20260928_193953_household_eve_20260928",
+     "sessions": [
+       {"wavs": ["audio_16bit_c000.wav", "audio_16bit_c001.wav"], "posteriors": "posteriors_device.bin", "exclude_s": []},
+       {"wavs": ["audio_16bit_s5_c000.wav", "audio_16bit_s5_c001.wav"], "posteriors": "posteriors_device_s5.bin", "exclude_s": [[430, 562]]}
+     ],
+     "posterior_min": 0.30, "hard_reps": 3, "stride": 60,
+     "_note": "TRAINING part only. Hard negatives = where v2b's live device posterior >= 0.30 (its TV/talk false activations and near-misses)."}
+  ],
+  "bed_train_v4": [
+    "20260927_203133_ambient_night_20260927/audio_16bit_c000.wav",
+    "20260927_203133_ambient_night_20260927/audio_16bit_c001.wav",
+    "20260927_203133_ambient_night_20260927/audio_16bit_c002.wav",
+    "20260927_203133_ambient_night_20260927/audio_16bit_c003.wav",
+    "20260927_203133_ambient_night_20260927/audio_16bit_c004.wav",
+    "20260928_193953_household_eve_20260928/audio_16bit_c000.wav",
+    "20260928_193953_household_eve_20260928/audio_16bit_c001.wav",
+    "20260928_193953_household_eve_20260928/audio_16bit_s5_c001.wav"
+  ],
+  "_bed_train_v4_note": "v3 night beds + household TRAINING chunks without the M6 test (s5 c000 holds it, so it is not a bed).",
   "real_train_runs": ["20260927_130649_kw_S01"],
   "validation_runs": ["20260927_151127_kw_S01_s2"],
   "_split_note_v2": "v2 split (2026-09-27 18:00): train = S01 session 1 + ambient_day c000-c001 + TTS v2 train speakers + LibriSpeech train speakers; validation = S01 session 2 (selection only); held-out test = ambient_day c002, overnight ambient, and any NEW session/speaker recorded after v2 is frozen.",
