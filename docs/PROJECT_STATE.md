@@ -105,21 +105,24 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | Milestone | Status |
 |---|---|
 | M0 toolchain, pinned build, X25 gate | **DONE** 2026-09-26 — ESP-IDF v5.5.5; `tools/idf.ps1 -Console uart build` green, gate PASS, image 241 095 B |
-| M1 physical audio | IN PROGRESS — flashed and running; alignment fixed (DEC-06); EXP-10 done; **scripted cold-boot Session A (user) and 10 min integrity run pending** |
+| M1 physical audio | **DONE** 2026-09-27 — MSB framing (DEC-06); Session A recorded; 10.0 h capture integrity: 0 CRC errors, 1 host gap of 20 ms (E-40) |
 | M2 front end + parity | **DONE** 2026-09-27 — bit-exact device vs host features after DEC-16 (runs `…145754`, `…150156`) |
-| M3 local KWS | **ON DEVICE** — v0 (windowed DS-CNN, 10 665 params, 212 584 MACs, 28 024 B int8) runs on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with host TFLite reference (1 984/1 984). Offline on held-out real speaker S01: 22/23 at thr 0.9, N=3. **Live spoken test pending.** |
-| M4 trigger | Decision logic (N-mean, threshold, 2 s refractory, IN-2 GPIO 15 pulse, `@KW` log) implemented on device; exit test pending (live keywords) |
+| M3 local KWS | **DONE** — windowed DS-CNN (10 665 params, 212 584 MACs, 28 024 B int8) on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with the host TFLite reference. Shipped model **v2b @ 0.80**: S01 s3 held-out 22/25 keyword prompts, 2/16 confusables. v3 @ 0.60 (23/25, 3/16) is the candidate; ship decision pending (DEC-23) |
 | M4 trigger | **DONE (software instruments)** — live triggers exactly equal the offline decision replay (E-26, re-confirmed on session 3). GPIO pulse present but not captured (logic analyser arrives 28 Sep). |
 | M5 streaming | **DONE** 2026-09-27 — 24/24 detections streamed with pre-roll, 0 overruns, 0 seq gaps (E-36); L1 median 1.66 ms, L2 ≈ 95 ms median (E-37). |
-| M6 ASR | NOT STARTED |
+| M6 ASR | **IN PROGRESS** — server (Vosk, endpoint → END, transcript) runs end to end. Live command test 28 Sep (E-48): edge stages pass (keyword detected, stream bit-exact, L1_audio0 ≈ 15 ms), **ASR fails** with the small en-in model (1/4). Larger Kaldi model vosk-model-en-in-0.5 approved and downloading; re-test on the recorded session, then a fresh live run |
 | **Open risk** | Evening acoustic domain (E-34): the room is 10–15 dB louder at 5–8 kHz in the evening. Its effect on recall is **untested**; next: a fresh scripted session (S01 s3, test data) under evening conditions with streaming on. |
 
 ## 9. Blockers
 
-Training toolchain not installed (WSL Python is 3.14; TensorFlow needs ≤ 3.13) · real keyword recordings not yet made
-
-Room conditions for Session A (user, verbatim): "fan was on of other room sound i could listen pc is about 30 cm from mic".
+- **ASR accuracy** (E-48): small Vosk model unusable on S01's commands → larger model (download in progress).
+- **Household false activations**: v2b ≈ 13.5 FA/h with TV/people (earlier), prayer singing confirmed as a trigger (E-47), 5 unattended triggers 19:34–19:39 on 28 Sep. Evening household recording running (`household_eve_20260928`, 2.5 h, started 19:39:53) → v2b vs v3 decision by `selection_rule_v3.json`.
+- **Device busy policy**: a keyword arriving while a stream is open is not streamed (2 of 6 in E-48; caused by the long no-endpoint streams).
+- **Demo IP risk** (E-41): server address is a build-time constant.
+- No logic analyser (I-1 NOT RUN; software instruments I-2/I-3 used).
 
 ## 10. Next task
 
-Record real "Hey Vayro" sessions (`host/scripts/kw_session_v1.txt`, one run per speaker). Then afternoon ambient recording, M2 front end and training setup, and the overnight ambient run.
+1. Big-model ASR: replay `20260928_192727_m6_cmd_S01` streams, then restart the server with it and run a fresh live command test (new prompts, each said once).
+2. After the household capture ends: v2b vs v3 on it; EXP-1 streaming peak (product build + synthetic triggers); ≥10 min EXP-2.
+3. Final firmware, SBOM, evidence pack; 29 Sep: PPT + demo video.
