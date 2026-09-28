@@ -1,0 +1,400 @@
+{
+  "label": "ambient_night_20260927",
+  "note": "overnight household ambient (user asleep, keyword never spoken); v2b thr 0.80 N=3 live, Wi-Fi + streaming on; split declared in model/data/sources.json",
+  "host_start_local": "2026-09-27T20:31:34",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "warm (RTS reset)",
+  "port_losses": 0,
+  "reset_retries": 0,
+  "auto_resets_on_stall": 0,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "files": [
+        "audio_24bit_c000.wav",
+        "audio_24bit_c001.wav",
+        "audio_24bit_c002.wav",
+        "audio_24bit_c003.wav",
+        "audio_24bit_c004.wav",
+        "audio_24bit_c005.wav",
+        "audio_24bit_c006.wav",
+        "audio_24bit_c007.wav",
+        "audio_24bit_c008.wav",
+        "audio_24bit_c009.wav",
+        "audio_24bit_c010.wav"
+      ],
+      "samples": 576000800,
+      "seconds": 36000.05,
+      "audio_frames": 3600003,
+      "host_gap_count": 1,
+      "host_gap_samples": 320,
+      "host_gaps_first50": [
+        [
+          22670400,
+          320
+        ]
+      ]
+    }
+  ],
+  "settle_s": null,
+  "script_file": null,
+  "script_segments": [],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "device_feature_frames": 3600001,
+  "device_posterior_frames": 599984,
+  "device_kw_triggers": [
+    {
+      "type": "KW",
+      "frame": 100311,
+      "t_ms": 1003140,
+      "p": 0.875,
+      "avg": 0.842,
+      "raw": 96,
+      "streamed": 1,
+      "host_t": 1006.365
+    },
+    {
+      "type": "KW",
+      "frame": 103449,
+      "t_ms": 1034520,
+      "p": 0.832,
+      "avg": 0.861,
+      "raw": 85,
+      "streamed": 1,
+      "host_t": 1037.761
+    },
+    {
+      "type": "KW",
+      "frame": 122559,
+      "t_ms": 1225620,
+      "p": 0.895,
+      "avg": 0.814,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 1228.808
+    },
+    {
+      "type": "KW",
+      "frame": 149877,
+      "t_ms": 1498800,
+      "p": 0.934,
+      "avg": 0.871,
+      "raw": 111,
+      "streamed": 1,
+      "host_t": 1501.995
+    },
+    {
+      "type": "KW",
+      "frame": 170211,
+      "t_ms": 1702140,
+      "p": 0.875,
+      "avg": 0.902,
+      "raw": 96,
+      "streamed": 1,
+      "host_t": 1705.368
+    },
+    {
+      "type": "KW",
+      "frame": 180507,
+      "t_ms": 1805100,
+      "p": 0.895,
+      "avg": 0.857,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 1808.301
+    },
+    {
+      "type": "KW",
+      "frame": 181653,
+      "t_ms": 1816560,
+      "p": 0.895,
+      "avg": 0.879,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 1819.755
+    },
+    {
+      "type": "KW",
+      "frame": 199251,
+      "t_ms": 1992540,
+      "p": 0.973,
+      "avg": 0.854,
+      "raw": 121,
+      "streamed": 1,
+      "host_t": 1995.72
+    },
+    {
+      "type": "KW",
+      "frame": 222645,
+      "t_ms": 2226480,
+      "p": 0.934,
+      "avg": 0.807,
+      "raw": 111,
+      "streamed": 1,
+      "host_t": 2229.639
+    },
+    {
+      "type": "KW",
+      "frame": 229947,
+      "t_ms": 2299500,
+      "p": 0.973,
+      "avg": 0.887,
+      "raw": 121,
+      "streamed": 1,
+      "host_t": 2302.67
+    },
+    {
+      "type": "KW",
+      "frame": 231927,
+      "t_ms": 2319300,
+      "p": 0.922,
+      "avg": 0.826,
+      "raw": 108,
+      "streamed": 1,
+      "host_t": 2322.461
+    },
+    {
+      "type": "KW",
+      "frame": 240777,
+      "t_ms": 2407800,
+      "p": 0.855,
+      "avg": 0.861,
+      "raw": 91,
+      "streamed": 1,
+      "host_t": 2410.955
+    },
+    {
+      "type": "KW",
+      "frame": 285843,
+      "t_ms": 2858460,
+      "p": 0.672,
+      "avg": 0.85,
+      "raw": 44,
+      "streamed": 1,
+      "host_t": 2861.654
+    },
+    {
+      "type": "KW",
+      "frame": 286917,
+      "t_ms": 2869200,
+      "p": 0.91,
+      "avg": 0.944,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 2872.37
+    },
+    {
+      "type": "KW",
+      "frame": 305205,
+      "t_ms": 3052080,
+      "p": 0.855,
+      "avg": 0.801,
+      "raw": 91,
+      "streamed": 1,
+      "host_t": 3055.221
+    },
+    {
+      "type": "KW",
+      "frame": 339867,
+      "t_ms": 3398700,
+      "p": 0.934,
+      "avg": 0.806,
+      "raw": 111,
+      "streamed": 1,
+      "host_t": 3401.847
+    },
+    {
+      "type": "KW",
+      "frame": 366213,
+      "t_ms": 3662160,
+      "p": 0.805,
+      "avg": 0.898,
+      "raw": 78,
+      "streamed": 1,
+      "host_t": 3665.305
+    },
+    {
+      "type": "KW",
+      "frame": 377439,
+      "t_ms": 3774420,
+      "p": 0.875,
+      "avg": 0.842,
+      "raw": 96,
+      "streamed": 1,
+      "host_t": 3777.576
+    },
+    {
+      "type": "KW",
+      "frame": 393039,
+      "t_ms": 3930420,
+      "p": 0.977,
+      "avg": 0.848,
+      "raw": 122,
+      "streamed": 1,
+      "host_t": 3933.572
+    },
+    {
+      "type": "KW",
+      "frame": 398331,
+      "t_ms": 3983340,
+      "p": 0.992,
+      "avg": 0.949,
+      "raw": 126,
+      "streamed": 1,
+      "host_t": 3986.442
+    },
+    {
+      "type": "KW",
+      "frame": 408279,
+      "t_ms": 4082820,
+      "p": 0.832,
+      "avg": 0.819,
+      "raw": 85,
+      "streamed": 1,
+      "host_t": 4085.959
+    },
+    {
+      "type": "KW",
+      "frame": 468495,
+      "t_ms": 4684980,
+      "p": 0.895,
+      "avg": 0.833,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 4688.084
+    },
+    {
+      "type": "KW",
+      "frame": 535329,
+      "t_ms": 5353320,
+      "p": 0.805,
+      "avg": 0.845,
+      "raw": 78,
+      "streamed": 1,
+      "host_t": 5356.437
+    },
+    {
+      "type": "KW",
+      "frame": 535833,
+      "t_ms": 5358360,
+      "p": 0.934,
+      "avg": 0.845,
+      "raw": 111,
+      "streamed": 1,
+      "host_t": 5361.466
+    },
+    {
+      "type": "KW",
+      "frame": 552249,
+      "t_ms": 5522520,
+      "p": 0.91,
+      "avg": 0.837,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 5525.608
+    },
+    {
+      "type": "KW",
+      "frame": 706905,
+      "t_ms": 7069080,
+      "p": 0.977,
+      "avg": 0.865,
+      "raw": 122,
+      "streamed": 1,
+      "host_t": 7072.096
+    },
+    {
+      "type": "KW",
+      "frame": 715701,
+      "t_ms": 7157040,
+      "p": 0.742,
+      "avg": 0.854,
+      "raw": 62,
+      "streamed": 1,
+      "host_t": 7160.054
+    },
+    {
+      "type": "KW",
+      "frame": 725043,
+      "t_ms": 7250460,
+      "p": 0.984,
+      "avg": 0.947,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 7253.531
+    },
+    {
+      "type": "KW",
+      "frame": 2953851,
+      "t_ms": 29538540,
+      "p": 0.805,
+      "avg": 0.828,
+      "raw": 78,
+      "streamed": 0,
+      "host_t": 29541.089
+    }
+  ],
+  "crc_errors": 0,
+  "bad_length_frames": 0,
+  "device_last_stats": {
+    "type": "STATS",
+    "t_ms": 36003628,
+    "samples": 575998720,
+    "pool_drops": 4,
+    "link_drops": 0,
+    "i2s_ovf": 0,
+    "short_reads": 0,
+    "level_dbfs": -39.9,
+    "peak16": 771,
+    "heap_free": 48188,
+    "heap_min": 28852,
+    "host_t": 36002.294
+  },
+  "device_last_perf": {
+    "type": "PERF",
+    "t_ms": 36003628,
+    "hwm_reader": 1252,
+    "hwm_tx": 3212,
+    "hwm_main": 1004,
+    "fe_frames": 3599898,
+    "fe_cyc_mean": 112277,
+    "fe_cyc_max": 151314,
+    "inf_count": 599982,
+    "inf_cyc_mean": 495100,
+    "inf_cyc_max": 600262,
+    "kw_triggers": 29,
+    "host_t": 36002.294
+  },
+  "device_boot": {
+    "type": "BOOT",
+    "idf": "v5.5.5",
+    "elf_sha": "8e4bca0f0",
+    "built": "Sep-27-2026_19:23:53",
+    "cores": 2,
+    "rev": 0.2,
+    "emb_psram": 0,
+    "flash_bytes": 4194304,
+    "cpu_mhz": 240,
+    "reset": "USB",
+    "host_t": 0.055
+  },
+  "device_cfg": {
+    "type": "CFG",
+    "fs": 16000,
+    "hop": 160,
+    "bck": 6,
+    "ws": 5,
+    "sd": 4,
+    "fmt": "MSB",
+    "bclk_inv": 0,
+    "settle_ms": 300,
+    "dma_desc": 4,
+    "dma_frames": 160,
+    "slot_bits": 32,
+    "i16_shift": 16,
+    "host_t": 0.055
+  },
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}
