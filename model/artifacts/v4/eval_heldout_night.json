@@ -1,0 +1,79 @@
+{
+  "model": "model/artifacts/v4/model_int8.tflite",
+  "frontend_sha256": "5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac",
+  "stride_frames": 6,
+  "win_frames": 100,
+  "refractory_s": 2.0,
+  "runs": {
+    "20260927_203133_ambient_night_20260927/audio_16bit_c005.wav": {
+      "seconds": 3600.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.7,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 1.0,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    },
+    "20260927_203133_ambient_night_20260927/audio_16bit_c006.wav": {
+      "seconds": 3600.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.7,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 1.0,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    },
+    "20260927_203133_ambient_night_20260927/audio_16bit_c007.wav": {
+      "seconds": 3600.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.7,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 1.0,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    },
+    "20260927_203133_ambient_night_20260927/audio_16bit_c008.wav": {
+      "seconds": 3600.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.7,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 1.0,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    },
+    "20260927_203133_ambient_night_20260927/audio_16bit_c009.wav": {
+      "seconds": 3600.0,
+      "sweep": [
+        {
+          "n": 3,
+          "threshold": 0.7,
+          "detections": 0,
+          "false_activations": 0,
+          "exposure_hours": 1.0,
+          "fa_per_hour": 0.0,
+          "fa_times_s": []
+        }
+      ]
+    }
+  }
+}
