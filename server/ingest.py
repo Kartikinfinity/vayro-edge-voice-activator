@@ -19,6 +19,7 @@ import argparse
 import csv
 import datetime as dt
 import json
+import math
 import pathlib
 import socket
 import struct
@@ -51,26 +52,49 @@ def new_recognizer():
 class AsrFrontEnd:
     """ASR-side conditioning of the device stream (M6 finding: raw device audio at about -40 dBFS speech with 60-70 Hz
     fan rumble at about -30 dBFS decoded to nothing; a steep 150 Hz high-pass + gain restored a LibriSpeech control
-    at device level). The KWS path on the device is unaffected — this runs on the server only."""
+    at device level). The KWS path on the device is unaffected — this runs on the server only.
 
-    def __init__(self):
+    Gain is keyword-referenced and fixed per stream (M6 run 20260928_192727: the earlier block AGC moved the gain
+    inside words and made transcripts flip with small level changes). The pre-roll ends at the detected keyword, so
+    its loudest part is the same speaker at the same distance just before the command: gain = speech at -20 dBFS
+    (p95 of 50 ms 300-4000 Hz RMS, the asr_level_test convention). The pre-roll arrives as one burst from the device
+    ring, so holding it back until the gain is known adds no measurable delay."""
+
+    def __init__(self, preroll_samples):
         import numpy as np
         from scipy import signal
         self.np, self.signal = np, signal
         self.sos = signal.butter(8, 150, btype="high", fs=16000, output="sos")
+        self.sos_sp = signal.butter(4, [300, 4000], btype="band", fs=16000, output="sos")
         self.zi = signal.sosfilt_zi(self.sos) * 0.0
-        self.gain = 8.0  # +18 dB start; adapted towards speech at about -20 dBFS
-        self.target = 32768 * 10 ** (-20 / 20) / np.sqrt(2)
+        self.need = preroll_samples
+        self.held = []
+        self.gain = None
+        self.speech_dbfs = None
+
+    def _set_gain(self, y):
+        np = self.np
+        sp = self.signal.sosfilt(self.sos_sp, y)
+        n = len(sp) // 800
+        if n == 0:
+            self.gain = 1.0
+            return
+        lev = np.sqrt(np.mean(sp[: n * 800].reshape(n, 800) ** 2, axis=1))
+        rms = max(float(np.percentile(lev, 95)), 1.0)
+        self.speech_dbfs = round(20 * np.log10(rms * np.sqrt(2) / 32768), 1)
+        self.gain = float(np.clip(10 ** (-20 / 20) * 32768 / np.sqrt(2) / rms, 0.5, 40.0))
 
     def __call__(self, pcm_bytes):
         np = self.np
         x = np.frombuffer(pcm_bytes, dtype=np.int16).astype(np.float64)
         y, self.zi = self.signal.sosfilt(self.sos, x, zi=self.zi)
-        rms = np.sqrt(np.mean(y ** 2))
-        if rms * self.gain > self.target * 0.5:  # speech-like block: adapt gain (fast attack, slow release)
-            want = self.target / max(rms, 1.0)
-            self.gain = min(self.gain, want) if want < self.gain else self.gain * 1.02
-        self.gain = float(np.clip(self.gain, 1.0, 40.0))
+        if self.gain is None:
+            self.held.append(y)
+            if sum(len(h) for h in self.held) < self.need:
+                return b""
+            y = np.concatenate(self.held)
+            self.held = []
+            self._set_gain(y[: self.need])
         return np.clip(np.round(y * self.gain), -32768, 32767).astype(np.int16).tobytes()
 
 
@@ -107,7 +131,7 @@ class Session:
                         "overrun": False, "wall_time": dt.datetime.now().isoformat(timespec="milliseconds")}
             if ASR_MODEL is not None:
                 self.rec, self.next_rec = self.next_rec, None
-                self.asr_fe = AsrFrontEnd()
+                self.asr_fe = AsrFrontEnd(pre_ms * 16)
                 self.act["asr_endpoint_at_s"] = None
         elif flags == F_CONT and self.act:
             a = self.act
@@ -123,7 +147,8 @@ class Session:
             if self.rec is not None:
                 # M6 endpointing: Vosk reports an utterance endpoint (trailing silence) -> END, once at least
                 # --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
-                if self.rec.AcceptWaveform(self.asr_fe(payload)):
+                blk = self.asr_fe(payload)
+                if blk and self.rec.AcceptWaveform(blk):
                     seg = json.loads(self.rec.Result())
                     a.setdefault("asr_segments", []).append(seg)
                     if after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
@@ -158,7 +183,9 @@ class Session:
             a["asr_after_trigger"] = " ".join(w["word"] for w in words if w["start"] >= pre - 0.15)
             a["asr_words"] = words
             a["asr_final_latency_ms"] = round((now_us() - t0) / 1000, 2)
-            a["asr_conditioning"] = "8th-order 150 Hz high-pass + AGC to about -20 dBFS (server side)"
+            a["asr_conditioning"] = "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)"
+            a["asr_preroll_speech_dbfs"] = self.asr_fe.speech_dbfs
+            a["asr_gain_db"] = round(20 * math.log10(self.asr_fe.gain), 1) if self.asr_fe.gain else None
             a["asr_grammar"] = bool(ASR_GRAMMAR)
             self.rec = None
             self.next_rec = new_recognizer()  # ready before the next START
@@ -242,6 +269,7 @@ def main():
         SetLogLevel(-1)
         t0 = time.time()
         ASR_MODEL = Model(args.asr)
+        AsrFrontEnd(160)(b"\0" * 320)  # imports numpy/scipy now: the first START of run 20260928_192727 paid ~25 ms
         print(f"ASR model loaded from {args.asr} in {time.time() - t0:.1f} s", flush=True)
     out = ROOT / "evidence" / "server" / dt.datetime.now().strftime("%Y%m%d_%H%M%S")
     out.mkdir(parents=True, exist_ok=True)

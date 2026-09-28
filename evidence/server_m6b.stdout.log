@@ -1,3 +1,57 @@
 ASR model loaded from D:\ps26172_ext\vosk\vosk-model-small-en-in-0.4 in 0.4 s
 ingest listening on 0.0.0.0:5005; writing to D:\ps26172\evidence\server\20260928_180050
 device connected from 192.168.1.9:60482
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:00:57.442] activation 12: 5.4 s audio, L1_start 3.533 ms, L1_audio0 1365.462 ms (±2.262 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0012.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:02:09.812] activation 13: 5.48 s audio, L1_start 17.584 ms, L1_audio0 17.584 ms (±2.082 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0013.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:03:22.723] activation 14: 5.44 s audio, L1_start 4.608 ms, L1_audio0 4.608 ms (±2.837 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0014.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:08:12.618] activation 15: 5.44 s audio, L1_start 3.062 ms, L1_audio0 5.727 ms (±2.65 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0015.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.109 s after trigger)
+[2026-09-28T18:08:21.317] activation 16: 4.72 s audio, L1_start 3.471 ms, L1_audio0 7.546 ms (±2.65 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0016.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:10:17.922] activation 17: 5.44 s audio, L1_start 3.11 ms, L1_audio0 8.915 ms (±2.855 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0017.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:10:56.684] activation 18: 5.4 s audio, L1_start 1.831 ms, L1_audio0 7.111 ms (±2.855 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0018.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 2.429 s after trigger)
+[2026-09-28T18:16:12.829] activation 19: 3.04 s audio, L1_start 3.014 ms, L1_audio0 8.539 ms (±2.805 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0019.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:18:07.000] activation 20: 5.44 s audio, L1_start 1.965 ms, L1_audio0 6.218 ms (±2.366 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0020.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:19:41.885] activation 21: 5.4 s audio, L1_start 3.623 ms, L1_audio0 8.982 ms (±2.465 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0021.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:22:31.486] activation 22: 5.4 s audio, L1_start 3.059 ms, L1_audio0 8.361 ms (±2.43 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0022.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:24:03.202] activation 23: 5.4 s audio, L1_start 2.891 ms, L1_audio0 8.32 ms (±2.579 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c180053_act0023.wav
+connection error: [WinError 10053] An established connection was aborted by the software in your host machine
+device disconnected
+device connected from 192.168.1.9:60483
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 6.029 s after trigger)
+[2026-09-28T18:55:20.839] activation 25: 6.64 s audio, L1_start 2.051 ms, L1_audio0 11.991 ms (±2.324 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c183355_act0025.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.829 s after trigger)
+[2026-09-28T18:59:36.531] activation 26: 5.52 s audio, L1_start 0.954 ms, L1_audio0 4.998 ms (±2.696 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c183355_act0026.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T19:21:24.867] activation 27: 5.4 s audio, L1_start 2.888 ms, L1_audio0 14.613 ms (±2.269 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c183355_act0027.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.829 s after trigger)
+[2026-09-28T19:21:32.257] activation 28: 5.4 s audio, L1_start 2.703 ms, L1_audio0 16.102 ms (±2.269 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c183355_act0028.wav
+device connected from 192.168.1.9:54543
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:27:41.576] activation 1: 5.44 s audio, L1_start 2.456 ms, L1_audio0 40.015 ms (±2.334 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0001.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:27:54.175] activation 2: 5.4 s audio, L1_start 2.296 ms, L1_audio0 13.876 ms (±2.334 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0002.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:27:59.575] activation 3: 5.44 s audio, L1_start 2.269 ms, L1_audio0 15.91 ms (±2.334 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0003.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 1.896 s after trigger)
+[2026-09-28T19:28:09.776] activation 4: 2.6 s audio, L1_start 2.186 ms, L1_audio0 17.748 ms (±2.334 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0004.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:34:27.530] activation 5: 5.4 s audio, L1_start 7.496 ms, L1_audio0 7.496 ms (±1.484 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0005.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:34:51.694] activation 6: 5.52 s audio, L1_start 1.426 ms, L1_audio0 9.072 ms (±1.484 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0006.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:35:46.893] activation 7: 5.4 s audio, L1_start 1.56 ms, L1_audio0 27.479 ms (±1.625 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0007.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:37:32.390] activation 8: 5.4 s audio, L1_start 1.715 ms, L1_audio0 19.875 ms (±1.528 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0008.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:39:06.708] activation 9: 5.4 s audio, L1_start 1.365 ms, L1_audio0 59.157 ms (±1.565 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0009.wav

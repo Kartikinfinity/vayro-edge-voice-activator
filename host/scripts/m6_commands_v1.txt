@@ -1,0 +1,8 @@
+# M6 live ASR protocol: keyword + command per prompt (8 s windows). Speak at ~30-50 cm, normal voice.
+sil_start | 3 | Stay quiet
+cmd_01    | 8 | Say: Hey Vayro ... turn on the light
+cmd_02    | 8 | Say: Hey Vayro ... what is the time
+cmd_03    | 8 | Say: Hey Vayro ... play some music
+cmd_04    | 8 | Say: Hey Vayro ... switch off the fan
+cmd_05    | 8 | Say: Hey Vayro ... open the door
+sil_end   | 3 | Stay quiet

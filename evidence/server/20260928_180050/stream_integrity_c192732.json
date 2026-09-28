@@ -1,0 +1,59 @@
+{
+  "capture": "20260928_192727_m6_cmd_S01",
+  "streams": 9,
+  "bit_exact": 4,
+  "results": [
+    {
+      "file": "c192732_act0001.wav",
+      "located": true,
+      "offset_s": 9.876,
+      "samples": 87040,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "c192732_act0002.wav",
+      "located": true,
+      "offset_s": 22.476,
+      "samples": 86400,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "c192732_act0003.wav",
+      "located": true,
+      "offset_s": 27.876,
+      "samples": 87040,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "c192732_act0004.wav",
+      "located": true,
+      "offset_s": 38.076,
+      "samples": 41600,
+      "mismatched_samples": 0,
+      "bit_exact": true
+    },
+    {
+      "file": "c192732_act0005.wav",
+      "located": false
+    },
+    {
+      "file": "c192732_act0006.wav",
+      "located": false
+    },
+    {
+      "file": "c192732_act0007.wav",
+      "located": false
+    },
+    {
+      "file": "c192732_act0008.wav",
+      "located": false
+    },
+    {
+      "file": "c192732_act0009.wav",
+      "located": false
+    }
+  ]
+}

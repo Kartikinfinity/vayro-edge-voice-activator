@@ -1,0 +1,43 @@
+{
+  "activation": 2,
+  "kw_frame": 2307,
+  "t_detect_device_us": 26818899,
+  "preroll_ms": 624,
+  "first_sample": 359616,
+  "raw_posterior": 127,
+  "t_start_rx_us": 123030492162,
+  "t_audio0_rx_us": 123030503742,
+  "offset_us": 123003670967,
+  "rtt_us": 4669,
+  "pings": 9,
+  "packets": 135,
+  "seq_gaps": 0,
+  "last_seq": 135,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-28T19:27:54.175",
+  "asr_endpoint_at_s": 4.776,
+  "t_end_sent_us": 123035298440,
+  "device_samples_sent": 86400,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 123035305719,
+  "asr_transcript": "listen",
+  "asr_after_trigger": "listen",
+  "asr_words": [
+    {
+      "conf": 0.507294,
+      "end": 1.14,
+      "start": 0.72,
+      "word": "listen"
+    }
+  ],
+  "asr_final_latency_ms": 0.03,
+  "asr_conditioning": "8th-order 150 Hz high-pass + AGC to about -20 dBFS (server side)",
+  "asr_grammar": false,
+  "audio_seconds": 5.4,
+  "L1_start_ms": 2.296,
+  "L1_audio0_ms": 13.876,
+  "clock_uncertainty_ms_half_rtt": 2.334,
+  "file_stem": "c192732_act0002"
+}
