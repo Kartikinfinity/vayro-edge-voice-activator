@@ -22,8 +22,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PY = str(ROOT / ".venv-host" / "Scripts" / "python.exe")
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 ASR_MODEL = r"D:\ps26172_ext\vosk\vosk-model-en-in-0.5"
-REGION = (0, 0, 1440, 852)  # above the taskbar
-RECTS = {"server": (0, 0, 620, 852), "device": (620, 0, 820, 600), "prompt": (620, 600, 820, 252)}
+REGION = (0, 0, 1440, 816)  # above the taskbar and a Windows overlay pill at y~830
+RECTS = {"server": (0, 0, 620, 816), "device": (620, 0, 820, 580), "prompt": (620, 580, 820, 236)}
 FONTS = {"server": 17, "device": 16, "prompt": 26}
 
 

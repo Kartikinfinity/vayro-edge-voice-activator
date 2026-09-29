@@ -428,7 +428,8 @@ def main():
                 if prompt_i == len(script) and rec_s >= starts[-1] + script[-1][1] and not script_done:
                     print("\n>>> DONE — you can stop.", flush=True)
                     script_done = True
-            elif last_stats and now - last_print >= 1.0:
+            elif last_stats and now - last_print >= 1.0 and not args.color:
+                # (demo console, --color: no in-place progress line - it overwrote wrapped device lines)
                 last_print = now
                 got = sum(s.samples for s in sessions)
                 print(f"\r  recorded {got / args.fs:8.1f}/{args.seconds:.0f} s   level {last_stats.get('level_dbfs')} dBFS"
