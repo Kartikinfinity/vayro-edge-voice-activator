@@ -72,6 +72,7 @@ for k in trig:
     sent = i // 2 - first
     a = s.act
     s.on_packet(ingest.F_END, 0, struct.pack("<IIII", act, sent, 0, 1), 0)
+    s.drain()  # ASR runs in its own thread (ingest.AsrJob); wait for this activation's files
     busy_until = (i // 2) / 16000
     j = json.loads((out / f"replay_act{act:04d}.json").read_text(encoding="utf-8"))
     rows.append({"t": t, "streamed": True, "act": act, "endpoint_s": j["asr_endpoint_at_s"],

@@ -21,6 +21,7 @@ import datetime as dt
 import json
 import math
 import pathlib
+import queue
 import socket
 import struct
 import threading
@@ -161,19 +162,76 @@ class VadEndpointer:
         return done
 
 
+class AsrJob(threading.Thread):
+    """One activation's ASR, OFF the receive thread. Run 20260929_194642: Vosk decoding inside the receive loop stalled
+    for up to ~0.6 s at times; the server stopped reading, TCP backed up into the device's 0.75 s ring (≈ 180 ms slack
+    beyond the pre-roll) and 3/31 streams overran. Now the receive thread only timestamps, runs the (cheap) VAD and
+    queues payloads; this thread creates its own recognizer (≈ 190 ms, never on the receive path), decodes, and
+    finalises the transcript after the device's END."""
+
+    def __init__(self, session, act, pre_samples):
+        super().__init__(daemon=True)
+        self.s, self.a = session, act
+        self.q = queue.Queue()
+        self.fe = AsrFrontEnd(pre_samples)
+        self.segs, self.asr_pcm, self.words = [], bytearray(), []
+        self.on_done = None
+        self.start()
+
+    def feed(self, payload, after_s):
+        self.q.put((payload, after_s))
+
+    def close(self, on_done):
+        self.on_done = on_done
+        self.q.put(None)
+
+    def run(self):
+        rec = new_recognizer()
+        while True:
+            item = self.q.get()
+            if item is None:
+                break
+            payload, after_s = item
+            blk = self.fe(payload)
+            self.asr_pcm.extend(blk)
+            if blk and rec.AcceptWaveform(blk):
+                self.segs.append(json.loads(rec.Result()))
+                if self.s.args.endpoint == "asr":
+                    self.s.request_end(self.a, after_s, "asr")
+        self.segs.append(json.loads(rec.FinalResult()))
+        self.words = [w for s in self.segs for w in s.get("result", [])]
+        self.on_done()
+
+
 class Session:
     def __init__(self, conn, out, args):
         self.conn, self.out, self.args = conn, out, args
         self.offset_us, self.rtt_us, self.pings = None, None, 0
         self.act = None
-        self.rec = None
-        # Pre-created so that START handling never blocks the receive loop (creating a recognizer took ~190 ms and
-        # inflated L1_audio0 in run 20260928_175052).
-        self.next_rec = new_recognizer() if ASR_MODEL is not None else None
-        self.asr_fe = None
+        self.job = None
+        self.jobs = []
         self.vad = None
         self.tx_lock = threading.Lock()
+        self.end_lock = threading.Lock()
+        self.write_lock = threading.Lock()
         self.conn_stamp = dt.datetime.now().strftime("c%H%M%S")
+
+    def request_end(self, a, after_s, by):
+        """Send END once for activation `a`: endpoints (VAD/ASR) only after --min-after-s; the cap always."""
+        with self.end_lock:
+            if a is not self.act or a["end_sent"] or (by != "cap" and after_s < self.args.min_after_s):
+                return
+            a["asr_endpoint_at_s"] = round(after_s, 3) if by != "cap" else None
+            a["endpoint_by"] = by
+            self.send(F_END, struct.pack("<I", a["activation"]))
+            a["end_sent"] = True
+            a["t_end_sent_us"] = now_us()
+
+    def drain(self):
+        """Wait until every activation's ASR has finished and its files are written (replay, shutdown)."""
+        for j in self.jobs:
+            j.join()
+        self.jobs = [j for j in self.jobs if j.is_alive()]
 
     def send(self, flags, payload=b""):
         hdr = bytes([MAGIC, flags, 0, 0, 0, 0, 0, 0])
@@ -194,11 +252,11 @@ class Session:
                         "pcm": bytearray(), "packets": 0, "seq_gaps": 0, "last_seq": 0, "end_sent": False,
                         "overrun": False, "wall_time": dt.datetime.now().isoformat(timespec="milliseconds")}
             if ASR_MODEL is not None:
-                self.rec, self.next_rec = self.next_rec, None
-                self.asr_fe = AsrFrontEnd(pre_ms * 16)
-                self.vad = VadEndpointer(pre_ms * 16) if self.args.endpoint == "vad" else None
                 self.act["asr_endpoint_at_s"] = None
                 self.act["endpoint_by"] = None
+                self.job = AsrJob(self, self.act, pre_ms * 16)
+                self.jobs = [j for j in self.jobs if j.is_alive()] + [self.job]
+                self.vad = VadEndpointer(pre_ms * 16) if self.args.endpoint == "vad" else None
         elif flags == F_CONT and self.act:
             a = self.act
             if a["t_audio0_rx_us"] is None:
@@ -209,33 +267,16 @@ class Session:
             a["pcm"] += payload
             a["packets"] += 1
             after_trigger_s = len(a["pcm"]) / 2 / 16000 - a["preroll_ms"] / 1000
-            end_now = False
-            if self.rec is not None:
-                # M6 endpointing (--endpoint): the VAD (default) or Vosk's own utterance endpoint -> END, once at
-                # least --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
-                blk = self.asr_fe(payload)
-                a.setdefault("asr_pcm", bytearray()).extend(blk)
-                ended_by = None
-                if blk and self.rec.AcceptWaveform(blk):
-                    seg = json.loads(self.rec.Result())
-                    a.setdefault("asr_segments", []).append(seg)
-                    if self.vad is None:
-                        ended_by = "asr"
+            if self.job is not None:
+                # M6 endpointing (--endpoint): the VAD here (default, cheap) or Vosk's endpoint in the ASR thread ->
+                # END once at least --min-after-s of post-trigger audio has arrived; hard cap --stream-s-max.
+                self.job.feed(payload, after_trigger_s)
                 if self.vad is not None and self.vad(payload):
-                    ended_by = "vad_" + self.vad.reason
-                if ended_by and after_trigger_s >= self.args.min_after_s and a["asr_endpoint_at_s"] is None:
-                    a["asr_endpoint_at_s"] = round(after_trigger_s, 3)
-                    a["endpoint_by"] = ended_by
-                    end_now = True
-                if after_trigger_s >= self.args.stream_s_max and a["endpoint_by"] is None:
-                    a["endpoint_by"] = "cap"
-                end_now = end_now or after_trigger_s >= self.args.stream_s_max
-            else:
-                end_now = after_trigger_s >= self.args.stream_s
-            if not a["end_sent"] and end_now:
-                self.send(F_END, struct.pack("<I", a["activation"]))
-                a["end_sent"] = True
-                a["t_end_sent_us"] = now_us()
+                    self.request_end(a, after_trigger_s, "vad_" + self.vad.reason)
+                if after_trigger_s >= self.args.stream_s_max:
+                    self.request_end(a, after_trigger_s, "cap")
+            elif after_trigger_s >= self.args.stream_s:
+                self.request_end(a, after_trigger_s, "cap")
         elif flags == F_OVERRUN and self.act:
             self.act["overrun"] = True
         elif flags == F_END and self.act:
@@ -245,27 +286,11 @@ class Session:
                                                 4: "socket_error"}.get(reason, reason), t_end_rx_us=t_rx))
 
     def finish(self, extra):
-        a = self.act
-        self.act = None
+        """Device END received (receive thread): timing fields now; files once the activation's ASR has finished."""
+        with self.end_lock:
+            a = self.act
+            self.act = None
         a.update(extra)
-        if self.rec is not None:
-            t0 = now_us()
-            segs = a.pop("asr_segments", []) + [json.loads(self.rec.FinalResult())]
-            words = [w for s in segs for w in s.get("result", [])]
-            pre = a["preroll_ms"] / 1000
-            a["asr_transcript"] = " ".join(w["word"] for w in words)
-            # Words starting inside the pre-roll carry the keyword; the rest is the "subsequent audio" (AMB-13).
-            a["asr_after_trigger"] = " ".join(w["word"] for w in words if w["start"] >= pre - 0.15)
-            a["asr_words"] = words
-            a["asr_final_latency_ms"] = round((now_us() - t0) / 1000, 2)
-            a["asr_conditioning"] = "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)"
-            if self.vad is not None:
-                a["vad_kw_dbfs"], a["vad_thr_dbfs"] = self.vad.kw_dbfs, self.vad.thr
-            a["asr_preroll_speech_dbfs"] = self.asr_fe.speech_dbfs
-            a["asr_gain_db"] = round(20 * math.log10(self.asr_fe.gain), 1) if self.asr_fe.gain else None
-            a["asr_grammar"] = bool(ASR_GRAMMAR)
-            self.rec = None
-            self.next_rec = new_recognizer()  # ready before the next START
         pcm = bytes(a.pop("pcm"))
         a["audio_seconds"] = round(len(pcm) / 2 / 16000, 3)
         if a["offset_us"] is not None:
@@ -273,35 +298,59 @@ class Session:
             a["L1_start_ms"] = round((a["t_start_rx_us"] - t_det_srv) / 1000, 3)
             a["L1_audio0_ms"] = round((a["t_audio0_rx_us"] - t_det_srv) / 1000, 3) if a["t_audio0_rx_us"] else None
             a["clock_uncertainty_ms_half_rtt"] = round(a["rtt_us"] / 2000, 3)
+        job, vad = self.job, self.vad
+        self.job, self.vad = None, None
+        if job is None:
+            self._complete(a, pcm, None, None)
+        else:
+            job.close(lambda: self._complete(a, pcm, job, vad))
+
+    def _complete(self, a, pcm, job, vad):
+        if job is not None:
+            words = job.words
+            pre = a["preroll_ms"] / 1000
+            a["asr_transcript"] = " ".join(w["word"] for w in words)
+            # Words starting inside the pre-roll carry the keyword; the rest is the "subsequent audio" (AMB-13).
+            a["asr_after_trigger"] = " ".join(w["word"] for w in words if w["start"] >= pre - 0.15)
+            a["asr_words"] = words
+            # transcript ready, measured from the device's END (queue drain + final decode, off the receive path)
+            a["asr_ready_after_end_ms"] = round((now_us() - a["t_end_rx_us"]) / 1000, 2)
+            a["asr_conditioning"] = "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)"
+            if vad is not None:
+                a["vad_kw_dbfs"], a["vad_thr_dbfs"] = vad.kw_dbfs, vad.thr
+            a["asr_preroll_speech_dbfs"] = job.fe.speech_dbfs
+            a["asr_gain_db"] = round(20 * math.log10(job.fe.gain), 1) if job.fe.gain else None
+            a["asr_grammar"] = bool(ASR_GRAMMAR)
         # Connection timestamp in the name: the device restarts activation numbering at 1 after every reboot, and
         # plain act0001.wav names overwrote earlier activations (session 20260927_192112, 19:30-19:52 files lost).
         stem = f"{self.conn_stamp}_act{a['activation']:04d}"
         a["file_stem"] = stem
-        asr_pcm = bytes(a.pop("asr_pcm", b""))
-        # <stem>.wav is the raw device stream (bit-exact, integrity checks); <stem>_asr.wav is what the ASR heard
-        # (high-pass + keyword-referenced gain) — audible for playback, since raw speech sits at about -30..-40 dBFS.
-        for name, data in ((f"{stem}.wav", pcm), (f"{stem}_asr.wav", asr_pcm)):
-            if not data:
-                continue
-            with wave.open(str(self.out / name), "wb") as w:
-                w.setnchannels(1)
-                w.setsampwidth(2)
-                w.setframerate(16000)
-                w.writeframes(data)
-        (self.out / f"{stem}.json").write_text(json.dumps(a, indent=2), encoding="utf-8")
-        new = not (self.out / "activations.csv").exists()
-        with open(self.out / "activations.csv", "a", newline="", encoding="utf-8") as f:
-            wr = csv.DictWriter(f, fieldnames=list(a))
-            if new:
-                wr.writeheader()
-            wr.writerow(a)
-        if "asr_transcript" in a:
-            print(f"    ASR: \"{a['asr_transcript']}\"  | after trigger: \"{a['asr_after_trigger']}\"  "
-                  f"(endpoint at {a['asr_endpoint_at_s']} s after trigger by {a.get('endpoint_by')})", flush=True)
-        print(f"[{a['wall_time']}] activation {a['activation']}: {a['audio_seconds']} s audio, "
-              f"L1_start {a.get('L1_start_ms')} ms, L1_audio0 {a.get('L1_audio0_ms')} ms "
-              f"(±{a.get('clock_uncertainty_ms_half_rtt')} ms clock), end={a['device_end_reason']}, "
-              f"overrun={a['overrun']}, seq_gaps={a['seq_gaps']} -> {stem}.wav", flush=True)
+        asr_pcm = bytes(job.asr_pcm) if job is not None else b""
+        with self.write_lock:  # AsrJob threads of consecutive activations may finish together
+            # <stem>.wav is the raw device stream (bit-exact, integrity checks); <stem>_asr.wav is what the ASR heard
+            # (high-pass + keyword-referenced gain) — audible for playback, since raw speech sits at about -30..-40 dBFS.
+            for name, data in ((f"{stem}.wav", pcm), (f"{stem}_asr.wav", asr_pcm)):
+                if not data:
+                    continue
+                with wave.open(str(self.out / name), "wb") as w:
+                    w.setnchannels(1)
+                    w.setsampwidth(2)
+                    w.setframerate(16000)
+                    w.writeframes(data)
+            (self.out / f"{stem}.json").write_text(json.dumps(a, indent=2), encoding="utf-8")
+            new = not (self.out / "activations.csv").exists()
+            with open(self.out / "activations.csv", "a", newline="", encoding="utf-8") as f:
+                wr = csv.DictWriter(f, fieldnames=list(a))
+                if new:
+                    wr.writeheader()
+                wr.writerow(a)
+            if "asr_transcript" in a:
+                print(f"    ASR: \"{a['asr_transcript']}\"  | after trigger: \"{a['asr_after_trigger']}\"  "
+                      f"(endpoint at {a['asr_endpoint_at_s']} s after trigger by {a.get('endpoint_by')})", flush=True)
+            print(f"[{a['wall_time']}] activation {a['activation']}: {a['audio_seconds']} s audio, "
+                  f"L1_start {a.get('L1_start_ms')} ms, L1_audio0 {a.get('L1_audio0_ms')} ms "
+                  f"(±{a.get('clock_uncertainty_ms_half_rtt')} ms clock), end={a['device_end_reason']}, "
+                  f"overrun={a['overrun']}, seq_gaps={a['seq_gaps']} -> {stem}.wav", flush=True)
 
 
 def serve(conn, addr, out, args):
@@ -332,6 +381,7 @@ def serve(conn, addr, out, args):
                 del buf[:HDR + n]
     except (ConnectionResetError, OSError) as e:
         print(f"connection error: {e}", flush=True)
+    s.drain()  # finished activations still being decoded get their files written
     print("device disconnected", flush=True)
 
 
