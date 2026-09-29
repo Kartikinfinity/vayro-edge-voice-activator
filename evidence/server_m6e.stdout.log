@@ -1,0 +1,9 @@
+ASR model loaded from D:\ps26172_ext\vosk\vosk-model-en-in-0.5 in 29.5 s
+ingest listening on 0.0.0.0:5005; writing to D:\ps26172\evidence\server\20260928_231705
+device connected from 192.168.1.9:51795
+device connected from 192.168.1.9:52232
+connection error: [WinError 10053] An established connection was aborted by the software in your host machine
+connection error: [WinError 10053] An established connection was aborted by the software in your host machine
+device disconnected
+device disconnected
+device connected from 192.168.1.9:52233

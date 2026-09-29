@@ -1,0 +1,216 @@
+{
+  "run": "20260929_192230_m6_v3_S01",
+  "n": 3,
+  "prompts": [
+    "v3_01",
+    "v3_02",
+    "v3_03",
+    "v3_04",
+    "v3_05",
+    "v3_06",
+    "v3_07",
+    "v3_08",
+    "v3_09",
+    "v3_10"
+  ],
+  "models": {
+    "v2b": {
+      "threshold": 0.8,
+      "hits": 10,
+      "of": 10,
+      "false_activations_outside_prompts": [],
+      "detections_s": [
+        8.58,
+        14.34,
+        18.0,
+        26.52,
+        28.92,
+        36.78,
+        44.16,
+        53.34,
+        63.18,
+        71.34,
+        80.34,
+        89.22
+      ],
+      "rows": [
+        {
+          "prompt": "v3_01",
+          "text": "Hey Vayro ... turn on the fan",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.986
+        },
+        {
+          "prompt": "v3_02",
+          "text": "Hey Vayro ... switch off the light",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.983
+        },
+        {
+          "prompt": "v3_03",
+          "text": "Hey Vayro ... what time is it",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.983
+        },
+        {
+          "prompt": "v3_04",
+          "text": "Hey Vayro ... play the next song",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.988
+        },
+        {
+          "prompt": "v3_05",
+          "text": "Hey Vayro ... set a timer for five minutes",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.995
+        },
+        {
+          "prompt": "v3_06",
+          "text": "Hey Vayro ... open the window",
+          "hit": true,
+          "max_p": 0.98,
+          "max_mean3": 0.956
+        },
+        {
+          "prompt": "v3_07",
+          "text": "Hey Vayro ... increase the volume",
+          "hit": true,
+          "max_p": 0.969,
+          "max_mean3": 0.862
+        },
+        {
+          "prompt": "v3_08",
+          "text": "Hey Vayro ... what is the temperature",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.996
+        },
+        {
+          "prompt": "v3_09",
+          "text": "Hey Vayro ... call my mother",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.996
+        },
+        {
+          "prompt": "v3_10",
+          "text": "Hey Vayro ... good night",
+          "hit": true,
+          "max_p": 0.984,
+          "max_mean3": 0.974
+        }
+      ]
+    },
+    "v4": {
+      "threshold": 0.7,
+      "hits": 10,
+      "of": 10,
+      "false_activations_outside_prompts": [],
+      "detections_s": [
+        8.52,
+        14.34,
+        18.0,
+        26.58,
+        28.92,
+        36.72,
+        44.16,
+        53.34,
+        63.18,
+        71.34,
+        80.28,
+        89.22
+      ],
+      "rows": [
+        {
+          "prompt": "v3_01",
+          "text": "Hey Vayro ... turn on the fan",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.996
+        },
+        {
+          "prompt": "v3_02",
+          "text": "Hey Vayro ... switch off the light",
+          "hit": true,
+          "max_p": 0.977,
+          "max_mean3": 0.941
+        },
+        {
+          "prompt": "v3_03",
+          "text": "Hey Vayro ... what time is it",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.991
+        },
+        {
+          "prompt": "v3_04",
+          "text": "Hey Vayro ... play the next song",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.995
+        },
+        {
+          "prompt": "v3_05",
+          "text": "Hey Vayro ... set a timer for five minutes",
+          "hit": true,
+          "max_p": 0.98,
+          "max_mean3": 0.969
+        },
+        {
+          "prompt": "v3_06",
+          "text": "Hey Vayro ... open the window",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.991
+        },
+        {
+          "prompt": "v3_07",
+          "text": "Hey Vayro ... increase the volume",
+          "hit": true,
+          "max_p": 0.973,
+          "max_mean3": 0.949
+        },
+        {
+          "prompt": "v3_08",
+          "text": "Hey Vayro ... what is the temperature",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.99
+        },
+        {
+          "prompt": "v3_09",
+          "text": "Hey Vayro ... call my mother",
+          "hit": true,
+          "max_p": 0.996,
+          "max_mean3": 0.996
+        },
+        {
+          "prompt": "v3_10",
+          "text": "Hey Vayro ... good night",
+          "hit": true,
+          "max_p": 0.992,
+          "max_mean3": 0.896
+        }
+      ]
+    }
+  },
+  "device_live_triggers_s": [
+    8.58,
+    14.34,
+    18.0,
+    26.52,
+    28.92,
+    36.78,
+    44.16,
+    53.34,
+    63.18,
+    71.34,
+    80.34,
+    89.22
+  ]
+}

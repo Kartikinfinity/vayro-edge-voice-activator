@@ -1,13 +1,51 @@
 {
   "applied_at": "2026-09-28T23:05",
   "rule_file": "model/artifacts/selection_rule_v4.json (declared 22:18, commit 3ffc188; amendment 1 commit fbaa1e9, both before the v4 build)",
-  "validation_S01_s2_prompt_score_N3": {"0.50": "17/25", "0.60": "17/25", "0.70": "17/25", "0.80": "15/25", "0.90": "15/25", "0.95": "15/25", "0.98": "14/25"},
+  "validation_S01_s2_prompt_score_N3": {
+    "0.50": "17/25",
+    "0.60": "17/25",
+    "0.70": "17/25",
+    "0.80": "15/25",
+    "0.90": "15/25",
+    "0.95": "15/25",
+    "0.98": "14/25"
+  },
   "threshold_outcome": "no threshold reached 20/25 -> maximum recall (17/25), ties -> higher threshold -> v4 @ 0.70",
-  "a_household_heldout_s5_ge_3600s": {"v2b@0.80": 13, "v4@0.70": 9, "exposure_h": 0.8625, "pass": true},
-  "b_S01_s3_keyword_prompt_recall": {"v4@0.70": "21/25", "v2b@0.80": "22/25 (earlier)", "confusable_prompt_FA_v4": "1/16 (neg_heyvayu_01)", "pass": true},
-  "c_heldout_night_c005_c009": {"v4@0.70": 0, "v2b@0.80": 1, "exposure_h": 5.0, "pass": true},
-  "d_fresh_command_session": "PENDING (host/scripts/m6_commands_v3.txt, recorded after v4 was frozen; model/eval/prompt_hits.py)",
-  "reported_not_in_rule": {"M6_v2_prompts": {"v2b@0.80": "6/10", "v4@0.70": "8/10 (misses: 03 weather, 07 turn on the light)"},
-                            "whole_household_recording": {"v2b@0.80": "39 FA / 2.469 h", "v4@0.70": "10 FA / 2.469 h (INCLUDES v4 training hours - not a fair comparison)"}},
-  "ship_decision": "PENDING rule (d)"
+  "a_household_heldout_s5_ge_3600s": {
+    "v2b@0.80": 13,
+    "v4@0.70": 9,
+    "exposure_h": 0.8625,
+    "pass": true
+  },
+  "b_S01_s3_keyword_prompt_recall": {
+    "v4@0.70": "21/25",
+    "v2b@0.80": "22/25 (earlier)",
+    "confusable_prompt_FA_v4": "1/16 (neg_heyvayu_01)",
+    "pass": true
+  },
+  "c_heldout_night_c005_c009": {
+    "v4@0.70": 0,
+    "v2b@0.80": 1,
+    "exposure_h": 5.0,
+    "pass": true
+  },
+  "d_fresh_command_session": {
+    "run": "20260929_192230_m6_v3_S01 (recorded 29 Sep 19:22, after v4 was frozen 28 Sep ~23:00)",
+    "v2b@0.80": "10/10",
+    "v4@0.70": "10/10",
+    "pass": true,
+    "note": "both models also fire a second time inside prompts 01 (14.34 s) and 03 (28.92 s), identically; cause unconfirmed (repeat or trigger on command words); no detections outside prompt windows"
+  },
+  "reported_not_in_rule": {
+    "M6_v2_prompts": {
+      "v2b@0.80": "6/10",
+      "v4@0.70": "8/10 (misses: 03 weather, 07 turn on the light)"
+    },
+    "whole_household_recording": {
+      "v2b@0.80": "39 FA / 2.469 h",
+      "v4@0.70": "10 FA / 2.469 h (INCLUDES v4 training hours - not a fair comparison)"
+    }
+  },
+  "ship_decision": "SHIP v4 @ 0.70 (N=3, stride 6, refractory 2 s): rules (a), (b), (c), (d) all pass",
+  "decided_at": "2026-09-29T19:30"
 }
