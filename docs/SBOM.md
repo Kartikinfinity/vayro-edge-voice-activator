@@ -14,8 +14,8 @@ automated build gate (`tools/forbidden_deps.py`, X25), which runs on every `tool
 | esp-nn | 1.4.1 | Apache-2.0 | optimised int8 conv / depthwise kernels | open source |
 | TFLM microfrontend | tflite-micro commit `aab6e2fd`, vendored unmodified | Apache-2.0 | log-mel front end (window, FFT, filterbank, noise reduction, PCAN, log) | `firmware/components/microfrontend/PROVENANCE.md` |
 | KissFFT | from esp-tflite-micro 1.4.1 | BSD-3-Clause | FFT used by the front end | |
-| Project firmware (`firmware/main`, `firmware/components/*` except vendored) | this repo | **to be set by the team** (Apache-2.0 proposed) | capture, ring, front-end glue, KWS engine, decision logic, netstream | original work |
-| KWS model (DS-CNN, 10 665 params, 28 024 B int8) | final model to be recorded here | original work (see §4 for training-data terms) | keyword "Hey Vayro" | **trained from random initialisation**; no pre-trained wake-word or speech model used (R6) |
+| Project firmware (`firmware/main`, `firmware/components/*` except vendored) | this repo | **Apache-2.0** (`LICENSE`, chosen by the team 29 Sep) | capture, ring, front-end glue, KWS engine, decision logic, netstream | original work |
+| KWS model **v4** (DS-CNN, 10 665 params, 28 024 B int8) | sha256 `fc280698770128b9…`, threshold 0.70 | Apache-2.0, original work (see §4 for training-data terms) | keyword "Hey Vayro" | **trained from random initialisation**; no pre-trained wake-word or speech model used (R6) |
 
 ## 2. Remote ASR server (PC; not part of the edge budget)
 
@@ -26,7 +26,7 @@ automated build gate (`tools/forbidden_deps.py`, X25), which runs on every `tool
 | vosk-model-en-in-0.5 | sha256 `0365c52f79308d81…`, 971 186 187 B zip | Apache-2.0 | primary ASR model (Indian English; publisher's WER 36.12 % on NPTEL) |
 | vosk-model-small-en-in-0.4 | sha256 `20663dcac4d5cb78…`, 37 573 330 B zip | Apache-2.0 | earlier ASR model (publisher's WER 49.05 % on NPTEL) |
 | numpy / scipy | 2.5.3 / 1.18.1 | BSD-3-Clause | ASR conditioning, VAD endpointing |
-| `server/*.py` | this repo | team licence | TCP ingest, clock sync, VAD endpoint, transcripts |
+| `server/*.py` | this repo | Apache-2.0 | TCP ingest, clock sync, VAD endpoint, transcripts |
 
 ## 3. Host tools (PC)
 
@@ -34,7 +34,7 @@ automated build gate (`tools/forbidden_deps.py`, X25), which runs on every `tool
 |---|---|---|---|
 | pyserial | 3.5 | BSD-3-Clause | USB link to the device |
 | esptool | bundled with ESP-IDF v5.5.5 | GPL-2.0-or-later | flashing, reset (tool only, not linked into firmware) |
-| `host/*.py` | this repo | team licence | capture, prompts, analysis |
+| `host/*.py` | this repo | Apache-2.0 | capture, prompts, analysis |
 
 ## 4. Training toolchain and data (offline; only the trained weights reach the device)
 

@@ -1,0 +1,20 @@
+SPDX-License-Identifier: Apache-2.0
+
+Copyright 2026 the PS26172 (SIH 2026) team
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Scope: the project's own firmware, server, host tools, training/evaluation code and the trained model weights.
+Third-party components keep their own licences (docs/SBOM.md): e.g. the vendored TFLM microfrontend (Apache-2.0),
+KissFFT (BSD-3-Clause), ESP-IDF (Apache-2.0) and the Espressif Wi-Fi binary libraries (Espressif licence).
+The model weights were trained partly on synthetic audio from TTS voices built on CC BY-NC datasets (see SBOM section 4).
