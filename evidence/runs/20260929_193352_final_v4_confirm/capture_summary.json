@@ -1,0 +1,275 @@
+{
+  "label": "final_v4_confirm",
+  "note": "Final firmware confirmation: v4@0.70 product build (DEC-22+24). 0-190 s idle (CPU), then 30 synthetic triggers every 10 s streamed to the ASR server (RAM peak)",
+  "host_start_local": "2026-09-29T19:33:53",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "warm (RTS reset)",
+  "port_losses": 0,
+  "reset_retries": 0,
+  "auto_resets_on_stall": 0,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "files": [
+        "audio_24bit.wav"
+      ],
+      "samples": 0,
+      "seconds": 0.0,
+      "audio_frames": 0,
+      "host_gap_count": 0,
+      "host_gap_samples": 0,
+      "host_gaps_first50": []
+    }
+  ],
+  "settle_s": null,
+  "script_file": null,
+  "script_segments": [],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "device_feature_frames": 0,
+  "device_posterior_frames": 0,
+  "device_kw_triggers": [
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 200.62
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 210.605
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 220.591
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 230.639
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 240.656
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 250.661
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 260.655
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 270.683
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 280.696
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 290.651
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 300.664
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 310.693
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 320.721
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 330.71
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 340.724
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 350.719
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 360.735
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 370.748
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 380.748
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 390.774
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 400.769
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 410.788
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 420.805
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 430.783
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 440.821
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 450.837
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 460.862
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 470.828
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 480.842
+    },
+    {
+      "type": "KW",
+      "synthetic": 1,
+      "streamed": 0,
+      "host_t": 490.877
+    }
+  ],
+  "crc_errors": 0,
+  "bad_length_frames": 0,
+  "device_last_stats": {
+    "type": "STATS",
+    "t_ms": 505419,
+    "samples": 8026240,
+    "pool_drops": 0,
+    "link_drops": 0,
+    "i2s_ovf": 0,
+    "short_reads": 0,
+    "level_dbfs": -40.2,
+    "peak16": 906,
+    "heap_free": 193144,
+    "heap_min": 189576,
+    "host_t": 504.893
+  },
+  "device_last_perf": {
+    "type": "PERF",
+    "t_ms": 505419,
+    "hwm_reader": 824,
+    "hwm_tx": 0,
+    "hwm_main": 1004,
+    "fe_frames": 50098,
+    "fe_cyc_mean": 105633,
+    "fe_cyc_max": 133105,
+    "inf_count": 8344,
+    "inf_cyc_mean": 485949,
+    "inf_cyc_max": 601468,
+    "kw_triggers": 0,
+    "host_t": 504.893
+  },
+  "device_boot": {
+    "type": "BOOT",
+    "idf": "v5.5.5",
+    "elf_sha": "b41ea9950",
+    "built": "Sep-29-2026_19:30:19",
+    "cores": 2,
+    "rev": 0.2,
+    "emb_psram": 0,
+    "flash_bytes": 4194304,
+    "cpu_mhz": 240,
+    "reset": "USB",
+    "host_t": 0.064
+  },
+  "device_cfg": {
+    "type": "CFG",
+    "fs": 16000,
+    "hop": 160,
+    "bck": 6,
+    "ws": 5,
+    "sd": 4,
+    "fmt": "MSB",
+    "bclk_inv": 0,
+    "settle_ms": 300,
+    "dma_desc": 4,
+    "dma_frames": 160,
+    "slot_bits": 32,
+    "i16_shift": 16,
+    "host_t": 0.064
+  },
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}
