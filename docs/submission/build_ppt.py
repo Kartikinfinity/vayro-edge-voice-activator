@@ -140,8 +140,7 @@ def slide2(s):
         "Training and device share one bit-exact feature pipeline (12 000 / 12 000 frames identical)",
         "Pre-roll ring buffer: a command spoken with no pause after the keyword is never clipped",
         "The device logs every trigger with its score, so real-home false triggers can be mined for retraining",
-        f"Models chosen by rules written before testing — and changed when new evidence says so; {LEDGER_N} "
-        "logged evidence entries"])
+        f"Selection rules declared before each test; {LEDGER_N} logged evidence entries"])
     sy, sh, sw, sg = 5.72, 1.08, 2.93, 0.19
     for k, (v, l) in enumerate([("28 KB", "int8 model · 13.4 KB tensor arena"),
                                 (f"{NUM['ram_kib']} KiB", "peak RAM while streaming (< 256 KB)"),

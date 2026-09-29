@@ -15,7 +15,7 @@ automated build gate (`tools/forbidden_deps.py`, X25), which runs on every `tool
 | TFLM microfrontend | tflite-micro commit `aab6e2fd`, vendored unmodified | Apache-2.0 | log-mel front end (window, FFT, filterbank, noise reduction, PCAN, log) | `firmware/components/microfrontend/PROVENANCE.md` |
 | KissFFT | from esp-tflite-micro 1.4.1 | BSD-3-Clause | FFT used by the front end | |
 | Project firmware (`firmware/main`, `firmware/components/*` except vendored) | this repo | **Apache-2.0** (`LICENSE`, chosen by the team 29 Sep) | capture, ring, front-end glue, KWS engine, decision logic, netstream | original work |
-| KWS model **v4** (DS-CNN, 10 665 params, 28 024 B int8) | sha256 `fc280698770128b9…`, threshold 0.70 | Apache-2.0, original work (see §4 for training-data terms) | keyword "Hey Vayro" | **trained from random initialisation**; no pre-trained wake-word or speech model used (R6) |
+| KWS model **v2b** (DS-CNN, 10 665 params, 28 024 B int8) | sha256 `f7c913efdbb28f64…`, threshold 0.80 (DEC-26) | Apache-2.0, original work (see §4 for training-data terms) | keyword "Hey Vayro" | **trained from random initialisation**; no pre-trained wake-word or speech model used (R6) |
 
 ## 2. Remote ASR server (PC; not part of the edge budget)
 

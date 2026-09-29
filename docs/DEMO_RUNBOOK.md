@@ -1,16 +1,17 @@
-# Demo video runbook (PS26172, final firmware: v4 @ 0.70, product configuration DEC-22 + DEC-24)
+# Demo video runbook (PS26172, final firmware: v2b @ 0.80 (DEC-26), product configuration DEC-22 + DEC-24)
 
 One continuous take, no cuts inside a step, no edited numbers. Target length 2:30–3:30. Record the screen (Win + Alt + R
 or OBS) and, if possible, a phone camera on the board at the same time.
 
 ## 0. Before recording (5 min)
 
+0. **PC awake (disable sleep), ASR server running** — a sleeping PC killed the server once (E-58).
 1. PC on the same Wi-Fi/LAN as the board, IP **192.168.1.13** (the server address is built into the firmware, E-41).
    Check: `ipconfig` shows `IPv4 Address . . . : 192.168.1.13`. Disable PC sleep for the session.
 2. Board on USB (COM7), mic ~30–50 cm from the speaker. TV off for the main part.
 3. Open two terminal windows side by side, font size ≥ 16.
 
-**Window A — ASR server** (wait for `ingest listening`, ~30 s model load):
+**Window A — ASR server** (wait for `ingest listening`, ~30 s model load; only one server can hold port 5005 — if it fails to start, another server is still running):
 ```
 D:/ps26172/.venv-host/Scripts/python.exe -u D:/ps26172/server/ingest.py --port 5005 --asr D:/ps26172_ext/vosk/vosk-model-en-in-0.5 --min-after-s 0.8 --stream-s-max 6
 ```
@@ -24,7 +25,7 @@ Show the ESP32-S3 N16R8 + INMP441 wiring (SCK→GPIO6, WS→GPIO5, SD→GPIO4, L
 on is processed on this microcontroller; only after the keyword does audio leave the device."
 
 ## 2. Boot (≈ 20 s, Window B)
-Point at: `@BOOT` (ESP-IDF 5.5.5, PSRAM disabled), `@KWS … run=v4 … model_bytes=28024 arena_used=…`,
+Point at: `@BOOT` (ESP-IDF 5.5.5, PSRAM disabled), `@KWS … run=v2b … model_bytes=28024 arena_used=13404`,
 `@MEM … streaming …`, `@NET wifi=up`, `@NET tcp=connected`, and in Window A `device connected`.
 
 ## 3. Keyword + command, 5 times (≈ 90 s)
@@ -45,8 +46,8 @@ Talk normally for ~15 s without the keyword (e.g. read a sentence aloud). Show t
 
 ## 5. Efficiency on screen (≈ 20 s)
 Wait for an `@CPU` line in Window B (every 10 s): `core1_busy` ≈ 9 %, `core0_busy` ≈ 1 %. Point at `@MEM … int_min_free`.
-Say the measured figures from the evidence: peak RAM while streaming 243.8 KiB (E-53), idle CPU 4.8 % mean of both
-cores (E-56).
+Say the measured figures from the evidence: peak RAM while streaming 245.0 KiB and idle CPU 5.5 % mean of both cores,
+busiest core ≤ 9.5 % (E-60).
 
 ## 6. Close (≈ 10 s)
 Ctrl+C in Window B (it prints `Saved run`), then Ctrl+C in Window A. The run folder `evidence/runs/*_demo_video` and the
