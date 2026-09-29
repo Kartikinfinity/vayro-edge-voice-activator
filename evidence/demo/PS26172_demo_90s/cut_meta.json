@@ -1,0 +1,12 @@
+{
+  "out": "D:\\ps26172\\evidence\\demo\\PS26172_demo_90s.mp4",
+  "demo_take": "evidence\\demo\\20260929_221334_demo_term",
+  "efficiency_take": "evidence\\demo\\20260929_221050_efficiency_term",
+  "demo_segment_video_s": 9.628,
+  "efficiency_segment_video_s": 16.92,
+  "audio_wall0": 1790700231.4010003,
+  "audio_s0": 38976,
+  "gain_db": 18.0,
+  "kw_used": 7,
+  "rule": "real time; the only edit is one cut between the two takes"
+}

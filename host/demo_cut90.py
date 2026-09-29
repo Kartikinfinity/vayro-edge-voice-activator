@@ -33,7 +33,10 @@ def flash_time(video, rect):
     pts = [float(m) for m in re.findall(rb"pts_time:([\d.]+)", p.stderr)]
     fr = np.frombuffer(p.stdout, np.uint8).reshape(-1, 160).mean(axis=1)
     n = min(len(pts), len(fr))
-    idx = np.nonzero(fr[:n] > 200)[0]
+    fr = fr[:n]
+    med, top = float(np.median(fr)), float(fr.max())
+    # console "white" is light grey and the crop includes the title bar: threshold halfway between background and peak
+    idx = np.nonzero(fr > med + 0.5 * (top - med))[0] if top - med > 60 else []
     if not len(idx):
         raise SystemExit(f"no sync flash in {video}")
     return pts[int(idx[0])], pts[n - 1]

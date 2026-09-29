@@ -1,0 +1,201 @@
+    0.064 @BOOT idf=v5.5.5 elf_sha=5b4021c07 built=Sep-29-2026_21:49:40 cores=2 rev=0.2 emb_psram=0 flash_bytes=4194304 cpu_mhz=240 reset=USB
+    0.064 @SYNC host_waited_ms=470
+    0.064 @CFG fs=16000 hop=160 bck=6 ws=5 sd=4 fmt=MSB bclk_inv=0 settle_ms=300 dma_desc=4 dma_frames=160 slot_bits=32 i16_shift=16
+    0.064 @MEM tag=boot int_total=289708 int_free=264032 int_min_free=264032 int_largest=237568 dma_free=256244 psram=disabled_in_sdkconfig
+    1.367 @DIAG phase=stereo bytes_per_s=127964
+    1.367 @DIAG phase=stereo slot=0 n=16000 dc=-531879.8 rms24=553267.4 rms_dbfs=-20.60 peak_dbfs=-20.89 lowbyte_nz_frac=0.0000 lsb1_frac=0.4989 zero_frac=0.0000 first_nz_ms=0.56
+    1.367 @DIAG phase=stereo slot=1 n=16000 dc=0.0 rms24=0.0 rms_dbfs=-999.00 peak_dbfs=-999.00 lowbyte_nz_frac=0.0000 lsb1_frac=0.0000 zero_frac=1.0000 first_nz_ms=-1.00
+    1.666 @ALIGN cfg=PHILIPS s0_rms_dbfs=-6.65 s0_dc=1992370.8 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.1502 s1_zero_frac=0.8498
+    1.977 @ALIGN cfg=MSB s0_rms_dbfs=-12.87 s0_dc=949149.2 s0_lsb1_frac=0.4850 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    2.267 @ALIGN cfg=PHILIPS_INV s0_rms_dbfs=-6.86 s0_dc=1902950.1 s0_lsb1_frac=0.0000 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.1628 s1_zero_frac=0.8373
+    2.568 @ALIGN cfg=MSB_INV s0_rms_dbfs=-21.28 s0_dc=-509092.5 s0_lsb1_frac=0.4978 s0_lowbyte_nz=0.0000 s1_rms_dbfs=-999.00 s1_lowbyte_nz=0.0000 s1_zero_frac=1.0000
+    3.105 @DIAG phase=mono mask=LEFT bytes_per_s=63976 rms_dbfs=-15.44 zero_frac=0.0000
+    3.105 @DIAG decision active_stereo_slot=0 mono_mask=LEFT no_signal=0 mono_vs_stereo_db=5.16
+    3.105 @CFG fe_sha256=5bd00bc673ecb2b3d94504299da456b8cb1107981d02bae0360feaf1642b57ac fe_window_ms=30 fe_hop_ms=10 fe_bands=40 fe_mel_hz=125-6500 fe_pcan=1
+    3.105 @MEM tag=fe_init int_total=289708 int_free=252404 int_min_free=252404 int_largest=237568 dma_free=244616 psram=disabled_in_sdkconfig
+    3.105 @FETAB canonical_tables_applied=1
+    3.105 @FETAB names=window,fb_freq_starts,fb_weight_starts,fb_widths,fb_weights,pcan_lut,fft_twiddles,fft_super_twiddles hashes=b78b64c2,e73b27bb,7a035269,b8666abd,6c637b80,5b0a1634,595c34d1,92f59174
+    3.105 @KWS init=ESP_OK run=v2b model_sha256=f7c913efdbb28f64 model_bytes=28024 arena_bytes=16384 arena_used=13404 win=100 bands=40 stride=6 avg_n=3 thr_pct=80 refractory_ms=2000 detect_gpio=15
+    3.105 @MEM tag=kws_init int_total=289708 int_free=252404 int_min_free=252404 int_largest=237568 dma_free=244616 psram=disabled_in_sdkconfig
+    3.105 @CFG net=1 server=192.168.1.13:5005 preroll_ms=571 stream_max_ms=10000 wifi_ps_none=1
+    3.167 I (3835) pp: pp rom version: e7ae62f
+    3.167 I (3835) net80211: net80211 rom version: e7ae62f
+    3.167 I (3837) wifi:
+    3.167 wifi driver task: 3fcb2fec, prio:23, stack:6656, core=0
+    3.167 
+    3.167 I (3844) wifi:
+    3.167 wifi firmware version: b9f67df
+    3.167 
+    3.167 I (3844) wifi:
+    3.167 wifi certification version: v7.0
+    3.167 
+    3.167 I (3844) wifi:
+    3.167 config NVS flash: enabled
+    3.167 
+    3.167 I (3844) wifi:
+    3.167 config nano formatting: disabled
+    3.167 
+    3.167 I (3844) wifi:
+    3.167 Init data frame dynamic rx buffer num: 16
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init static rx mgmt buffer num: 5
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init management short buffer num: 32
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init dynamic tx buffer num: 8
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init static tx FG buffer num: 2
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init static rx buffer size: 1600
+    3.167 
+    3.167 I (3845) wifi:
+    3.167 Init static rx buffer num: 4
+    3.167 
+    3.167 I (3846) wifi:
+    3.167 Init dynamic rx buffer num: 16
+    3.167 
+    3.167 I (3847) wifi_init: accept mbox: 6
+    3.167 I (3847) wifi_init: tcpip mbox: 32
+    3.167 I (3847) wifi_init: udp mbox: 6
+    3.167 I (3847) wifi_init: tcp mbox: 6
+    3.167 I (3847) wifi_init: tcp tx win: 4096
+    3.167 I (3847) wifi_init: tcp rx win: 4096
+    3.167 I (3847) wifi_init: tcp mss: 1440
+    3.167 W (3848) wifi:
+    3.167 Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+    3.167 
+    3.167 I (3848) phy_init: phy_version 712,87e8c20e,Apr 13 2026,18:51:10
+    3.167 I (3883) wifi:
+    3.167 mode : sta (e0:72:a1:xx:xx:xx)
+    3.167 
+    3.167 I (3884) wifi:
+    3.167 enable tsf
+    3.167 
+    3.167 I (3886) wifi:
+    3.167 Set ps type: 0, coexist: 0
+    3.167 
+    3.221 @MEM tag=net_start int_total=289708 int_free=202248 int_min_free=202248 int_largest=188416 dma_free=194460 psram=disabled_in_sdkconfig
+    3.222 I (3894) wifi:
+    3.222 new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
+    3.222 
+    3.222 I (3895) wifi:
+    3.222 state: init -> auth (0xb0)
+    3.222 
+    3.222 I (3901) wifi:
+    3.222 state: auth -> assoc (0x0)
+    3.222 
+    3.222 I (3907) wifi:
+    3.222 state: assoc -> run (0x10)
+    3.222 
+    3.397 @MEM tag=streaming int_total=289708 int_free=194480 int_min_free=194300 int_largest=180224 dma_free=186692 psram=disabled_in_sdkconfig
+    3.397 I (4116) wifi:
+    3.397 connected with home-wifi-redacted, aid = 1, channel 11, BW20, bssid = b4:86:18:xx:xx:xx
+    3.397 
+    3.397 I (4117) wifi:
+    3.397 security: WPA2-PSK, phy: bgn, rssi: -48, cipher(pairwise:0x3, group:0x1), pmf:0
+    3.397 
+    3.459 I (4119) wifi:
+    3.459 pm start, type: 0
+    3.459 
+    3.459 I (4119) wifi:
+    3.459 dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+    3.459 
+    3.459 I (4119) wifi:
+    3.459 set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+    3.459 
+    3.459 I (4128) wifi:
+    3.459 AP's beacon interval = 102400 us, DTIM period = 1
+    3.459 
+    4.389 @STATS t_ms=4868 samples=18240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-26.0 peak16=7179 heap_free=193728 heap_min=191056
+    4.389 @PERF t_ms=4868 hwm_reader=856 hwm_tx=0 hwm_main=1004 fe_frames=98 fe_cyc_mean=102527 fe_cyc_max=200772 inf_count=3 inf_cyc_mean=0 inf_cyc_max=0 kw_triggers=0
+    4.635 I (5309) esp_netif_handlers: sta ip: 192.168.1.9, mask: 255.255.255.0, gw: 192.168.1.1
+    4.635 @NET wifi=up ip=192.168.1.9
+    4.635 @NET tcp=connected server=192.168.1.13:5005
+    5.371 @STATS t_ms=5869 samples=34240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.7 peak16=487 heap_free=193220 heap_min=189876
+    5.371 @PERF t_ms=5869 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=198 fe_cyc_mean=107139 fe_cyc_max=194098 inf_count=19 inf_cyc_mean=0 inf_cyc_max=0 kw_triggers=0
+    6.386 @STATS t_ms=6870 samples=50240 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-46.4 peak16=278 heap_free=193220 heap_min=189876
+    6.386 @PERF t_ms=6870 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=298 fe_cyc_mean=106749 fe_cyc_max=146829 inf_count=36 inf_cyc_mean=0 inf_cyc_max=0 kw_triggers=0
+    7.400 @STATS t_ms=7871 samples=66400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.4 peak16=236 heap_free=193220 heap_min=189876
+    7.400 @PERF t_ms=7871 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=398 fe_cyc_mean=107542 fe_cyc_max=165649 inf_count=53 inf_cyc_mean=551044 inf_cyc_max=957804 kw_triggers=0
+    8.398 @STATS t_ms=8872 samples=82400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-48.3 peak16=489 heap_free=193220 heap_min=189876
+    8.398 @PERF t_ms=8872 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=498 fe_cyc_mean=107754 fe_cyc_max=152582 inf_count=69 inf_cyc_mean=551044 inf_cyc_max=957804 kw_triggers=0
+    9.420 @STATS t_ms=9873 samples=98400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-49.3 peak16=352 heap_free=193220 heap_min=189876
+    9.420 @PERF t_ms=9873 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=598 fe_cyc_mean=104997 fe_cyc_max=144430 inf_count=86 inf_cyc_mean=551044 inf_cyc_max=957804 kw_triggers=0
+   10.390 @STATS t_ms=10874 samples=114400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-51.0 peak16=202 heap_free=193220 heap_min=189876
+   10.390 @PERF t_ms=10874 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=698 fe_cyc_mean=104545 fe_cyc_max=129345 inf_count=103 inf_cyc_mean=517435 inf_cyc_max=740871 kw_triggers=0
+   11.409 @STATS t_ms=11875 samples=130400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-52.3 peak16=189 heap_free=193220 heap_min=189876
+   11.409 @PERF t_ms=11875 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=798 fe_cyc_mean=104417 fe_cyc_max=124008 inf_count=119 inf_cyc_mean=517435 inf_cyc_max=740871 kw_triggers=0
+   12.382 @STATS t_ms=12876 samples=146400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-53.5 peak16=204 heap_free=193220 heap_min=189876
+   12.382 @PERF t_ms=12876 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=898 fe_cyc_mean=104727 fe_cyc_max=131298 inf_count=136 inf_cyc_mean=517435 inf_cyc_max=740871 kw_triggers=0
+   13.425 @STATS t_ms=13877 samples=162400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.2 peak16=691 heap_free=193220 heap_min=189876
+   13.425 @PERF t_ms=13877 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=998 fe_cyc_mean=104173 fe_cyc_max=123936 inf_count=153 inf_cyc_mean=508991 inf_cyc_max=595930 kw_triggers=0
+   14.398 @STATS t_ms=14877 samples=178400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.9 peak16=785 heap_free=193220 heap_min=189876
+   14.398 @PERF t_ms=14877 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1098 fe_cyc_mean=104109 fe_cyc_max=132570 inf_count=169 inf_cyc_mean=508991 inf_cyc_max=595930 kw_triggers=0
+   15.380 @STATS t_ms=15878 samples=194400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=538 heap_free=193220 heap_min=189876
+   15.380 @PERF t_ms=15878 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1198 fe_cyc_mean=104322 fe_cyc_max=131060 inf_count=186 inf_cyc_mean=508991 inf_cyc_max=595930 kw_triggers=0
+   16.407 @STATS t_ms=16879 samples=210400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.8 peak16=580 heap_free=193220 heap_min=189876
+   16.407 @PERF t_ms=16879 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1298 fe_cyc_mean=104238 fe_cyc_max=126416 inf_count=203 inf_cyc_mean=511070 inf_cyc_max=605029 kw_triggers=0
+   17.383 @STATS t_ms=17880 samples=226400 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.4 peak16=528 heap_free=193220 heap_min=189876
+   17.383 @PERF t_ms=17880 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1398 fe_cyc_mean=104570 fe_cyc_max=123974 inf_count=219 inf_cyc_mean=511070 inf_cyc_max=605029 kw_triggers=0
+   18.409 @STATS t_ms=18881 samples=242560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.7 peak16=570 heap_free=193220 heap_min=189876
+   18.409 @PERF t_ms=18881 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1498 fe_cyc_mean=105920 fe_cyc_max=184716 inf_count=236 inf_cyc_mean=511070 inf_cyc_max=605029 kw_triggers=0
+   19.389 @STATS t_ms=19882 samples=258560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.3 peak16=537 heap_free=193220 heap_min=189876
+   19.389 @PERF t_ms=19882 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1598 fe_cyc_mean=104123 fe_cyc_max=130471 inf_count=253 inf_cyc_mean=514765 inf_cyc_max=635200 kw_triggers=0
+   20.418 @STATS t_ms=20883 samples=274560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.8 peak16=569 heap_free=193220 heap_min=189876
+   20.418 @PERF t_ms=20883 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1698 fe_cyc_mean=104593 fe_cyc_max=124266 inf_count=270 inf_cyc_mean=514765 inf_cyc_max=635200 kw_triggers=0
+   21.394 @STATS t_ms=21884 samples=290560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.4 peak16=535 heap_free=193220 heap_min=189876
+   21.394 @PERF t_ms=21884 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1798 fe_cyc_mean=104085 fe_cyc_max=128577 inf_count=286 inf_cyc_mean=514765 inf_cyc_max=635200 kw_triggers=0
+   22.400 @STATS t_ms=22885 samples=306560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.1 peak16=539 heap_free=193220 heap_min=189876
+   22.400 @PERF t_ms=22885 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1898 fe_cyc_mean=104127 fe_cyc_max=124447 inf_count=303 inf_cyc_mean=511455 inf_cyc_max=619225 kw_triggers=0
+   23.431 @CPU interval_ms=10009 core0_busy=0.80 core1_busy=8.77 reader=8.74 streamer=0.00 netlink=0.11 wifi=0.41 tcpip=0.00
+   23.431 @STATS t_ms=23888 samples=322560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.9 peak16=586 heap_free=193220 heap_min=189876
+   23.431 @PERF t_ms=23888 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=1998 fe_cyc_mean=103805 fe_cyc_max=122136 inf_count=320 inf_cyc_mean=511455 inf_cyc_max=619225 kw_triggers=0
+   24.398 @STATS t_ms=24887 samples=338560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.9 peak16=530 heap_free=193220 heap_min=189876
+   24.398 @PERF t_ms=24887 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2098 fe_cyc_mean=104387 fe_cyc_max=135213 inf_count=336 inf_cyc_mean=511455 inf_cyc_max=619225 kw_triggers=0
+   25.437 @STATS t_ms=25887 samples=354560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-41.0 peak16=535 heap_free=193220 heap_min=189876
+   25.437 @PERF t_ms=25887 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2198 fe_cyc_mean=104617 fe_cyc_max=130440 inf_count=353 inf_cyc_mean=513766 inf_cyc_max=612649 kw_triggers=0
+   26.391 @STATS t_ms=26888 samples=370560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-26.3 peak16=3468 heap_free=193220 heap_min=189876
+   26.391 @PERF t_ms=26888 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2298 fe_cyc_mean=104303 fe_cyc_max=128617 inf_count=370 inf_cyc_mean=513766 inf_cyc_max=612649 kw_triggers=0
+   27.434 @STATS t_ms=27889 samples=386560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-30.6 peak16=1570 heap_free=193220 heap_min=189876
+   27.434 @PERF t_ms=27889 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2398 fe_cyc_mean=104071 fe_cyc_max=131892 inf_count=386 inf_cyc_mean=513766 inf_cyc_max=612649 kw_triggers=0
+   28.408 @STATS t_ms=28890 samples=402560 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.2 peak16=724 heap_free=193220 heap_min=189876
+   28.408 @PERF t_ms=28890 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2498 fe_cyc_mean=105872 fe_cyc_max=147414 inf_count=403 inf_cyc_mean=510164 inf_cyc_max=640489 kw_triggers=0
+   29.394 @STATS t_ms=29891 samples=418720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.7 peak16=694 heap_free=193220 heap_min=189876
+   29.394 @PERF t_ms=29891 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2598 fe_cyc_mean=104707 fe_cyc_max=129286 inf_count=420 inf_cyc_mean=510164 inf_cyc_max=640489 kw_triggers=0
+   30.430 @STATS t_ms=30892 samples=434720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-40.6 peak16=1084 heap_free=193220 heap_min=189876
+   30.430 @PERF t_ms=30892 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2698 fe_cyc_mean=105054 fe_cyc_max=136304 inf_count=436 inf_cyc_mean=510164 inf_cyc_max=640489 kw_triggers=0
+   31.409 @STATS t_ms=31893 samples=450720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.5 peak16=728 heap_free=193220 heap_min=189876
+   31.409 @PERF t_ms=31893 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2798 fe_cyc_mean=104586 fe_cyc_max=132000 inf_count=453 inf_cyc_mean=514791 inf_cyc_max=628816 kw_triggers=0
+   32.443 @STATS t_ms=32894 samples=466720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.3 peak16=592 heap_free=193220 heap_min=189876
+   32.443 @PERF t_ms=32894 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2898 fe_cyc_mean=104976 fe_cyc_max=133334 inf_count=470 inf_cyc_mean=514791 inf_cyc_max=628816 kw_triggers=0
+   33.397 @CPU interval_ms=10009 core0_busy=0.86 core1_busy=8.79 reader=8.74 streamer=0.00 netlink=0.11 wifi=0.47 tcpip=0.00
+   33.397 @STATS t_ms=33897 samples=482720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.8 peak16=569 heap_free=193220 heap_min=189876
+   33.397 @PERF t_ms=33897 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=2998 fe_cyc_mean=104708 fe_cyc_max=134553 inf_count=486 inf_cyc_mean=514791 inf_cyc_max=628816 kw_triggers=0
+   34.440 @STATS t_ms=34896 samples=498720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.1 peak16=808 heap_free=193220 heap_min=189876
+   34.440 @PERF t_ms=34896 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3098 fe_cyc_mean=104639 fe_cyc_max=135226 inf_count=503 inf_cyc_mean=516535 inf_cyc_max=630133 kw_triggers=0
+   35.395 @STATS t_ms=35896 samples=514720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-42.8 peak16=619 heap_free=193220 heap_min=189876
+   35.395 @PERF t_ms=35896 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3198 fe_cyc_mean=104897 fe_cyc_max=136477 inf_count=520 inf_cyc_mean=516535 inf_cyc_max=630133 kw_triggers=0
+   36.422 @STATS t_ms=36897 samples=530720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-36.4 peak16=857 heap_free=193220 heap_min=189876
+   36.422 @PERF t_ms=36897 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3298 fe_cyc_mean=104494 fe_cyc_max=130669 inf_count=536 inf_cyc_mean=516535 inf_cyc_max=630133 kw_triggers=0
+   37.404 @STATS t_ms=37897 samples=546720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.2 peak16=772 heap_free=193220 heap_min=189876
+   37.404 @PERF t_ms=37897 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3398 fe_cyc_mean=104699 fe_cyc_max=124691 inf_count=553 inf_cyc_mean=515147 inf_cyc_max=610426 kw_triggers=0
+   38.427 @STATS t_ms=38898 samples=562720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.4 peak16=683 heap_free=193220 heap_min=189876
+   38.427 @PERF t_ms=38898 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3498 fe_cyc_mean=105259 fe_cyc_max=157100 inf_count=570 inf_cyc_mean=515147 inf_cyc_max=610426 kw_triggers=0
+   39.393 @STATS t_ms=39899 samples=578720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.5 peak16=686 heap_free=193220 heap_min=189876
+   39.393 @PERF t_ms=39899 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3598 fe_cyc_mean=104492 fe_cyc_max=126431 inf_count=586 inf_cyc_mean=515147 inf_cyc_max=610426 kw_triggers=0
+   40.444 @STATS t_ms=40900 samples=594720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-34.2 peak16=3075 heap_free=193220 heap_min=189876
+   40.444 @PERF t_ms=40900 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3698 fe_cyc_mean=104502 fe_cyc_max=124947 inf_count=603 inf_cyc_mean=513784 inf_cyc_max=630193 kw_triggers=0
+   41.425 @STATS t_ms=41901 samples=610880 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-34.1 peak16=994 heap_free=193220 heap_min=189876
+   41.425 @PERF t_ms=41901 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3798 fe_cyc_mean=104165 fe_cyc_max=138777 inf_count=620 inf_cyc_mean=513784 inf_cyc_max=630193 kw_triggers=0
+   42.409 @STATS t_ms=42902 samples=626720 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-38.9 peak16=727 heap_free=193220 heap_min=189876
+   42.409 @PERF t_ms=42902 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3898 fe_cyc_mean=104268 fe_cyc_max=125311 inf_count=637 inf_cyc_mean=513784 inf_cyc_max=630193 kw_triggers=0
+   43.446 @CPU interval_ms=10008 core0_busy=0.78 core1_busy=8.78 reader=8.76 streamer=0.00 netlink=0.11 wifi=0.40 tcpip=0.00
+   43.447 @STATS t_ms=43905 samples=642880 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-39.6 peak16=631 heap_free=193220 heap_min=189876
+   43.447 @PERF t_ms=43905 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=3998 fe_cyc_mean=104425 fe_cyc_max=130040 inf_count=653 inf_cyc_mean=511302 inf_cyc_max=601075 kw_triggers=0
+   44.432 @STATS t_ms=44904 samples=658880 pool_drops=0 link_drops=0 i2s_ovf=0 short_reads=0 level_dbfs=-37.4 peak16=1463 heap_free=193220 heap_min=189876
+   44.432 @PERF t_ms=44904 hwm_reader=824 hwm_tx=0 hwm_main=1004 fe_frames=4098 fe_cyc_mean=104622 fe_cyc_max=126615 inf_count=670 inf_cyc_mean=511302 inf_cyc_max=601075 kw_triggers=0

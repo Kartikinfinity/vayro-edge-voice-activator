@@ -1,0 +1,41 @@
+{
+  "mode": "demo",
+  "region": [
+    0,
+    0,
+    1440,
+    816
+  ],
+  "rects": {
+    "server": [
+      0,
+      0,
+      620,
+      816
+    ],
+    "device": [
+      620,
+      0,
+      820,
+      580
+    ],
+    "prompt": [
+      620,
+      580,
+      820,
+      236
+    ]
+  },
+  "fonts": {
+    "server": 17,
+    "device": 16,
+    "prompt": 26
+  },
+  "started": 1790700214.7544866,
+  "recording_started": 1790700224.2430143,
+  "device_started": 1790700227.0050044,
+  "t0": 1790700237.8369708,
+  "recording_stopped": 1790700306.4517534,
+  "flash_wall": 1790700225.7754755,
+  "capture_run": "D:\\ps26172\\evidence\\runs\\20260929_221347_demo90_demo"
+}

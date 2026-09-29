@@ -1,0 +1,4 @@
+# keep only the takes used in the final video (and their logs); raw screens of void takes stay local
+*/screen.mp4
+!20260929_221334_demo_term/screen.mp4
+!20260929_221050_efficiency_term/screen.mp4

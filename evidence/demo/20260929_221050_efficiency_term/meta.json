@@ -1,0 +1,40 @@
+{
+  "mode": "efficiency",
+  "region": [
+    0,
+    0,
+    1440,
+    816
+  ],
+  "rects": {
+    "server": [
+      0,
+      0,
+      620,
+      816
+    ],
+    "device": [
+      620,
+      0,
+      820,
+      580
+    ],
+    "prompt": [
+      620,
+      580,
+      820,
+      236
+    ]
+  },
+  "fonts": {
+    "server": 17,
+    "device": 16,
+    "prompt": 26
+  },
+  "started": 1790700050.5729368,
+  "recording_started": 1790700054.236254,
+  "device_started": 1790700057.0021107,
+  "recording_stopped": 1790700098.2121828,
+  "flash_wall": 1790700055.7864554,
+  "capture_run": "D:\\ps26172\\evidence\\runs\\20260929_221057_demo90_efficiency"
+}
