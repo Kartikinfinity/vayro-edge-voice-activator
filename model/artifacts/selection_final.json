@@ -1,0 +1,10 @@
+{
+  "decided_at": "2026-09-29T20:20",
+  "decided_by": "team (user), on the evidence below",
+  "shipped": {"model": "v2b", "threshold": 0.80, "N": 3, "stride_frames": 6, "refractory_s": 2.0,
+              "tflite_sha256_prefix": "f7c913efdbb28f64"},
+  "overrides": "selection_v4_outcome.json (v4 @ 0.70 passed its declared rules a-d on S01-only accuracy data)",
+  "reason": "First new-speaker test (E-59, run 20260929_201213_kw_S02_s1, not used by either model): v4 14/25 vs v2b 20/25 keyword prompts; v4 1-2 m 4/13 vs v2b 10/13. The v4 rule had no new-speaker criterion because no second speaker existed when it was declared. All real keyword tests after v4 was built: v2b 58/70, v4 53/70.",
+  "accepted_cost": "higher false activations with TV/family speech: household held-out 13 FA (15.1/h) vs v4 9 (10.4/h); quiet night 1 vs 0 in 5 h",
+  "transparency": "this is a post-hoc decision against a declared rule; it is reported as such in the ledger (E-60) and in the deck"
+}
