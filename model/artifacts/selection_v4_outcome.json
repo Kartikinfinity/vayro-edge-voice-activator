@@ -47,5 +47,12 @@
     }
   },
   "ship_decision": "SHIP v4 @ 0.70 (N=3, stride 6, refractory 2 s): rules (a), (b), (c), (d) all pass",
-  "decided_at": "2026-09-29T19:30"
+  "decided_at": "2026-09-29T19:30",
+  "selected": {
+    "model": "v4",
+    "threshold": 0.7,
+    "N": 3,
+    "stride_frames": 6,
+    "refractory_s": 2.0
+  }
 }
