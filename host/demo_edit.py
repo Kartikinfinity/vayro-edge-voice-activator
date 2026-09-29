@@ -105,12 +105,13 @@ def demo_audio(info, t_start, t_len):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--demo", required=True)
-    ap.add_argument("--eff", required=True)
+    ap.add_argument("--eff", default="", help="efficiency take (optional: without it, part 2 is omitted)")
     ap.add_argument("--out", default=str(ROOT / "evidence" / "demo" / "PS26172_demo_video.mp4"))
     args = ap.parse_args()
     work = pathlib.Path(args.out).with_suffix("")
     work.mkdir(parents=True, exist_ok=True)
-    dm, ef = take_info(args.demo), take_info(args.eff)
+    dm = take_info(args.demo)
+    ef = take_info(args.eff) if args.eff else None
     team = TEAM["team_name"]
     card(work / "title.png", [
         ("SMART INDIA HACKATHON 2026  \u00b7  PROBLEM STATEMENT 26172", "seguisb.ttf", 34, MUTED, 0),
@@ -127,23 +128,34 @@ def main():
         ("The configuration judged against the PS limits (< 256 KB RAM, < 10 % CPU while idle-listening):",
          "segoeui.ttf", 34, TXT, 40),
         ("same model v2b, no USB audio stream. Live device lines, real time.", "segoeui.ttf", 34, TXT, 4)])
-    card(work / "end.png", [
-        ("MEASURED RESULTS  (evidence ledger IDs in brackets)", "seguisb.ttf", 34, MUTED, -40),
-        ("Peak RAM while streaming   245.0 KiB  (< 256 KB)   [E-60]", "consola.ttf", 40, TXT, 30),
-        ("Idle CPU                   5.5 % both cores, busiest core \u2264 9.5 %   [E-60]", "consola.ttf", 40, TXT, 6),
-        ("Model                      28 KB int8, 10.7 k params, runs every 60 ms", "consola.ttf", 40, TXT, 6),
-        ("Keyword end \u2192 server      \u2248 95 ms median, p95 136 ms   [E-37]", "consola.ttf", 40, TXT, 6),
-        ("Keyword accuracy           22/25 speaker 1, 20/25 new speaker   [E-59]", "consola.ttf", 40, TXT, 6),
-        ("False triggers             1 in 5 h quiet night; 15.1 /h with TV   [E-51]", "consola.ttf", 40, ORANGE, 6),
-        ("Open source only \u00b7 custom keyword trained from scratch \u00b7 no vendor voice SDK", "segoeui.ttf", 32,
-         GREEN, 40),
-        (f"Raw logs of these takes: evidence/demo/{dm['dir'].name}, {ef['dir'].name}", "segoeui.ttf", 26, MUTED, 20)])
+    end = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(end)
+    rows = [("Peak RAM while streaming", "245.0 KiB  (limit 256 KB)", "E-60", TXT),
+            ("Idle CPU", "5.5 % both cores · busiest core ≤ 9.5 %  (limit 10 %)", "E-60", TXT),
+            ("Keyword model", "28 KB int8 · 10.7 k parameters · every 60 ms", "", TXT),
+            ("Keyword end → server", "95 ms median · 136 ms p95", "E-37", TXT),
+            ("Keyword accuracy", "22 / 25 speaker 1 · 20 / 25 new speaker", "E-59", TXT),
+            ("False triggers", "1 in 5 h quiet night · 15.1 / h with TV on", "E-51", ORANGE)]
+    y = 250
+    d.text((150, y - 90), "MEASURED RESULTS", font=font("seguisb.ttf", 34), fill=MUTED)
+    for lab, val, eid, col in rows:
+        d.text((150, y), lab, font=font("segoeui.ttf", 38), fill=MUTED)
+        d.text((720, y), val, font=font("seguisb.ttf", 38), fill=col)
+        if eid:
+            d.text((1640, y + 6), f"[{eid}]", font=font("segoeui.ttf", 28), fill=MUTED)
+        y += 78
+    d.text((150, y + 40), "Open source only · custom keyword trained from scratch · no vendor voice SDK",
+           font=font("seguisb.ttf", 32), fill=GREEN)
+    d.text((150, y + 100), "Raw logs of this recording: evidence/demo/" + dm["dir"].name +
+           (f", {ef['dir'].name}" if ef else "") + "   ·   [E-xx] = entry in the project's evidence ledger",
+           font=font("segoeui.ttf", 24), fill=MUTED)
+    end.save(work / "end.png")
     # segments (real time, only the part before the sync flash is dropped)
     d0 = dm["t_flash"] + 0.6
     d_len = dm["dur"] - d0
-    e0 = ef["t_flash"] + 0.6
-    e_len = ef["dur"] - e0
-    T_TITLE, T_P2, T_END = 7.0, 5.0, 12.0
+    e0 = ef["t_flash"] + 0.6 if ef else 0.0
+    e_len = ef["dur"] - e0 if ef else 0.0
+    T_TITLE, T_P2, T_END = 7.0, (5.0 if ef else 0.0), 12.0
     audio, ainfo = demo_audio(dm, d0, d_len)
     total = T_TITLE + d_len + T_P2 + e_len + T_END
     track = np.zeros(int(round(total * SR)), np.int16)
@@ -156,24 +168,23 @@ def main():
         w.writeframes(track.tobytes())
     fit = f"scale=1728:1080:flags=lanczos,pad={W}:{H}:96:0:color=0x0B1220,setsar=1,fps={FPS},format=yuv420p"
     still = f"scale={W}:{H},setsar=1,fps={FPS},format=yuv420p"
-    fc = (f"[0:v]{still}[t];"
-          f"[1:v]trim=start={d0:.3f}:duration={d_len:.3f},setpts=PTS-STARTPTS,{fit}[d];"
-          f"[2:v]{still}[p];"
-          f"[3:v]trim=start={e0:.3f}:duration={e_len:.3f},setpts=PTS-STARTPTS,{fit}[e];"
-          f"[4:v]{still}[z];"
-          f"[t][d][p][e][z]concat=n=5:v=1:a=0[v]")
-    cmd = [FF, "-hide_banner", "-loglevel", "error", "-y",
-           "-loop", "1", "-t", str(T_TITLE), "-i", str(work / "title.png"),
-           "-i", str(dm["dir"] / "screen.mp4"),
-           "-loop", "1", "-t", str(T_P2), "-i", str(work / "part2.png"),
-           "-i", str(ef["dir"] / "screen.mp4"),
-           "-loop", "1", "-t", str(T_END), "-i", str(work / "end.png"),
-           "-i", str(work / "audio.wav"),
-           "-filter_complex", fc, "-map", "[v]", "-map", "5:a",
+    ins = ["-loop", "1", "-t", str(T_TITLE), "-i", str(work / "title.png"), "-i", str(dm["dir"] / "screen.mp4")]
+    fc = f"[0:v]{still}[t];[1:v]trim=start={d0:.3f}:duration={d_len:.3f},setpts=PTS-STARTPTS,{fit}[d];"
+    parts = "[t][d]"
+    k = 2
+    if ef:
+        ins += ["-loop", "1", "-t", str(T_P2), "-i", str(work / "part2.png"), "-i", str(ef["dir"] / "screen.mp4")]
+        fc += (f"[2:v]{still}[p];[3:v]trim=start={e0:.3f}:duration={e_len:.3f},setpts=PTS-STARTPTS,{fit}[e];")
+        parts += "[p][e]"
+        k = 4
+    ins += ["-loop", "1", "-t", str(T_END), "-i", str(work / "end.png"), "-i", str(work / "audio.wav")]
+    fc += f"[{k}:v]{still}[z];{parts}[z]concat=n={parts.count('[') + 1}:v=1:a=0[v]"
+    cmd = [FF, "-hide_banner", "-loglevel", "error", "-y"] + ins + [
+           "-filter_complex", fc, "-map", "[v]", "-map", f"{k + 1}:a",
            "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-profile:v", "high", "-movflags", "+faststart",
            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest", args.out]
     subprocess.run(cmd, check=True)
-    meta = {"out": args.out, "demo_take": str(dm["dir"]), "efficiency_take": str(ef["dir"]),
+    meta = {"out": args.out, "demo_take": str(dm["dir"]), "efficiency_take": str(ef["dir"]) if ef else None,
             "demo_capture_run": str(dm["run"]), "demo_segment_s": [round(d0, 3), round(d_len, 3)],
             "efficiency_segment_s": [round(e0, 3), round(e_len, 3)], "audio": ainfo,
             "processing": "no speed change; only frames before each take's sync flash dropped; audio = device "

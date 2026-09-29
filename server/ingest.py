@@ -251,6 +251,8 @@ class Session:
                         "offset_us": self.offset_us, "rtt_us": self.rtt_us, "pings": self.pings,
                         "pcm": bytearray(), "packets": 0, "seq_gaps": 0, "last_seq": 0, "end_sent": False,
                         "overrun": False, "wall_time": dt.datetime.now().isoformat(timespec="milliseconds")}
+            if getattr(self.args, "print_style", "full") == "compact":
+                print(f"{dt.datetime.now():%H:%M:%S}  stream {act} started: keyword detected on the device", flush=True)
             if ASR_MODEL is not None:
                 self.act["asr_endpoint_at_s"] = None
                 self.act["endpoint_by"] = None
@@ -344,6 +346,18 @@ class Session:
                 if new:
                     wr.writeheader()
                 wr.writerow(a)
+            if getattr(self.args, "print_style", "full") == "compact":
+                # demo console: the same facts, short lines (colour: ANSI, the console enables VT mode)
+                l1 = a.get("L1_audio0_ms")
+                print(f"{dt.datetime.now():%H:%M:%S}  stream {a['activation']}: {a['audio_seconds']:.1f} s audio, first "
+                      f"audio +{l1:.1f} ms, {a['seq_gaps']} lost" if l1 is not None else
+                      f"{dt.datetime.now():%H:%M:%S}  stream {a['activation']}: {a['audio_seconds']:.1f} s audio",
+                      flush=True)
+                if "asr_after_trigger" in a:
+                    heard = a["asr_after_trigger"]
+                    print(f"          heard: \x1b[92m\"{heard}\"\x1b[0m" if heard else
+                          "          heard: \x1b[90m(nothing after the keyword)\x1b[0m", flush=True)
+                return
             if "asr_transcript" in a:
                 print(f"    ASR: \"{a['asr_transcript']}\"  | after trigger: \"{a['asr_after_trigger']}\"  "
                       f"(endpoint at {a['asr_endpoint_at_s']} s after trigger by {a.get('endpoint_by')})", flush=True)
@@ -354,7 +368,12 @@ class Session:
 
 
 def serve(conn, addr, out, args):
-    print(f"device connected from {addr[0]}:{addr[1]}", flush=True)
+    if args.print_style == "compact":
+        print(f"{dt.datetime.now():%H:%M:%S}  device connected ({addr[0]})", flush=True)
+    else:
+        print(f"device connected from {addr[0]}:{addr[1]}", flush=True)
+    if args.status_file:
+        pathlib.Path(args.status_file).write_text(f"connected {time.time():.3f} {addr[0]}\n", encoding="utf-8")
     conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     s = Session(conn, out, args)
     buf = bytearray()
@@ -393,6 +412,9 @@ def main():
     ap.add_argument("--min-after-s", type=float, default=0.5, help="with --asr: minimum post-trigger audio before END")
     ap.add_argument("--stream-s-max", type=float, default=6.0, help="with --asr: hard cap after the trigger")
     ap.add_argument("--grammar", default="", help="with --asr: JSON phrase list restricting recognition (e.g. server/commands.json)")
+    ap.add_argument("--print-style", choices=["full", "compact"], default="full",
+                    help="compact: short live lines for a demo console (files and JSON unchanged)")
+    ap.add_argument("--status-file", default="", help="written when a device connects (demo orchestration)")
     ap.add_argument("--endpoint", choices=["vad", "asr"], default="vad",
                     help="with --asr: END on the server VAD (default) or on the Vosk utterance endpoint")
     args = ap.parse_args()

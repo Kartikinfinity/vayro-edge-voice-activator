@@ -205,6 +205,8 @@ def main():
                     help="Windows: hold ES_SYSTEM_REQUIRED while recording (released on exit; no settings changed)")
     ap.add_argument("--wall-s", type=float, default=0,
                     help="stop after this many WALL seconds regardless of audio (product builds stream no audio)")
+    ap.add_argument("--echo-stats", action="store_true", help="also echo @STATS/@PERF lines to stdout (live dashboards)")
+    ap.add_argument("--color", action="store_true", help="ANSI colour for @KW/@STREAM/@CPU/@MEM lines (demo console)")
     ap.add_argument("--send", default="", help='timed host->device bytes, e.g. "T@20,T@35" (T = synthetic trigger)')
     ap.add_argument("--fs", type=int, default=16000)
     ap.add_argument("--out-root", default=str(ROOT / "evidence" / "runs"))
@@ -383,8 +385,13 @@ def main():
                             last_stats = rec
                         elif rec["type"] == "PERF":
                             last_perf = rec
-                        else:
-                            print("\n" + text.strip(), end="")
+                        if rec["type"] not in ("STATS", "PERF") or args.echo_stats:
+                            line = text.strip()
+                            if args.color:  # demo console: highlight the lines a viewer should notice
+                                col = {"KW": "92", "STREAM": "96", "CPU": "93", "MEM": "93"}.get(rec["type"])
+                                line = f"\x1b[{col}m{line}\x1b[0m" if col else line
+                            print("\n" + line, end="")
+                    log.flush()
 
             now = time.time()
             while sends and got_frame and now - t_start >= sends[0][0]:
@@ -452,6 +459,7 @@ def main():
         "label": args.label,
         "note": args.note,
         "host_start_local": dt.datetime.fromtimestamp(t_start).isoformat(timespec="seconds"),
+        "host_t0_epoch": round(t_start, 3),  # host_t of every event is relative to this wall time
         "port": port,
         "port_kind": port_kind,
         "baud": args.baud,

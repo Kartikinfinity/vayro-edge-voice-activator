@@ -67,13 +67,16 @@ class Proc:
             buf += ch
             while b"\n" in buf:
                 raw, buf = buf.split(b"\n", 1)
-                # progress lines rewrite themselves with \r; Windows ends lines with \r\n -> strip that first
-                line = raw.decode("utf-8", "replace").rstrip("\r").split("\r")[-1].rstrip()
+                # the console rewrites its progress line with \r and device lines share that physical line:
+                # every \r-separated segment is its own line (Windows also ends lines with \r\n)
                 t = now()
-                self.log.write(f"{t:.3f} {line}\n")
-                self.log.flush()
-                if line.strip():
+                for seg in raw.decode("utf-8", "replace").split("\r"):
+                    line = seg.rstrip()
+                    if not line.strip():
+                        continue
+                    self.log.write(f"{t:.3f} {line}\n")
                     self.q.put((self.name, line, t))
+                self.log.flush()
         self.q.put((self.name, None, now()))
 
 
@@ -134,7 +137,7 @@ class Dashboard:
         label = f"demo_video_{self.mode}"
         note = ("Demo video take (demo mode): capture firmware v2b, speaker prompted on screen" if self.mode == "demo"
                 else "Demo video take (efficiency mode): product firmware v2b, idle listening")
-        cmd = [PY, "-u", "host/capture.py", "--port", "COM7", "--wall-s", str(self.args.wall_s), "--label", label,
+        cmd = [PY, "-u", "host/capture.py", "--port", "COM7", "--wall-s", str(self.args.wall_s), "--echo-stats", "--label", label,
                "--note", note]
         self.root.after(2600, lambda: self._start_dev(cmd))
 
@@ -361,9 +364,10 @@ class Dashboard:
             yy = y1 + 52
             for a in reversed(self.acts[-4:]):
                 self.txt(52, yy, f"#{a['act']}", ("Segoe UI Semibold", 18), BLUE)
-                tr = a.get("after") or a.get("transcript") or ""
-                self.txt(110, yy - 2, f"\u201c{tr}\u201d" if tr else "(no words recognised)", ("Segoe UI Semibold", 19),
-                         TXT if tr else MUTED)
+                # only the words AFTER the keyword (the pre-roll holds the keyword itself, which the ASR mis-hears)
+                tr = a.get("after") or ""
+                self.txt(110, yy - 2, f"\u201c{tr}\u201d" if tr else "(no command after the keyword)",
+                         ("Segoe UI Semibold", 19), TXT if tr else MUTED)
                 by = {"vad_trailing_silence": "end of speech (VAD)", "vad_no_speech": "no speech (VAD)",
                       "cap": "6 s cap", "asr": "ASR endpoint"}.get(a.get("by"), a.get("by", "?"))
                 self.txt(110, yy + 32, f"first audio at server +{a['l1_audio0']} ms after detection \u00b7 stream ended: "
@@ -406,7 +410,8 @@ class Dashboard:
         self.raw(RX + 18, ry + 36, self.srv_lines, 16, W - RX - 64)
 
     def raw(self, x, y, lines, n, wpx):
-        keep = [l for l in lines if not l.strip().startswith("recorded")][-n:]
+        # high-rate status lines (1 Hz @STATS/@PERF) stay in the saved logs but would flood this small panel
+        keep = [l for l in lines if not l.strip().startswith(("recorded", "@STATS", "@PERF"))][-n:]
         maxc = max(20, wpx // 8)
         for k, l in enumerate(keep):
             s = l.strip()
