@@ -19,6 +19,9 @@ TEMPLATE = ROOT / "SIH2026-IDEA-Presentation-Format (3).pptx"
 WORK = HERE / "build"
 OUT = HERE / "PS26172_SIH2026_Idea.pptx"
 TEAM = json.loads((HERE / "team.json").read_text(encoding="utf-8"))
+# Measured numbers of the SHIPPED firmware (v2b @ 0.80, DEC-26) - filled from the final confirmation runs (ledger E-60).
+NUM = json.loads((HERE / "numbers.json").read_text(encoding="utf-8"))
+LEDGER_N = len(re.findall(r"^\| E-\d+ \|", (ROOT / "docs" / "EVIDENCE_LEDGER.md").read_text(encoding="utf-8"), re.M))
 
 EMU = 914400
 NAVY, BLUE, ORANGE, GREEN, RED = "1F497D", "0070C0", "E46C0A", "2E7D32", "C0504D"
@@ -125,23 +128,24 @@ def slide2(s):
     card(s, xs[0], y, w, h, "Detailed explanation of the proposed solution", [
         "ESP32-S3 + INMP441 microphone listen continuously; every 10 ms the chip computes a 40-band log-mel frame",
         "A 10.7 k-parameter DS-CNN (28 KB int8, TensorFlow Lite Micro + ESP-NN) scores the last 1 s every 60 ms",
-        "“Hey Vayro” detected (mean of 3 scores ≥ 0.70) → 571 ms pre-roll + live audio stream over "
+        "“Hey Vayro” detected (mean of 3 scores ≥ 0.80) → 571 ms pre-roll + live audio stream over "
         "one warm TCP link",
         "Server: VAD ends the utterance, Vosk (Kaldi) ASR returns the command text"])
     card(s, xs[1], y, w, h, "How it addresses the problem", [
         "No audio leaves the device until the keyword is detected → privacy, zero cloud cost while idle",
-        "Inside the PS budget on real hardware: 245.6 KiB peak RAM, 4.7 % idle CPU",
+        f"Inside the PS budget on real hardware: {NUM['ram_kib']} KiB peak RAM, {NUM['cpu_c3']} % idle CPU",
         "Low latency: first audio at the server ≈ 2 ms after detection; keyword end → server ≈ 95 ms",
         "Only open-source components; custom keyword trained from scratch (no pre-trained wake word)"])
     card(s, xs[2], y, w, h, "Innovation and uniqueness of the solution", [
         "Training and device share one bit-exact feature pipeline (12 000 / 12 000 frames identical)",
         "Pre-roll ring buffer: a command spoken with no pause after the keyword is never clipped",
-        "Learns from real homes: its own logged false triggers become hard negatives (model v4)",
-        "Each model is chosen by a rule written before testing; 58 logged evidence entries"])
+        "The device logs every trigger with its score, so real-home false triggers can be mined for retraining",
+        f"Models chosen by rules written before testing — and changed when new evidence says so; {LEDGER_N} "
+        "logged evidence entries"])
     sy, sh, sw, sg = 5.72, 1.08, 2.93, 0.19
     for k, (v, l) in enumerate([("28 KB", "int8 model · 13.4 KB tensor arena"),
-                                ("245.6 KiB", "peak RAM while streaming (< 256 KB)"),
-                                ("4.7 %", "idle CPU, both cores (busiest core 8.8 %)"),
+                                (f"{NUM['ram_kib']} KiB", "peak RAM while streaming (< 256 KB)"),
+                                (f"{NUM['cpu_c3']} %", f"idle CPU, both cores (busiest core {NUM['cpu_core_max']} %)"),
                                 ("≈ 95 ms", "keyword end → server (median)")]):
         stat(s, 0.5 + k * (sw + sg), sy, sw, sh, v, l, color=ORANGE if k in (1, 2) else NAVY)
 
@@ -163,7 +167,7 @@ def slide3(s):
     s.text(x0, 1.82, W, 0.3, [para(run("Runtime — on the ESP32-S3 until the keyword, then the server", 11,
                                        MUTED, b=True))])
     steps = [("Mic", "I2S, 16 kHz, 24-bit"), ("Front end", "30/10 ms, 40 log-mel"), ("DS-CNN", "int8, 1 s window, "
-             "every 60 ms"), ("Decide", "mean of 3 ≥ 0.70, 2 s refractory"), ("Ring", "0.75 s, 571 ms pre-roll"),
+             "every 60 ms"), ("Decide", "mean of 3 ≥ 0.80, 2 s refractory"), ("Ring", "0.75 s, 571 ms pre-roll"),
              ("Wi-Fi TCP", "40 ms packets, warm link"), ("Server", "VAD end-point → Vosk ASR")]
     bw, aw = 1.02, 0.235
     for k, (t, d) in enumerate(steps):
@@ -205,12 +209,12 @@ def slide3(s):
 def slide4(s):
     s.text(0.5, 1.28, 12.3, 0.4, [pointer("Analysis of the feasibility of the idea — measured on the physical "
                                           "prototype, final firmware", 16)])
-    cols = [("Efficiency", [("245.6 KiB", "peak RAM, streaming (< 256 KB)"),
-                            ("4.7 %", "idle CPU, 2 cores (max core 8.8 %)"),
+    cols = [("Efficiency", [(f"{NUM['ram_kib']} KiB", "peak RAM, streaming (< 256 KB)"),
+                            (f"{NUM['cpu_c3']} %", f"idle CPU, 2 cores (max core {NUM['cpu_core_max']} %)"),
                             ("28 KB", "model flash · 13.4 KB arena")]),
-            ("Accuracy (model v4)", [("21 / 25", "held-out keyword prompts, 0.5–2 m"),
-                                     ("10 / 10", "fresh keyword + command prompts"),
-                                     ("0 in 5 h", "false triggers, quiet night (held-out)")]),
+            ("Accuracy (shipped model v2b)", [("22 / 25", "held-out prompts, speaker 1, 0.5–2 m"),
+                                              ("20 / 25", "new speaker, never trained on"),
+                                              ("1 in 5 h", "false triggers, quiet night (held-out)")]),
             ("Latency", [("1.7 ms", "detection → first packet at server"),
                          ("≈ 95 ms", "keyword end → server (median)"),
                          ("136 ms", "keyword end → server (p95)")])]
@@ -227,10 +231,10 @@ def slide4(s):
     s.box(tx, ty, c1, 0.4, [pointer("Potential challenges and risks", 13)], fill=CARD, anchor="ctr", inset=0.1)
     s.box(tx + c1 + 0.08, ty, tw - c1 - 0.08, 0.4, [pointer("Strategies for overcoming these challenges", 13)],
           fill=CARD2, anchor="ctr", inset=0.1)
-    rows = [("TV / family speech still triggers: 10.4 per hour (held-out household audio)",
-             "Hard negatives mined from the device’s own false triggers already cut 15.1 → 10.4 /h; next: more "
-             "household hours, server-side second check that drops streams with no command"),
-            ("Real-voice testing so far: one main speaker (plus TTS voices in 4 accents)",
+    rows = [("TV / family speech still triggers: 15.1 per hour (held-out household audio)",
+             "Mining the device’s own false triggers cut this to 10.4 /h (model v4), but v4 lost new-speaker "
+             "recall (14/25), so v2b ships; next: retrain with more speakers and household audio together"),
+            ("Real voices tested so far: two speakers (plus TTS voices in 4 accents)",
              "Scripted 3-minute sessions for new speakers; per-speaker results reported separately"),
             ("Server ASR word accuracy is set by the ASR model (Vosk en-in: 36 % WER published)",
              "Edge is ASR-agnostic: swap in a larger model or a command grammar on the server only"),
@@ -263,7 +267,7 @@ def slide5(s):
               NAVY, CARD),
              ("Economic", "Hardware ≈ ₹1 000 (estimate); open-source stack; no cloud cost while listening",
               ORANGE, "FDF0E6"),
-             ("Environmental", "Low compute (4.7 % CPU idle); audio is sent only after the keyword, so traffic "
+             ("Environmental", f"Low compute ({NUM['cpu_c3']} % CPU idle); audio is sent only after the keyword, so traffic "
               "stays tiny. Wi-Fi is kept awake for latency; power not yet measured", GREEN, CARD2),
              ("Technical", "Reproducible: a new keyword = new recordings + the same scripts; every number traceable "
               "to an evidence log", NAVY, CARD)]
@@ -297,7 +301,7 @@ def slide6(s):
     s.box(0.5, 1.8, 7.95, 5.0, ps, fill=CARD, geom="roundRect", inset=0.16)
     s.box(8.62, 1.8, 4.21, 5.0, [
         para(run("Our own research record", 14, NAVY, b=True), after=6)] + bullets([
-            ("Evidence ledger: ", "58 entries, each tagged measured / estimated / proposed, with its raw data"),
+            ("Evidence ledger: ", f"{LEDGER_N} entries, each tagged measured / estimated / proposed, with its raw data"),
             ("Selection rules: ", "written and committed before each held-out test"),
             ("SBOM: ", "every component and licence listed; the one closed Wi-Fi radio blob and the non-commercial TTS voices are disclosed"),
             ("Licence: ", "our code Apache-2.0; every component’s licence listed in the SBOM"),
