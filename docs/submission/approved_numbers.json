@@ -1,54 +1,268 @@
 {
   "_doc": "Single approved set of numbers and wording (EVIDENCE_CONSISTENCY_SHEET.md, section C). status: approved | conditional | needs_confirmation. Not yet wired into build_ppt.py (PPT and video unchanged).",
-  "built": "2026-09-30",
+  "built": "2026-09-30 (T1 added)",
   "items": {
-    "ram_peak": {"value_bytes": 250899, "value_kib": 245.0, "status": "approved", "evidence": ["E-60", "E-53"],
-      "wording": "Peak RAM while streaming: 245 KiB - under the 256 KB limit (final firmware; static 139.7 KB + peak heap 111.2 KB)"},
-    "cpu_idle_both_cores_pct": {"range": [4.8, 5.5], "quote": 5.5, "status": "approved", "evidence": ["E-56", "E-58", "E-60"],
-      "wording": "Idle CPU while listening, Wi-Fi connected: 5.5 % averaged over both cores (worst of our runs)"},
-    "cpu_idle_busiest_core_pct": {"range": [8.6, 9.5], "quote": 9.5, "status": "approved", "evidence": ["E-43", "E-56", "E-60", "E-61"],
-      "wording": "Busiest core <= 9.5 % (8.6-9.5 % across runs; it rises with Wi-Fi traffic)"},
-    "cpu_demo_build_pct": {"idle_core1": 10.87, "streaming_core1": 11.54, "status": "approved", "evidence": ["household_eve_20260928 (n=822)", "E-61"],
-      "wording": "The demo build also sends the microphone audio to the PC over USB (+~2 % CPU); the product firmware idles at 8.8 %", "use": "video narration only"},
-    "model": {"bytes": 28024, "params": 10665, "macs": 212584, "arena_used_bytes": 13404, "status": "approved", "evidence": ["model/artifacts/v2b/metrics.json", "@KWS"],
-      "wording": "28 KB int8 model, 10.7 k parameters, 213 k MACs per inference, 13.4 KB tensor arena"},
-    "cadence": {"frame_ms": 10, "window_s": 1.02, "stride_ms": 60, "status": "approved",
-      "wording": "Every 10 ms a 40-band log-mel frame; the model scores the last 1 s every 60 ms"},
-    "decision": {"n": 3, "threshold": 0.80, "refractory_ms": 2000, "status": "approved",
-      "wording": "Detection when the mean of 3 scores >= 0.80; 2 s refractory"},
-    "latency_keyword_end_to_server_ms": {"median": 95, "p95": 136, "n": 22, "status": "conditional", "evidence": ["E-37"],
-      "condition": "27 Sep, LAN, non-ASR server, keyword-only prompts",
-      "wording": "Keyword end -> audio at the server: 95 ms median, 136 ms p95 (LAN, n = 22); about 84 ms of it is the on-device 3-score confirmation"},
-    "latency_keyword_end_to_server_with_asr_ms": {"median": 81, "p95": 172, "n": 9, "status": "conditional", "evidence": ["E-62"],
-      "wording": "With the ASR running: 81 ms median, 172 ms p95 (n = 9)"},
-    "latency_detection_to_first_audio_ms": {"median_range": [2, 11], "p95_max": 22, "status": "approved", "evidence": ["E-37", "E-62"],
-      "wording": "First audio reaches the server 2-11 ms (median) after detection; <= 22 ms at p95 with the ASR running"},
-    "streaming": {"preroll_ms": 571, "payload_bytes_per_s": 32000, "status": "approved", "evidence": ["DEC-22", "E-44", "E-60"],
-      "wording": "Audio is sent only after a detection: from 571 ms before it until the end of speech, 16 kHz 16-bit (32 kB/s); streams arrive complete and bit-exact"},
-    "no_clipping": {"status": "approved", "evidence": ["E-37", "E-62"],
-      "wording": "A command spoken straight after the keyword is inside the stream: it starts 571 ms before the detection, which comes <= 164 ms after the keyword ends (measured)"},
-    "recall_speaker1": {"hits": 22, "of": 25, "confusables": "2/16", "status": "approved", "evidence": ["E-35"],
-      "wording": "Speaker 1, held-out session, 0.5-2 m: 22 of 25 keywords"},
-    "recall_new_speaker": {"hits": 20, "of": 25, "by_distance": {"0.5m": "10/12", "1m": "6/8", "2m": "4/5"}, "confusables": "1/16", "status": "approved", "evidence": ["E-59"],
-      "wording": "New speaker never used in training: 20 of 25"},
-    "false_triggers_quiet": {"count": 1, "hours": 5.0, "per_hour": 0.2, "status": "approved", "evidence": ["E-39"],
-      "wording": "Quiet room: 1 false trigger in 5 h (held-out night)", "rule": "always quote together with false_triggers_tv"},
-    "false_triggers_tv": {"count": 39, "hours": 2.47, "per_hour": 15.8, "status": "approved", "evidence": ["E-51"],
-      "wording": "Active household with TV/talk: 15.8 false triggers per hour - our main open issue"},
-    "false_triggers_v4_comparison": {"v2b_per_hour": 15.1, "v4_per_hour": 10.4, "hours": 0.8625, "v4_new_speaker": "14/25", "status": "approved", "evidence": ["E-55", "E-59"],
-      "wording": "Retraining with the device's own false triggers cut this to 10.4 /h (v4) but lowered new-speaker recall to 14/25, so v2b ships"},
-    "asr": {"publisher_wer_pct": 36.12, "demo_exact": "3/4", "status": "approved", "evidence": ["alphacephei.com/vosk/models", "E-61"],
-      "wording": "Server ASR: off-the-shelf Vosk en-in (publisher's WER 36 %); in the demo 3 of 4 commands were transcribed exactly"},
-    "openness": {"status": "approved", "evidence": ["firmware/build_usbjtag_product/ps26172_fw.map", "forbidden_deps PASS", "docs/SBOM.md"],
-      "wording": "No proprietary voice SDK (checked on every build). The whole keyword pipeline is open source; the only closed code on the chip is Espressif's Wi-Fi/PHY radio driver and boot ROM, disclosed in the SBOM."},
-    "licence": {"status": "approved", "evidence": ["LICENSE", "docs/SBOM.md"],
-      "wording": "Our code is Apache-2.0. Two of the four TTS voices used for training are non-commercial, so commercial use needs retraining without them."},
-    "privacy": {"status": "approved", "wording": "Audio leaves the device only after a detection - true or false."},
-    "speakers": {"real": 2, "tts_voices": 4, "status": "approved", "evidence": ["E-35", "E-59", "docs/SBOM.md"],
-      "wording": "Tested on 2 real speakers; trained with 4 TTS voices (US, UK, non-native English, Hindi) plus speaker 1"},
-    "platform_scope": {"status": "approved", "wording": "ESP32-S3 (not 'any ESP32-class')"},
-    "evidence_count": {"value": 62, "status": "conditional", "condition": "after E-08..E-16 are marked superseded"},
-    "hardware_cost": {"status": "needs_confirmation", "needs": "BOM prices"},
-    "prototype_photo": {"status": "needs_confirmation", "needs": "photo; breadboard or not"}
+    "ram_peak": {
+      "value_bytes": 250899,
+      "value_kib": 245.0,
+      "status": "approved",
+      "evidence": [
+        "E-60",
+        "E-53"
+      ],
+      "wording": "Peak RAM while streaming: 245 KiB - under the 256 KB limit (final firmware; static 139.7 KB + peak heap 111.2 KB)"
+    },
+    "cpu_idle_both_cores_pct": {
+      "range": [
+        4.8,
+        5.5
+      ],
+      "quote": 5.5,
+      "status": "approved",
+      "evidence": [
+        "E-56",
+        "E-58",
+        "E-60"
+      ],
+      "wording": "Idle CPU while listening, Wi-Fi connected: 5.5 % averaged over both cores (worst of our runs)"
+    },
+    "cpu_idle_busiest_core_pct": {
+      "range": [
+        8.6,
+        9.5
+      ],
+      "quote": 9.5,
+      "status": "approved",
+      "evidence": [
+        "E-43",
+        "E-56",
+        "E-60",
+        "E-61"
+      ],
+      "wording": "Busiest core <= 9.5 % (8.6-9.5 % across runs; it rises with Wi-Fi traffic)"
+    },
+    "cpu_demo_build_pct": {
+      "idle_core1": 10.87,
+      "streaming_core1": 11.54,
+      "status": "approved",
+      "evidence": [
+        "household_eve_20260928 (n=822)",
+        "E-61"
+      ],
+      "wording": "The demo build also sends the microphone audio to the PC over USB (+~2 % CPU); the product firmware idles at 8.8 %",
+      "use": "video narration only"
+    },
+    "model": {
+      "bytes": 28024,
+      "params": 10665,
+      "macs": 212584,
+      "arena_used_bytes": 13404,
+      "status": "approved",
+      "evidence": [
+        "model/artifacts/v2b/metrics.json",
+        "@KWS"
+      ],
+      "wording": "28 KB int8 model, 10.7 k parameters, 213 k MACs per inference, 13.4 KB tensor arena"
+    },
+    "cadence": {
+      "frame_ms": 10,
+      "window_s": 1.02,
+      "stride_ms": 60,
+      "status": "approved",
+      "wording": "Every 10 ms a 40-band log-mel frame; the model scores the last 1 s every 60 ms"
+    },
+    "decision": {
+      "n": 3,
+      "threshold": 0.8,
+      "refractory_ms": 2000,
+      "status": "approved",
+      "wording": "Detection when the mean of 3 scores >= 0.80; 2 s refractory"
+    },
+    "latency_keyword_end_to_server_ms": {
+      "median": 138,
+      "p95": 196,
+      "max": 198,
+      "n": 12,
+      "status": "approved",
+      "evidence": [
+        "E-63"
+      ],
+      "condition": "final configuration: product firmware v2b + ASR server, 30 Sep, LAN, keyword with a pause",
+      "wording": "Keyword end -> audio at the ASR server: 138 ms median, 196 ms p95 (final firmware, n = 12); about 110 ms of it is the on-device confirmation over 3 consecutive scores"
+    },
+    "latency_detection_to_first_audio_ms": {
+      "median": 18,
+      "p95": 30,
+      "max": 37,
+      "n": 12,
+      "status": "approved",
+      "evidence": [
+        "E-63",
+        "E-62",
+        "E-37"
+      ],
+      "wording": "First audio reaches the ASR server 18 ms (median) after detection; 30 ms at p95 (final configuration)",
+      "note": "2 ms median without ASR load (E-37); 7-11 ms in other ASR sessions (E-62)"
+    },
+    "streaming": {
+      "preroll_ms": 571,
+      "payload_bytes_per_s": 32000,
+      "status": "approved",
+      "evidence": [
+        "DEC-22",
+        "E-44",
+        "E-60"
+      ],
+      "wording": "Audio is sent only after a detection: from 571 ms before it until the end of speech, 16 kHz 16-bit (32 kB/s); streams arrive complete and bit-exact"
+    },
+    "no_clipping": {
+      "status": "approved",
+      "evidence": [
+        "E-37",
+        "E-62"
+      ],
+      "wording": "A command spoken straight after the keyword is inside the stream: it starts 571 ms before the detection, which comes <= 164 ms after the keyword ends (measured)"
+    },
+    "recall_speaker1": {
+      "hits": 22,
+      "of": 25,
+      "confusables": "2/16",
+      "status": "approved",
+      "evidence": [
+        "E-35"
+      ],
+      "wording": "Speaker 1, held-out session, 0.5-2 m: 22 of 25 keywords"
+    },
+    "recall_new_speaker": {
+      "hits": 20,
+      "of": 25,
+      "by_distance": {
+        "0.5m": "10/12",
+        "1m": "6/8",
+        "2m": "4/5"
+      },
+      "confusables": "1/16",
+      "status": "approved",
+      "evidence": [
+        "E-59"
+      ],
+      "wording": "New speaker never used in training: 20 of 25"
+    },
+    "false_triggers_quiet": {
+      "count": 1,
+      "hours": 5.0,
+      "per_hour": 0.2,
+      "status": "approved",
+      "evidence": [
+        "E-39"
+      ],
+      "wording": "Quiet room: 1 false trigger in 5 h (held-out night)",
+      "rule": "always quote together with false_triggers_tv"
+    },
+    "false_triggers_tv": {
+      "count": 39,
+      "hours": 2.47,
+      "per_hour": 15.8,
+      "status": "approved",
+      "evidence": [
+        "E-51"
+      ],
+      "wording": "Active household with TV/talk: 15.8 false triggers per hour - our main open issue"
+    },
+    "false_triggers_v4_comparison": {
+      "v2b_per_hour": 15.1,
+      "v4_per_hour": 10.4,
+      "hours": 0.8625,
+      "v4_new_speaker": "14/25",
+      "status": "approved",
+      "evidence": [
+        "E-55",
+        "E-59"
+      ],
+      "wording": "Retraining with the device's own false triggers cut this to 10.4 /h (v4) but lowered new-speaker recall to 14/25, so v2b ships"
+    },
+    "asr": {
+      "publisher_wer_pct": 36.12,
+      "demo_exact": "3/4",
+      "status": "approved",
+      "evidence": [
+        "alphacephei.com/vosk/models",
+        "E-61"
+      ],
+      "wording": "Server ASR: off-the-shelf Vosk en-in (publisher's WER 36 %); in the demo 3 of 4 commands were transcribed exactly"
+    },
+    "openness": {
+      "status": "approved",
+      "evidence": [
+        "firmware/build_usbjtag_product/ps26172_fw.map",
+        "forbidden_deps PASS",
+        "docs/SBOM.md"
+      ],
+      "wording": "No proprietary voice SDK (checked on every build). The whole keyword pipeline is open source; the only closed code on the chip is Espressif's Wi-Fi/PHY radio driver and boot ROM, disclosed in the SBOM."
+    },
+    "licence": {
+      "status": "approved",
+      "evidence": [
+        "LICENSE",
+        "docs/SBOM.md"
+      ],
+      "wording": "Our code is Apache-2.0. Two of the four TTS voices used for training are non-commercial, so commercial use needs retraining without them."
+    },
+    "privacy": {
+      "status": "approved",
+      "wording": "Audio leaves the device only after a detection - true or false."
+    },
+    "speakers": {
+      "real": 2,
+      "tts_voices": 4,
+      "status": "approved",
+      "evidence": [
+        "E-35",
+        "E-59",
+        "docs/SBOM.md"
+      ],
+      "wording": "Tested on 2 real speakers; trained with 4 TTS voices (US, UK, non-native English, Hindi) plus speaker 1"
+    },
+    "platform_scope": {
+      "status": "approved",
+      "wording": "ESP32-S3 (not 'any ESP32-class')"
+    },
+    "evidence_count": {
+      "value": 63,
+      "status": "approved",
+      "condition": "E-08..E-16 marked superseded (30 Sep)"
+    },
+    "hardware_cost": {
+      "value": "<= 2000 INR",
+      "status": "approved",
+      "evidence": [
+        "team estimate (user, 30 Sep)"
+      ],
+      "wording": "Hardware <= Rs 2,000 (team estimate)"
+    },
+    "prototype_photo": {
+      "status": "needs_confirmation",
+      "needs": "photo; breadboard or not"
+    },
+    "latency_keyword_end_to_server_earlier_ms": {
+      "median": 95,
+      "p95": 136,
+      "n": 22,
+      "status": "conditional",
+      "evidence": [
+        "E-37"
+      ],
+      "condition": "27 Sep, capture build, no ASR load - earlier configuration, not the headline"
+    },
+    "detection_t1": {
+      "hits": 12,
+      "of": 12,
+      "extra": 0,
+      "status": "approved",
+      "evidence": [
+        "E-63"
+      ],
+      "wording": "12 of 12 keywords detected on the final firmware, no extra triggers (1 speaker, n = 12)"
+    }
   }
 }

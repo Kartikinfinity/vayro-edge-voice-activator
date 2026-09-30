@@ -113,25 +113,19 @@ Architecture **A spine, measurement-gated promotion to B**. ESP32-S3 @240 MHz, P
 | M3 local KWS | **DONE** — windowed DS-CNN (10 665 params, 212 584 MACs, 28 024 B int8) on the ESP32-S3 via esp-tflite-micro 1.4.1 + esp-nn 1.4.1; device outputs bit-exact with the host TFLite reference. Shipped model **v2b @ 0.80**: S01 s3 held-out 22/25 keyword prompts, 2/16 confusables. v3 @ 0.60 (23/25, 3/16) is the candidate; ship decision pending (DEC-23) |
 | M4 trigger | **DONE (software instruments)** — live triggers exactly equal the offline decision replay (E-26, re-confirmed on session 3). GPIO pulse present but not captured (logic analyser arrives 28 Sep). |
 | M5 streaming | **DONE** 2026-09-27 — 24/24 detections streamed with pre-roll, 0 overruns, 0 seq gaps (E-36); L1 median 1.66 ms, L2 ≈ 95 ms median (E-37). |
-| M6 ASR | **IN PROGRESS** — server (Vosk, endpoint → END, transcript) runs end to end. Live command test 28 Sep (E-48): edge stages pass (keyword detected, stream bit-exact, L1_audio0 ≈ 15 ms), **ASR fails** with the small en-in model (1/4). Larger Kaldi model vosk-model-en-in-0.5 approved and downloading; re-test on the recorded session, then a fresh live run |
-| **Open risk** | Evening acoustic domain (E-34): the room is 10–15 dB louder at 5–8 kHz in the evening. Its effect on recall is **untested**; next: a fresh scripted session (S01 s3, test data) under evening conditions with streaming on. |
+| M6 ASR | **DONE (with a stated limit)** — Vosk en-in-0.5 behind the ingest, energy-VAD endpointing (DEC deviation from WebRTC-VAD, recorded), ASR in its own thread (E-58). Live demo 29 Sep (E-61): keyword → stream → transcript, 3 of 4 commands exact; word accuracy is the off-the-shelf model's (publisher WER 36 %) |
+| **Open risk** | Active-household false triggers: v2b 15.8 /h with TV/talk (E-51) vs 0.2 /h quiet (E-39); v4 cut it to 10.4 /h but lost new-speaker recall (E-55, E-59) → v2b ships (DEC-26) |
 
 ## 9. Blockers
 
-- **ASR accuracy** (E-48): small Vosk model unusable on S01's commands → larger model (download in progress).
-- **Household false activations**: v2b ≈ 13.5 FA/h with TV/people (earlier), prayer singing confirmed as a trigger (E-47), 5 unattended triggers 19:34–19:39 on 28 Sep. Evening household recording running (`household_eve_20260928`, 2.5 h, started 19:39:53) → v2b vs v3 decision by `selection_rule_v3.json`.
-- **Device busy policy**: a keyword arriving while a stream is open is not streamed (2 of 6 in E-48; caused by the long no-endpoint streams).
-- **Demo IP risk** (E-41): server address is a build-time constant.
+- **Household false triggers** (E-51): main accuracy limitation; fix path = more speakers + household data together.
+- **Speaker coverage**: 2 real speakers (E-35, E-59).
+- **Demo IP risk** (E-41): server address is a build-time constant; PC must be awake with the server running (E-58).
 - No logic analyser (I-1 NOT RUN; software instruments I-2/I-3 used).
 
-## 10. Next task (as of 28 Sep 23:17)
+## 10. Next task (as of 30 Sep, submission day)
 
-State: capture firmware (v2b) flashed; ASR server running (Vosk en-in-0.5, VAD endpoint) → `evidence/server/20260928_231705`.
-Done tonight: EXP-1 streaming S4 249 615 B after DEC-24 (E-53, passes both 256 k readings); EXP-2 12 min C3 4.82 %,
-core 1 max 9.04 % (E-56); v4 rule checks (a)(b)(c) pass (E-55).
-
-1. **29 Sep morning — rule (d):** user runs `host/capture.py --script-file host/scripts/m6_commands_v3.txt` (fresh S01 session,
-   each prompt once) → `model/eval/prompt_hits.py --run <run> --models v2b:0.8,v4:0.7 --prefix v3_` → ship v4 iff hits ≥ v2b.
-2. Final firmware with the chosen model (`tools/gen_model_source.py`): product build (DEC-24) + demo/capture build; if v4,
-   short EXP-1/EXP-2 confirmation runs (same architecture → same arena).
-3. Demo video (user), PPT, evidence pack (SBOM done: `docs/SBOM.md`).
+1. T1 latency on the product firmware with the ASR server (E-63) → final latency wording.
+2. Apply `docs/submission/EVIDENCE_CONSISTENCY_SHEET.md` corrections to the PPT (team ID/name, wording) → PDF.
+3. Video: caption/narration for the demo-build CPU lines (B5); upload unlisted; link into the PPT.
+4. Idea title / abstract / description from `docs/submission/approved_numbers.json`.

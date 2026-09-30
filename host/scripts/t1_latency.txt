@@ -1,0 +1,16 @@
+# T1 latency test (EVIDENCE_CONSISTENCY_SHEET.md, D): product firmware + ASR server, keyword only, a clear pause after each.
+# Say only "Hey Vayro" at ~40 cm, normal voice, then stay quiet until the next prompt.
+sil_start | 3 | Stay quiet
+kw_01 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_02 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_03 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_04 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_05 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_06 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_07 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_08 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_09 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_10 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_11 | 6 | Say:  Hey Vayro   (then stay quiet)
+kw_12 | 6 | Say:  Hey Vayro   (then stay quiet)
+sil_end | 3 | Done - thank you

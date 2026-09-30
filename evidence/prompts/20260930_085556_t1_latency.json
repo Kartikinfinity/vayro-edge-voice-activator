@@ -1,0 +1,104 @@
+{
+  "label": "t1_latency",
+  "script": "D:\\ps26172\\host\\scripts\\t1_latency.txt",
+  "segments": [
+    {
+      "name": "sil_start",
+      "prompt": "Stay quiet",
+      "t0_wall": "2026-09-30T08:55:59.265",
+      "t0_epoch": 1790738759.265,
+      "seconds": 3.0
+    },
+    {
+      "name": "kw_01",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:02.266",
+      "t0_epoch": 1790738762.267,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_02",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:08.267",
+      "t0_epoch": 1790738768.267,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_03",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:14.267",
+      "t0_epoch": 1790738774.268,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_04",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:20.268",
+      "t0_epoch": 1790738780.269,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_05",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:26.270",
+      "t0_epoch": 1790738786.27,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_06",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:32.271",
+      "t0_epoch": 1790738792.271,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_07",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:38.271",
+      "t0_epoch": 1790738798.271,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_08",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:44.273",
+      "t0_epoch": 1790738804.273,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_09",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:50.274",
+      "t0_epoch": 1790738810.274,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_10",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:56:56.274",
+      "t0_epoch": 1790738816.275,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_11",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:57:02.275",
+      "t0_epoch": 1790738822.276,
+      "seconds": 6.0
+    },
+    {
+      "name": "kw_12",
+      "prompt": "Say:  Hey Vayro   (then stay quiet)",
+      "t0_wall": "2026-09-30T08:57:08.276",
+      "t0_epoch": 1790738828.277,
+      "seconds": 6.0
+    },
+    {
+      "name": "sil_end",
+      "prompt": "Done - thank you",
+      "t0_wall": "2026-09-30T08:57:14.277",
+      "t0_epoch": 1790738834.278,
+      "seconds": 3.0
+    }
+  ]
+}

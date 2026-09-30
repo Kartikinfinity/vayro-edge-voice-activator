@@ -1,0 +1,27 @@
+ASR model loaded from D:\ps26172_ext\vosk\vosk-model-en-in-0.5 in 11.7 s
+ingest listening on 0.0.0.0:5005; writing to D:\ps26172\evidence\server\20260930_085548
+device connected from 192.168.1.9:61367
+    ASR: "cairo"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:04.302] activation 1: 2.08 s audio, L1_start 3.319 ms, L1_audio0 18.152 ms (±1.815 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0001.wav
+    ASR: "wiring"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:11.321] activation 2: 2.08 s audio, L1_start 2.289 ms, L1_audio0 17.828 ms (±1.815 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0002.wav
+    ASR: "pyro"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:17.201] activation 3: 2.08 s audio, L1_start 2.342 ms, L1_audio0 20.734 ms (±1.815 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0003.wav
+    ASR: "while"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:22.662] activation 4: 2.08 s audio, L1_start 2.767 ms, L1_audio0 21.182 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0004.wav
+    ASR: ""  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:27.581] activation 5: 2.08 s audio, L1_start 2.72 ms, L1_audio0 11.272 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0005.wav
+    ASR: "rule"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:33.941] activation 6: 2.08 s audio, L1_start 2.471 ms, L1_audio0 23.639 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0006.wav
+    ASR: "cairo"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:39.880] activation 7: 2.08 s audio, L1_start 2.298 ms, L1_audio0 24.189 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0007.wav
+    ASR: "friday"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:45.881] activation 8: 2.08 s audio, L1_start 2.294 ms, L1_audio0 12.092 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0008.wav
+    ASR: "cairo"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:52.120] activation 9: 2.08 s audio, L1_start 1.914 ms, L1_audio0 12.585 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0009.wav
+    ASR: "you"  | after trigger: ""  (endpoint at 1.509 s after trigger by vad_no_speech)
+[2026-09-30T08:56:57.642] activation 10: 2.08 s audio, L1_start 2.426 ms, L1_audio0 17.037 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0010.wav
+    ASR: "cairo"  | after trigger: ""  (endpoint at 1.389 s after trigger by vad_trailing_silence)
+[2026-09-30T08:57:03.760] activation 11: 1.96 s audio, L1_start 1.579 ms, L1_audio0 12.421 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0011.wav
+    ASR: "role"  | after trigger: ""  (endpoint at 3.629 s after trigger by vad_trailing_silence)
+[2026-09-30T08:57:09.597] activation 12: 4.2 s audio, L1_start 17.948 ms, L1_audio0 36.613 ms (±1.234 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c085553_act0012.wav

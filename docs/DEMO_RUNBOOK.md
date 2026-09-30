@@ -1,3 +1,8 @@
+> **Superseded 29 Sep (see E-61).** The submitted 90 s video was recorded with `host/demo_take.py` (real console windows,
+> region-only capture, device-microphone audio) in two takes — `--mode efficiency` (product firmware, silent room) and
+> `--mode demo` (capture build, prompted keyword + command) — and cut with `host/demo_cut90.py`. The plan below is the
+> earlier manual procedure, kept for reference.
+
 # Demo video runbook (PS26172, final firmware: v2b @ 0.80 (DEC-26), product configuration DEC-22 + DEC-24)
 
 One continuous take, no cuts inside a step, no edited numbers. Target length 2:30–3:30. Record the screen (Win + Alt + R
