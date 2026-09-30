@@ -25,6 +25,7 @@ Usage (from the private repository, host venv or any Python 3.10+):
 Then, in the exported clone:  git push -u origin main
 """
 import argparse
+import json
 import os
 import pathlib
 import re
@@ -116,6 +117,26 @@ def wifi_ssid():
     return m.group(1).encode(), p.group(1).encode()
 
 
+AMBIENT = []  # filled at run time by ambient_phrases(); never listed in this file
+
+
+def ambient_phrases():
+    """Recognised text (3+ words) of ambient streams, collected from the local result files at run time, so that
+    a quotation of it anywhere else (a ledger entry, a note) is withheld too. Phrases that also occur in a
+    scripted transcript are left alone."""
+    ambient, scripted = set(), set()
+    for f in (ROOT / "evidence" / "server").glob("*/*act*.json"):
+        rel = f.relative_to(ROOT).as_posix()
+        try:
+            t = (json.loads(f.read_text(encoding="utf-8")).get("asr_transcript") or "").strip()
+        except (ValueError, OSError):
+            continue
+        if t and not t.startswith("["):
+            (scripted if any(rx.search(rel) for rx in TRANSCRIPT_KEEP) else ambient).add(t)
+    keep = {t for t in ambient if len(t.split()) >= 3 and not any(t in s for s in scripted)}
+    return sorted((t.encode() for t in keep), key=len, reverse=True)
+
+
 def redact(data, ssid):
     """Text blobs only. Network name -> placeholder; MAC addresses keep their vendor prefix only;
     the Windows account name in absolute paths -> 'user'."""
@@ -123,6 +144,8 @@ def redact(data, ssid):
         return data
     out = data.replace(ssid, b"home-wifi-redacted")
     out = MAC.sub(lambda m: m.group(1) + b"xx:xx:xx", out)
+    for phrase in AMBIENT:
+        out = out.replace(phrase, PLACEHOLDER)
     out = WINUSER.sub(lambda m: m.group(1) + b"user", out)
     return out
 
@@ -133,6 +156,7 @@ def main():
     ap.add_argument("--export", default="", help="directory of a clean public clone to create / fast-forward")
     args = ap.parse_args()
     ssid, password = wifi_ssid()
+    AMBIENT[:] = ambient_phrases()
 
     cache = {}  # blob id -> redacted blob id
 
@@ -222,6 +246,8 @@ def main():
             problems.append(f"large blob: {path} ({len(data)} B)")
         if ssid in data or password in data:
             problems.append(f"network name or password present: {path}")
+        if b"\0" not in data[:8192] and any(phrase in data for phrase in AMBIENT):
+            problems.append(f"ambient transcript quoted: {path}")
         if len(account) >= 4 and b"\0" not in data[:8192] and re.search(rb"(?i)\b" + re.escape(account) + rb"\b", data):
             problems.append(f"local account name present: {path}")
         if b"\0" not in data[:8192] and redact_transcripts(path, data).replace(b"\r\n", b"\n") != data.replace(b"\r\n", b"\n"):

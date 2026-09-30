@@ -49,7 +49,8 @@ In text files, three kinds of identifier were replaced, in every commit:
 One more kind of content is withheld inside otherwise published files: the **recognised text of streams that captured
 ambient household sound** (television, family conversation picked up by a false trigger or by a synthetic test
 stream). In the server logs, and in the activation JSON and CSV files of those streams, the text fields read
-`[withheld: ambient audio]` and the word list is empty. Transcripts of the scripted test sessions, where the speaker
+`[withheld: ambient audio]` and the word list is empty; the same placeholder replaces such text where a document
+quotes it. Transcripts of the scripted test sessions, where the speaker
 read prompts (E-48, E-49, E-61, E-63), are published unchanged, as are all timing, size and integrity fields.
 
 No measurement, timestamp or result was changed. Private-range IP addresses (`192.168.x.x`) are left as recorded.
