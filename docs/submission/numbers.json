@@ -2,5 +2,8 @@
   "ram_kib": "245.0",
   "cpu_c3": "5.5",
   "cpu_core_max": "9.5",
-  "source": "E-60, run 20260929_202327_final_v2b_confirm"
+  "source": "E-60 (RAM, CPU), E-63 (latency, final configuration)",
+  "l2_median": 138,
+  "l2_p95": 196,
+  "l1_audio_median": 18
 }

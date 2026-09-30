@@ -132,32 +132,34 @@ def slide2(s):
         "one warm TCP link",
         "Server: VAD ends the utterance, Vosk (Kaldi) ASR returns the command text"])
     card(s, xs[1], y, w, h, "How it addresses the problem", [
-        "No audio leaves the device until the keyword is detected → privacy, zero cloud cost while idle",
+        "Audio leaves the device only after a detection (true or false) → privacy; nothing is sent or processed while idle",
         f"Inside the PS budget on real hardware: {NUM['ram_kib']} KiB peak RAM, {NUM['cpu_c3']} % idle CPU",
-        "Low latency: first audio at the server ≈ 2 ms after detection; keyword end → server ≈ 95 ms",
-        "Only open-source components; custom keyword trained from scratch (no pre-trained wake word)"])
+        f"Low latency: keyword end → audio at the ASR server {NUM['l2_median']} ms median ({NUM['l2_p95']} ms p95), first audio {NUM['l1_audio_median']} ms after detection",
+        "No proprietary voice SDK: keyword pipeline fully open source (only the Wi-Fi radio driver is closed, disclosed); keyword trained from scratch"])
     card(s, xs[2], y, w, h, "Innovation and uniqueness of the solution", [
         "Training and device share one bit-exact feature pipeline (12 000 / 12 000 frames identical)",
-        "Pre-roll ring buffer: a command spoken with no pause after the keyword is never clipped",
+        "Pre-roll: the stream starts 571 ms before the detection, so a command spoken right after the keyword is not cut off",
         "The device logs every trigger with its score, so real-home false triggers can be mined for retraining",
-        f"Selection rules declared before each test; {LEDGER_N} logged evidence entries"])
+        f"Selection rules written before each held-out test (one documented override); {LEDGER_N} evidence entries"])
     sy, sh, sw, sg = 5.72, 1.08, 2.93, 0.19
     for k, (v, l) in enumerate([("28 KB", "int8 model · 13.4 KB tensor arena"),
                                 (f"{NUM['ram_kib']} KiB", "peak RAM while streaming (< 256 KB)"),
                                 (f"{NUM['cpu_c3']} %", f"idle CPU, both cores (busiest core {NUM['cpu_core_max']} %)"),
-                                ("≈ 95 ms", "keyword end → server (median)")]):
+                                (f"{NUM['l2_median']} ms", "keyword end → ASR server (median)")]):
         stat(s, 0.5 + k * (sw + sg), sy, sw, sh, v, l, color=ORANGE if k in (1, 2) else NAVY)
 
 
 def slide3(s):
     s.box(0.5, 1.3, 3.55, 5.5, [pointer("Technologies to be used (e.g. programming languages, frameworks, hardware)",
                                         12.5)] + bullets([
-        ("Hardware: ", "ESP32-S3 N16R8 (240 MHz, PSRAM off) + INMP441 I2S MEMS mic"),
-        ("Firmware: ", "C / C++ on ESP-IDF 5.5.5 (FreeRTOS)"),
-        ("TinyML: ", "TensorFlow Lite Micro + ESP-NN kernels, TFLM microfrontend"),
+        ("Hardware: ", "ESP32-S3 N16R8 — 240 MHz dual core, SIMD used by ESP-NN, on-chip Wi-Fi (PSRAM off); "
+                       "INMP441 — digital I2S mic, no analog stage"),
+        ("Firmware: ", "C / C++ on ESP-IDF 5.5.5 (FreeRTOS) — open source, vendor-supported"),
+        ("TinyML: ", "TensorFlow Lite Micro + ESP-NN, TFLM microfrontend — integer inference, no OS needed"),
+        ("Model: ", "DS-CNN — small and accurate for keyword spotting on MCUs [1]"),
         ("Training: ", "Python, TensorFlow / Keras, Piper TTS (4 voices), LibriSpeech, our own recordings"),
-        ("Server: ", "Python TCP ingest, energy VAD, Vosk / Kaldi ASR"),
-        ("Verification: ", "bit-exact host twin of the front end, scripted capture and replay tools")], sz=12, gap=7),
+        ("Server: ", "Python ingest, energy VAD, Vosk / Kaldi — open, offline, not a transformer"),
+        ("Verification: ", "bit-exact host twin of the front end, scripted capture and replay")], sz=11, gap=6),
         fill=CARD, geom="roundRect", inset=0.14)
     x0, W = 4.25, 8.6
     s.text(x0, 1.3, W, 0.42, [pointer("Methodology and process for implementation (Flow Charts/Images/ working "
@@ -197,7 +199,7 @@ def slide3(s):
             s.arrow(x + bw2 + 0.035, 4.64, aw2 - 0.07, 0.2)
     s.box(x0, 5.5, W, 1.3, [
         para([run("Working prototype: ", 11.5, NAVY, b=True),
-              run("ESP32-S3-N16R8 + INMP441 on a breadboard (SCK→GPIO6, WS→GPIO5, SD→GPIO4). The demo "
+              run("ESP32-S3-N16R8 + INMP441 (SCK→GPIO6, WS→GPIO5, SD→GPIO4). The demo "
                   "video shows keyword → stream → transcript live on this board.", 11.5)]),
         para([run("Model: ", 11.5, NAVY, b=True),
               run("10 665 parameters · 212 584 MACs per inference · 28 024 B int8 · tensor arena "
@@ -211,12 +213,12 @@ def slide4(s):
     cols = [("Efficiency", [(f"{NUM['ram_kib']} KiB", "peak RAM, streaming (< 256 KB)"),
                             (f"{NUM['cpu_c3']} %", f"idle CPU, 2 cores (max core {NUM['cpu_core_max']} %)"),
                             ("28 KB", "model flash · 13.4 KB arena")]),
-            ("Accuracy (shipped model v2b)", [("22 / 25", "held-out prompts, speaker 1, 0.5–2 m"),
+            ("Accuracy (shipped model v2b)", [("22 / 25", "speaker 1, held-out session, 0.5–2 m"),
                                               ("20 / 25", "new speaker, never trained on"),
-                                              ("1 in 5 h", "false triggers, quiet night (held-out)")]),
-            ("Latency", [("1.7 ms", "detection → first packet at server"),
-                         ("≈ 95 ms", "keyword end → server (median)"),
-                         ("136 ms", "keyword end → server (p95)")])]
+                                              ("0.2 · 15.8", "false triggers per hour: quiet · TV/talk")]),
+            ("Latency (final firmware, ASR on)", [(f"{NUM['l2_median']} ms", "keyword end → ASR server (median)"),
+                                                  (f"{NUM['l2_p95']} ms", "keyword end → ASR server (p95)"),
+                                                  (f"{NUM['l1_audio_median']} ms", "detection → first audio (median)")])]
     cw, cg = 3.98, 0.18
     for c, (head, stats) in enumerate(cols):
         x = 0.5 + c * (cw + cg)
@@ -230,10 +232,10 @@ def slide4(s):
     s.box(tx, ty, c1, 0.4, [pointer("Potential challenges and risks", 13)], fill=CARD, anchor="ctr", inset=0.1)
     s.box(tx + c1 + 0.08, ty, tw - c1 - 0.08, 0.4, [pointer("Strategies for overcoming these challenges", 13)],
           fill=CARD2, anchor="ctr", inset=0.1)
-    rows = [("TV / family speech still triggers: 15.1 per hour (held-out household audio)",
-             "Mining the device’s own false triggers cut this to 10.4 /h (model v4), but v4 lost new-speaker "
-             "recall (14/25), so v2b ships; next: retrain with more speakers and household audio together"),
-            ("Real voices tested so far: two speakers (plus TTS voices in 4 accents)",
+    rows = [("TV / family speech still triggers: 15.8 per hour (2.5 h of held-out household audio)",
+             "On the same 52 min, retraining with the device’s own false triggers cut 15.1 → 10.4 /h (v4), but v4 "
+             "lost new-speaker recall (14/25), so v2b ships; next: more speakers + household audio together"),
+            ("Real voices tested so far: two speakers (plus 4 TTS voices: US, UK, non-native, Hindi)",
              "Scripted 3-minute sessions for new speakers; per-speaker results reported separately"),
             ("Server ASR word accuracy is set by the ASR model (Vosk en-in: 36 % WER published)",
              "Edge is ASR-agnostic: swap in a larger model or a command grammar on the server only"),
@@ -253,23 +255,23 @@ def slide5(s):
         "<a:buFont", '<a:spcAft><a:spcPts val="600"/></a:spcAft><a:buFont', 1)] + bullets([
         ("ISRO labs & control rooms: ", "hands-free voice commands where hands and eyes are busy — without "
                                          "streaming room audio all day"),
-        ("Smart automation: ", "a ready wake-word front end for any ESP32-class home, office or factory device"),
+        ("Smart automation: ", "a ready wake-word front end for ESP32-S3 home, office or factory devices"),
         ("Assistive use: ", "voice control for elderly or motor-impaired users on low-cost hardware"),
-        ("Indian developers & start-ups: ", "custom keyword with Indian-accent training data, no vendor SDK or "
-                                            "licence fee")], sz=13.5, gap=9),
+        ("Indian developers & start-ups: ", "custom keyword with Indian-accent training data and no vendor "
+                                            "voice SDK")], sz=13.5, gap=9),
         fill=CARD, geom="roundRect", inset=0.16)
-    for k, (v, l) in enumerate([("0 bytes", "of audio sent until the keyword is detected"),
+    for k, (v, l) in enumerate([("0 bytes", "of audio sent before a detection"),
                                 ("32 kB/s", "16 kHz audio, only from keyword to end of command")]):
         stat(s, 0.7 + k * 2.45, 5.35, 2.3, 1.25, v, l, color=ORANGE if k else NAVY, vsz=20, lsz=9.5)
     s.text(5.95, 1.3, 6.9, 0.4, [pointer("Benefits of the solution (social, economic, environmental, etc.)", 14)])
-    items = [("Social", "Privacy by design: the room is only heard by the chip until someone says “Hey Vayro”",
+    items = [("Social", "Privacy by design: audio leaves the chip only after a detection (true or false); nothing is sent while idle",
               NAVY, CARD),
-             ("Economic", "Hardware ≈ ₹1 000 (estimate); open-source stack; no cloud cost while listening",
+             ("Economic", "Hardware ≤ ₹2,000 (team estimate); open-source stack; no audio processed in the cloud while idle",
               ORANGE, "FDF0E6"),
-             ("Environmental", f"Low compute ({NUM['cpu_c3']} % CPU idle); audio is sent only after the keyword, so traffic "
+             ("Environmental", f"Low compute ({NUM['cpu_c3']} % CPU idle); audio is sent only after a detection, so traffic "
               "stays tiny. Wi-Fi is kept awake for latency; power not yet measured", GREEN, CARD2),
-             ("Technical", "Reproducible: a new keyword = new recordings + the same scripts; every number traceable "
-              "to an evidence log", NAVY, CARD)]
+             ("Technical", "Reproducible: data, training, selection and tests are scripts; every number is "
+              "traceable to an evidence log", NAVY, CARD)]
     w, h, g = 3.37, 2.35, 0.16
     for k, (head, txt, col, fill) in enumerate(items):
         x = 5.95 + (k % 2) * (w + g)
@@ -300,9 +302,9 @@ def slide6(s):
     s.box(0.5, 1.8, 7.95, 5.0, ps, fill=CARD, geom="roundRect", inset=0.16)
     s.box(8.62, 1.8, 4.21, 5.0, [
         para(run("Our own research record", 14, NAVY, b=True), after=6)] + bullets([
-            ("Evidence ledger: ", f"{LEDGER_N} entries, each tagged measured / estimated / proposed, with its raw data"),
-            ("Selection rules: ", "written and committed before each held-out test"),
-            ("SBOM: ", "every component and licence listed; the one closed Wi-Fi radio blob and the non-commercial TTS voices are disclosed"),
+            ("Evidence ledger: ", f"{LEDGER_N} entries, each tagged measured / estimated / proposed and pointing to its raw data"),
+            ("Selection rules: ", "written and committed before each held-out test; one documented override (new-speaker evidence)"),
+            ("SBOM: ", "every component and licence listed; the closed Wi-Fi/PHY radio driver and two non-commercial TTS voices are disclosed"),
             ("Licence: ", "our code Apache-2.0; every component’s licence listed in the SBOM"),
             ("Demo video: ", TEAM.get("video_link", "link to be added"))], sz=12.5, gap=9),
         fill=CARD2, geom="roundRect", inset=0.16)
@@ -330,6 +332,17 @@ def main():
     x = x[:m.start(2)] + body.group(1) + ps + x[m.end(2):]
     (sl / "slide1.xml").write_text(x, encoding="utf-8")
 
+    OVAL_OLD = ('<a:bodyPr rtlCol="0" anchor="ctr"/><a:lstStyle/><a:p><a:pPr algn="ctr"/>'
+                '<a:r><a:rPr lang="en-US" dirty="0"/><a:t>Your Team Name</a:t></a:r>')
+
+    def oval_body(name):
+        a, sep, b = name.partition("_")
+        lines = [a + sep, b] if sep and b else [name]
+        rpr = '<a:rPr lang="en-US" sz="1600" dirty="0"/>'
+        runs = f'<a:br>{rpr}</a:br>'.join(f"<a:r>{rpr}<a:t>{escape(s)}</a:t></a:r>" for s in lines)
+        return ('<a:bodyPr rtlCol="0" anchor="ctr" wrap="none" lIns="0" tIns="0" rIns="0" bIns="0"/><a:lstStyle/>'
+                '<a:p><a:pPr algn="ctr"/>' + runs)
+
     builders = {2: slide2, 3: slide3, 4: slide4, 5: slide5, 6: slide6}
     for n, fn in builders.items():
         p = sl / f"slide{n}.xml"
@@ -337,7 +350,7 @@ def main():
         # drop the template's pointer text box (its pointers are re-used verbatim as headings above)
         x = re.sub(r'<p:sp>(?:(?!</p:sp>).)*?name="TextBox 8".*?</p:sp>', "", x, count=1, flags=re.S)
         # team name in the oval
-        x = x.replace("<a:t>Your Team Name</a:t>", f"<a:t>{escape(TEAM['team_name'])}</a:t>")
+        x = x.replace(OVAL_OLD, oval_body(TEAM["team_name"]))
         x = re.sub(r"<a:t>Your</a:t>(.*?)<a:t>Team</a:t>(.*?)<a:t>Name</a:t>",
                    lambda mm: f"<a:t>{escape(TEAM['team_name'])}</a:t>{mm.group(1)}<a:t></a:t>{mm.group(2)}<a:t></a:t>",
                    x, count=1, flags=re.S)

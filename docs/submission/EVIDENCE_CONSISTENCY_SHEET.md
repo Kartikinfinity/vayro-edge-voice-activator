@@ -17,6 +17,29 @@ checked for weight loading; all 9 reference links checked (HTTP 200, arXiv title
 
 ---
 
+> **Update 30 Sep 09:00 — T1 done (E-63).** Final configuration (product firmware v2b + ASR server, n = 12): detection
+> 12/12, no extra triggers; detection → first audio at the server 18 ms median (p95 30); **keyword end → server 138 ms
+> median, 196 ms p95**. This replaces 95 / 136 ms (E-37, earlier configuration) as the approved headline (B2, B4, C). Team
+> details received (ID `AUC-SIH26-172041`, name `DATA_Edgepulse`); hardware cost approved as "≤ ₹2,000 (team estimate)";
+> ledger rows E-08…E-16 marked superseded; state file and runbook refreshed. `approved_numbers.json` holds the current set.
+>
+> **Update 30 Sep 09:05 — PPT corrected.** The deck and its PDF were rebuilt from section C. Resolved there:
+> - B1 openness: "no proprietary voice SDK; closed Wi-Fi/PHY driver disclosed";
+> - B2–B4 latency: 138 / 196 ms, and 18 ms detection → first audio;
+> - B6 scope: ESP32-S3 only; cost "≤ ₹2,000 (team estimate)";
+> - B7 false triggers: 15.8 /h, with 15.1 → 10.4 /h scoped to the same 52 min;
+> - B8 quiet and TV rates quoted together;
+> - B9 privacy: "only after a detection (true or false)";
+> - B10 no "licence fee" claim;
+> - B11 63 entries;
+> - B12 one documented override.
+>
+> Also changed: team details, slide 3 technologies now give reasons, and "breadboard" removed (unconfirmed). The claims
+> table below still describes the deck *before* this rebuild. Still open:
+> - B5 / B13 in the video (demo-build CPU and pre-roll need one line of narration or caption);
+> - the video link on slide 6;
+> - the prototype photo.
+
 ## A. Master table of claims
 
 ### A1 Platform and pipeline
