@@ -1,0 +1,493 @@
+{
+  "session": "20260929_195557",
+  "activations": [
+    {
+      "activation": 1,
+      "L1_start_ms": 2.108,
+      "L1_audio0_ms": 10.835,
+      "clock_unc_ms": 1.377,
+      "audio_s": 2.16,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 244.0,
+      "L2_est_ms": 264.8
+    },
+    {
+      "activation": 2,
+      "L1_start_ms": 3.234,
+      "L1_audio0_ms": 11.763,
+      "clock_unc_ms": 1.377,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 164.0,
+      "L2_est_ms": 185.8
+    },
+    {
+      "activation": 3,
+      "L1_start_ms": 1.17,
+      "L1_audio0_ms": 6.071,
+      "clock_unc_ms": 1.472,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 284.0,
+      "L2_est_ms": 300.1
+    },
+    {
+      "activation": 4,
+      "L1_start_ms": 2.511,
+      "L1_audio0_ms": 11.0,
+      "clock_unc_ms": 1.411,
+      "audio_s": 2.32,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 284.0,
+      "L2_est_ms": 305.0
+    },
+    {
+      "activation": 5,
+      "L1_start_ms": 2.076,
+      "L1_audio0_ms": 19.126,
+      "clock_unc_ms": 1.411,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 244.0,
+      "L2_est_ms": 273.1
+    },
+    {
+      "activation": 6,
+      "L1_start_ms": 48.883,
+      "L1_audio0_ms": 48.883,
+      "clock_unc_ms": 1.411,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 164.0,
+      "L2_est_ms": 222.9
+    },
+    {
+      "activation": 7,
+      "L1_start_ms": 1.211,
+      "L1_audio0_ms": 14.647,
+      "clock_unc_ms": 1.411,
+      "audio_s": 2.16,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 144.0,
+      "L2_est_ms": 168.6
+    },
+    {
+      "activation": 8,
+      "L1_start_ms": 2.379,
+      "L1_audio0_ms": 9.201,
+      "clock_unc_ms": 1.411,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 204.0,
+      "L2_est_ms": 223.2
+    },
+    {
+      "activation": 9,
+      "L1_start_ms": 2.315,
+      "L1_audio0_ms": 10.543,
+      "clock_unc_ms": 1.25,
+      "audio_s": 6.64,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 264.0,
+      "L2_est_ms": 284.5
+    },
+    {
+      "activation": 1,
+      "L1_start_ms": 1.211,
+      "L1_audio0_ms": 19.13,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 2,
+      "L1_start_ms": 0.233,
+      "L1_audio0_ms": 5.098,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 3,
+      "L1_start_ms": 0.58,
+      "L1_audio0_ms": 9.648,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 4,
+      "L1_start_ms": 2.253,
+      "L1_audio0_ms": 9.815,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 5,
+      "L1_start_ms": 1.987,
+      "L1_audio0_ms": 8.91,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 6,
+      "L1_start_ms": 1.753,
+      "L1_audio0_ms": 6.218,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 7,
+      "L1_start_ms": 1.451,
+      "L1_audio0_ms": 9.145,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 169.0
+    },
+    {
+      "activation": 8,
+      "L1_start_ms": 1.196,
+      "L1_audio0_ms": 5.803,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 9,
+      "L1_start_ms": 1.268,
+      "L1_audio0_ms": 8.261,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 169.0
+    },
+    {
+      "activation": 10,
+      "L1_start_ms": 0.9,
+      "L1_audio0_ms": 20.608,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 11,
+      "L1_start_ms": 0.223,
+      "L1_audio0_ms": 8.061,
+      "clock_unc_ms": 2.071,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 169.0
+    },
+    {
+      "activation": 12,
+      "L1_start_ms": 2.411,
+      "L1_audio0_ms": 12.793,
+      "clock_unc_ms": 2.125,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 13,
+      "L1_start_ms": 2.33,
+      "L1_audio0_ms": 10.214,
+      "clock_unc_ms": 2.018,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 14,
+      "L1_start_ms": 2.606,
+      "L1_audio0_ms": 10.849,
+      "clock_unc_ms": 1.971,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 15,
+      "L1_start_ms": 2.094,
+      "L1_audio0_ms": 10.669,
+      "clock_unc_ms": 1.971,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 16,
+      "L1_start_ms": 2.106,
+      "L1_audio0_ms": 10.591,
+      "clock_unc_ms": 1.971,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 17,
+      "L1_start_ms": 2.087,
+      "L1_audio0_ms": 11.486,
+      "clock_unc_ms": 1.971,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 169.0
+    },
+    {
+      "activation": 18,
+      "L1_start_ms": 2.528,
+      "L1_audio0_ms": 10.271,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 19,
+      "L1_start_ms": 1.395,
+      "L1_audio0_ms": 5.848,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 20,
+      "L1_start_ms": 1.736,
+      "L1_audio0_ms": 10.253,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 21,
+      "L1_start_ms": 1.559,
+      "L1_audio0_ms": 11.905,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 22,
+      "L1_start_ms": 1.163,
+      "L1_audio0_ms": 19.635,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 23,
+      "L1_start_ms": 1.103,
+      "L1_audio0_ms": 11.306,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 24,
+      "L1_start_ms": 0.918,
+      "L1_audio0_ms": 10.753,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 25,
+      "L1_start_ms": 0.731,
+      "L1_audio0_ms": 22.447,
+      "clock_unc_ms": 1.921,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 26,
+      "L1_start_ms": 2.11,
+      "L1_audio0_ms": 20.796,
+      "clock_unc_ms": 2.135,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 27,
+      "L1_start_ms": 1.798,
+      "L1_audio0_ms": 21.9,
+      "clock_unc_ms": 2.135,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 28,
+      "L1_start_ms": 1.76,
+      "L1_audio0_ms": 6.252,
+      "clock_unc_ms": 1.878,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 29,
+      "L1_start_ms": 2.006,
+      "L1_audio0_ms": 6.419,
+      "clock_unc_ms": 1.843,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 179.0
+    },
+    {
+      "activation": 30,
+      "L1_start_ms": 1.982,
+      "L1_audio0_ms": 6.557,
+      "clock_unc_ms": 1.843,
+      "audio_s": 6.6,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 169.0
+    }
+  ],
+  "summary": {
+    "L1_start_ms": {
+      "n": 39,
+      "mean": 2.91,
+      "p50": 1.8,
+      "p95": 2.67,
+      "max": 48.88
+    },
+    "L1_audio0_ms": {
+      "n": 39,
+      "mean": 12.4,
+      "p50": 10.59,
+      "p95": 21.95,
+      "max": 48.88
+    },
+    "lag_audio_ms": {
+      "n": 9,
+      "mean": 221.78,
+      "p50": 244.0,
+      "p95": 284.0,
+      "max": 284.0
+    },
+    "L2_est_ms": {
+      "n": 9,
+      "mean": 247.56,
+      "p50": 264.8,
+      "p95": 303.04,
+      "max": 305.0
+    },
+    "clock_unc_ms": {
+      "n": 39,
+      "mean": 1.86,
+      "p50": 1.92,
+      "p95": 2.13,
+      "max": 2.13
+    }
+  },
+  "definitions": {
+    "capture_delta_ms": "[EST] 10.0 +/- 7.0 ms, not measured",
+    "L2_est": "L1_audio0 + lag_audio + capture_delta; keyword end located at 20 ms resolution"
+  }
+}

@@ -41,7 +41,8 @@ def kw_end_in_stream(pcm, trig_off, fr=320):
 
 def main(sess):
     rows = []
-    for j in sorted(sess.glob("act*.json")):
+    # server files are c<HHMMSS>_act<N>.json since 28 Sep (older sessions: act<N>.json)
+    for j in sorted(sess.glob("*act[0-9]*.json")):
         a = json.loads(j.read_text(encoding="utf-8"))
         with wave.open(str(j.with_suffix(".wav"))) as w:
             pcm = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16)

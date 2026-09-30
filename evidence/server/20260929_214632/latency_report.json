@@ -1,0 +1,163 @@
+{
+  "session": "20260929_214632",
+  "activations": [
+    {
+      "activation": 1,
+      "L1_start_ms": 2.385,
+      "L1_audio0_ms": 6.961,
+      "clock_unc_ms": 1.581,
+      "audio_s": 2.16,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 104.0,
+      "L2_est_ms": 121.0
+    },
+    {
+      "activation": 2,
+      "L1_start_ms": 1.908,
+      "L1_audio0_ms": 7.349,
+      "clock_unc_ms": 1.391,
+      "audio_s": 2.52,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 64.0,
+      "L2_est_ms": 81.3
+    },
+    {
+      "activation": 3,
+      "L1_start_ms": 1.846,
+      "L1_audio0_ms": 6.731,
+      "clock_unc_ms": 1.391,
+      "audio_s": 2.8,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 4.0,
+      "L2_est_ms": 20.7
+    },
+    {
+      "activation": 4,
+      "L1_start_ms": 1.908,
+      "L1_audio0_ms": 6.735,
+      "clock_unc_ms": 1.368,
+      "audio_s": 2.0,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": -16.0,
+      "L2_est_ms": 0.7
+    },
+    {
+      "activation": 5,
+      "L1_start_ms": 1.197,
+      "L1_audio0_ms": 7.729,
+      "clock_unc_ms": 1.368,
+      "audio_s": 2.24,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": -16.0,
+      "L2_est_ms": 1.7
+    },
+    {
+      "activation": 6,
+      "L1_start_ms": 1.375,
+      "L1_audio0_ms": 6.726,
+      "clock_unc_ms": 1.368,
+      "audio_s": 2.24,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": -16.0,
+      "L2_est_ms": 0.7
+    },
+    {
+      "activation": 7,
+      "L1_start_ms": 2.338,
+      "L1_audio0_ms": 20.395,
+      "clock_unc_ms": 1.368,
+      "audio_s": 2.48,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 124.0,
+      "L2_est_ms": 154.4
+    },
+    {
+      "activation": 8,
+      "L1_start_ms": 0.701,
+      "L1_audio0_ms": 5.294,
+      "clock_unc_ms": 1.368,
+      "audio_s": 3.32,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 164.0,
+      "L2_est_ms": 179.3
+    },
+    {
+      "activation": 9,
+      "L1_start_ms": 1.743,
+      "L1_audio0_ms": 6.488,
+      "clock_unc_ms": 1.467,
+      "audio_s": 2.16,
+      "end_reason": "server_end",
+      "overrun": false,
+      "seq_gaps": 0,
+      "min_slack_ms": 376.0,
+      "lag_audio_ms": 144.0,
+      "L2_est_ms": 160.5
+    }
+  ],
+  "summary": {
+    "L1_start_ms": {
+      "n": 9,
+      "mean": 1.71,
+      "p50": 1.85,
+      "p95": 2.37,
+      "max": 2.38
+    },
+    "L1_audio0_ms": {
+      "n": 9,
+      "mean": 8.27,
+      "p50": 6.74,
+      "p95": 15.33,
+      "max": 20.39
+    },
+    "lag_audio_ms": {
+      "n": 9,
+      "mean": 61.78,
+      "p50": 64.0,
+      "p95": 156.0,
+      "max": 164.0
+    },
+    "L2_est_ms": {
+      "n": 9,
+      "mean": 80.03,
+      "p50": 81.3,
+      "p95": 171.78,
+      "max": 179.3
+    },
+    "clock_unc_ms": {
+      "n": 9,
+      "mean": 1.41,
+      "p50": 1.37,
+      "p95": 1.54,
+      "max": 1.58
+    }
+  },
+  "definitions": {
+    "capture_delta_ms": "[EST] 10.0 +/- 7.0 ms, not measured",
+    "L2_est": "L1_audio0 + lag_audio + capture_delta; keyword end located at 20 ms resolution"
+  }
+}
