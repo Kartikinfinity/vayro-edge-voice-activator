@@ -151,9 +151,11 @@ def main():
 
     mapping, last_new, last_tree = {}, None, None
     dropped = {}
-    tmp_index = tempfile.NamedTemporaryFile(delete=False, suffix=".idx")
-    tmp_index.close()
-    os.unlink(tmp_index.name)
+    # scratch index inside .git (same drive as the repository; the system temp drive may be full)
+    fd, idx = tempfile.mkstemp(suffix=".idx", prefix="public-", dir=git("rev-parse", "--absolute-git-dir").strip())
+    os.close(fd)
+    os.unlink(idx)
+    tmp_index = argparse.Namespace(name=idx)
     env_idx = dict(os.environ, GIT_INDEX_FILE=tmp_index.name)
     commits = git("rev-list", "--reverse", "--first-parent", args.source).split()
     for n, old in enumerate(commits, 1):
