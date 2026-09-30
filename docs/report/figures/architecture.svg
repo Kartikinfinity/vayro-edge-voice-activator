@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440">
+<defs><marker id="ah-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.8px;font-weight:600;fill:#12344d}.g-s{font-size:9px;fill:#1f2933}.g-m{font-size:8.4px;fill:#5d6b79}.g-e{fill:#eaf2fa;stroke:#1f5f8b}.g-n{fill:#f3eefb;stroke:#7a5aa6}.g-v{fill:#eaf7ef;stroke:#2f7d4f}.g-o{fill:#f5f6f7;stroke:#6b7785}.g-x{fill:#fdf1e7;stroke:#b8591a}.g-a{stroke:#1f2933;stroke-width:1.2;fill:none}</style>
+<!-- device container -->
+<rect x="6" y="22" width="452" height="412" rx="9" fill="#fbfdff" stroke="#1f5f8b" stroke-width="1.4"/>
+<text x="16" y="15" class="g-h">ESP32-S3 edge device — firmware on ESP-IDF 5.5.5 / FreeRTOS, 240 MHz, PSRAM disabled</text>
+<!-- core 1 lane -->
+<rect x="16" y="32" width="432" height="176" rx="6" fill="#f2f7fc" stroke="#9dbad4" stroke-dasharray="3 2"/>
+<text x="24" y="47" class="g-t">Core 1 · task i2s_reader (priority 20) — everything below runs once per 10 ms hop</text>
+<rect x="24" y="62" width="76" height="54" rx="5" class="g-e"/>
+<text x="62" y="79" text-anchor="middle" class="g-t">I2S0 RX</text><text x="62" y="92" text-anchor="middle" class="g-s">+ DMA</text><text x="62" y="105" text-anchor="middle" class="g-m">4 × 160 frames</text>
+<rect x="110" y="62" width="70" height="54" rx="5" class="g-e"/>
+<text x="145" y="79" text-anchor="middle" class="g-t">int32→int16</text><text x="145" y="92" text-anchor="middle" class="g-s">word >> 16</text><text x="145" y="105" text-anchor="middle" class="g-m">160 samples</text>
+<rect x="190" y="62" width="80" height="54" rx="5" class="g-e"/>
+<text x="230" y="79" text-anchor="middle" class="g-t">Front end</text><text x="230" y="92" text-anchor="middle" class="g-s">microfrontend</text><text x="230" y="105" text-anchor="middle" class="g-m">40 log-mel / 10 ms</text>
+<rect x="280" y="62" width="76" height="54" rx="5" class="g-e"/>
+<text x="318" y="79" text-anchor="middle" class="g-t">DS-CNN int8</text><text x="318" y="92" text-anchor="middle" class="g-s">TFLM + esp-nn</text><text x="318" y="105" text-anchor="middle" class="g-m">every 60 ms</text>
+<rect x="366" y="62" width="74" height="54" rx="5" class="g-e"/>
+<text x="403" y="79" text-anchor="middle" class="g-t">Decision</text><text x="403" y="92" text-anchor="middle" class="g-s">mean-3 ≥ 0.80</text><text x="403" y="105" text-anchor="middle" class="g-m">2 s refractory</text>
+<path d="M100,89 L108,89" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M180,89 L188,89" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M270,89 L278,89" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M356,89 L364,89" class="g-a" marker-end="url(#ah-ar)"/>
+<rect x="190" y="130" width="166" height="30" rx="5" class="g-o"/>
+<text x="273" y="143" text-anchor="middle" class="g-s">feature window 100 × 40 int8</text><text x="273" y="155" text-anchor="middle" class="g-m">(last 1.02 s, static array s_fring)</text>
+<path d="M230,116 L230,128" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M318,130 L318,118" class="g-a" marker-end="url(#ah-ar)"/>
+<text x="190" y="182" class="g-m">GPIO16 high while a hop is processed;</text>
+<text x="190" y="194" class="g-m">GPIO15 pulses on a detection (not captured:</text>
+<text x="190" y="206" class="g-m">no logic analyser was available)</text>
+<!-- ring -->
+<rect x="24" y="222" width="190" height="40" rx="5" class="g-x"/>
+<text x="119" y="238" text-anchor="middle" class="g-t">Unified audio ring (product)</text><text x="119" y="252" text-anchor="middle" class="g-s">0.75 s = 12 000 int16 = 24 000 B</text>
+<path d="M145,116 C145,170 120,190 120,220" class="g-a" marker-end="url(#ah-ar)"/>
+<text x="104" y="176" class="g-m" text-anchor="end">ring_write()</text>
+<!-- core 0 lane -->
+<rect x="16" y="276" width="432" height="150" rx="6" fill="#f7f5fb" stroke="#bda9dd" stroke-dasharray="3 2"/>
+<text x="24" y="291" class="g-t">Core 0 · networking and telemetry</text>
+<rect x="24" y="314" width="128" height="58" rx="5" class="g-n"/>
+<text x="88" y="330" text-anchor="middle" class="g-t">streamer (prio 12)</text><text x="88" y="343" text-anchor="middle" class="g-s">from w − 571 ms</text><text x="88" y="356" text-anchor="middle" class="g-m">1 280 B = 40 ms per packet</text>
+<rect x="162" y="314" width="128" height="58" rx="5" class="g-n"/>
+<text x="226" y="330" text-anchor="middle" class="g-t">netlink (prio 10)</text><text x="226" y="343" text-anchor="middle" class="g-s">Wi-Fi STA, warm TCP</text><text x="226" y="356" text-anchor="middle" class="g-m">PING/PONG clock sync 10 s</text>
+<rect x="300" y="314" width="140" height="58" rx="5" class="g-o"/>
+<text x="370" y="330" text-anchor="middle" class="g-t">main task (app_main)</text><text x="370" y="343" text-anchor="middle" class="g-s">@STATS/@PERF 1 s, @CPU 10 s</text><text x="370" y="356" text-anchor="middle" class="g-m">USB-Serial-JTAG → PC (COM7)</text>
+<rect x="162" y="386" width="128" height="30" rx="5" fill="#eeeeee" stroke="#6b7785"/>
+<text x="226" y="400" text-anchor="middle" class="g-s">lwIP + Wi-Fi/PHY driver</text><text x="226" y="411" text-anchor="middle" class="g-m">(closed binary, disclosed)</text>
+<path d="M60,262 L60,312" class="g-a" marker-end="url(#ah-ar)"/>
+<text x="66" y="309" class="g-m">ring_read()</text>
+<path d="M403,116 L403,300 L118,300 L118,312" class="g-a" marker-end="url(#ah-ar)" stroke-dasharray="4 2"/>
+<text x="396" y="296" class="g-m" text-anchor="end">trigger: ns_trigger() → queue (non-blocking)</text>
+<path d="M152,372 C160,390 162,398 162,400" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M290,401 L464,401" class="g-a" marker-end="url(#ah-ar)"/>
+<!-- network -->
+<rect x="466" y="36" width="56" height="390" rx="6" class="g-n" stroke-dasharray="4 2"/>
+<text x="490" y="250" text-anchor="middle" class="g-t" transform="rotate(-90 490 250)">home Wi-Fi LAN</text>
+<text x="504" y="250" text-anchor="middle" class="g-m" transform="rotate(-90 504 250)">one warm TCP connection · port 5005</text>
+<text x="494" y="60" text-anchor="middle" class="g-m">audio →</text>
+<text x="494" y="112" text-anchor="middle" class="g-m">← END</text>
+<!-- server -->
+<rect x="532" y="22" width="182" height="412" rx="9" fill="#fbfefc" stroke="#2f7d4f" stroke-width="1.4"/>
+<text x="540" y="15" class="g-h">PC — ASR server (Python 3.12)</text>
+<rect x="542" y="36" width="162" height="76" rx="5" class="g-v"/>
+<text x="623" y="52" text-anchor="middle" class="g-t">ingest.py receive thread</text><text x="623" y="66" text-anchor="middle" class="g-s">parse 8-byte-header packets</text><text x="623" y="79" text-anchor="middle" class="g-s">µs timestamps (L1)</text><text x="623" y="92" text-anchor="middle" class="g-s">energy VAD → END</text><text x="623" y="104" text-anchor="middle" class="g-m">answers PING (clock offset)</text>
+<rect x="542" y="130" width="162" height="76" rx="5" class="g-v"/>
+<text x="623" y="146" text-anchor="middle" class="g-t">AsrJob thread (per stream)</text><text x="623" y="160" text-anchor="middle" class="g-s">150 Hz high-pass +</text><text x="623" y="173" text-anchor="middle" class="g-s">keyword-referenced gain</text><text x="623" y="186" text-anchor="middle" class="g-s">Vosk en-in-0.5 (Kaldi)</text><text x="623" y="198" text-anchor="middle" class="g-m">not a transformer</text>
+<rect x="542" y="224" width="162" height="62" rx="5" class="g-o"/>
+<text x="623" y="240" text-anchor="middle" class="g-t">files per activation</text><text x="623" y="254" text-anchor="middle" class="g-s">raw .wav · _asr.wav · .json</text><text x="623" y="267" text-anchor="middle" class="g-s">activations.csv</text><text x="623" y="279" text-anchor="middle" class="g-m">evidence/server/&lt;session&gt;/</text>
+<rect x="542" y="304" width="162" height="44" rx="5" class="g-o"/>
+<text x="623" y="321" text-anchor="middle" class="g-t">console</text><text x="623" y="335" text-anchor="middle" class="g-s">transcript of the command</text>
+<rect x="542" y="366" width="162" height="58" rx="5" fill="#ffffff" stroke="#6b7785" stroke-dasharray="3 2"/>
+<text x="623" y="382" text-anchor="middle" class="g-t">host/capture.py (USB)</text><text x="623" y="396" text-anchor="middle" class="g-s">records telemetry, audio,</text><text x="623" y="409" text-anchor="middle" class="g-s">features for evidence</text>
+<path d="M510,68 L540,68" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M542,98 L512,98" class="g-a" stroke-dasharray="4 2" marker-end="url(#ah-ar)"/>
+<path d="M623,112 L623,128" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M623,206 L623,222" class="g-a" marker-end="url(#ah-ar)"/>
+<path d="M623,286 L623,302" class="g-a" marker-end="url(#ah-ar)"/>
+</svg>

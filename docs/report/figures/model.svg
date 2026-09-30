@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 268">
+<defs><marker id="ah-md" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:8.8px;fill:#1f2933}.g-m{font-size:8.2px;fill:#5d6b79}.g-e{fill:#eaf2fa;stroke:#1f5f8b}.g-o{fill:#f5f6f7;stroke:#6b7785}.g-v{fill:#eaf7ef;stroke:#2f7d4f}.g-a{stroke:#1f2933;stroke-width:1.1;fill:none}</style>
+<text x="4" y="14" class="g-h">DS-CNN "v2b" (model/train/train.py build_model) — time runs down the first axis; the 40 mel bands are the input channels</text>
+<g>
+<rect x="4" y="26" width="88" height="124" rx="5" class="g-o"/>
+<text x="48" y="42" text-anchor="middle" class="g-t">Input</text><text x="48" y="57" text-anchor="middle" class="g-s">100 × 1 × 40</text><text x="48" y="71" text-anchor="middle" class="g-s">int8 features</text><text x="48" y="92" text-anchor="middle" class="g-m">100 frames × 10 ms</text><text x="48" y="104" text-anchor="middle" class="g-m">= 1.02 s of audio</text><text x="48" y="124" text-anchor="middle" class="g-m">step 10 ms</text>
+<rect x="102" y="26" width="92" height="124" rx="5" class="g-e"/>
+<text x="148" y="42" text-anchor="middle" class="g-t">Conv2D 24</text><text x="148" y="55" text-anchor="middle" class="g-m">kernel 3×1, stride 2</text><text x="148" y="71" text-anchor="middle" class="g-s">→ 49 × 1 × 24</text><text x="148" y="92" text-anchor="middle" class="g-s">2 880 weights</text><text x="148" y="105" text-anchor="middle" class="g-s">141 120 MACs</text><text x="148" y="124" text-anchor="middle" class="g-m">step 20 ms</text>
+<rect x="204" y="26" width="92" height="124" rx="5" class="g-e"/>
+<text x="250" y="42" text-anchor="middle" class="g-t">Block 1</text><text x="250" y="55" text-anchor="middle" class="g-m">DW 5×1 s2 + PW 32</text><text x="250" y="71" text-anchor="middle" class="g-s">→ 23 × 1 × 32</text><text x="250" y="92" text-anchor="middle" class="g-s">120 + 768 weights</text><text x="250" y="105" text-anchor="middle" class="g-s">2 760 + 17 664 MACs</text><text x="250" y="124" text-anchor="middle" class="g-m">step 40 ms</text>
+<rect x="306" y="26" width="92" height="124" rx="5" class="g-e"/>
+<text x="352" y="42" text-anchor="middle" class="g-t">Block 2</text><text x="352" y="55" text-anchor="middle" class="g-m">DW 5×1 s1 + PW 32</text><text x="352" y="71" text-anchor="middle" class="g-s">→ 19 × 1 × 32</text><text x="352" y="92" text-anchor="middle" class="g-s">160 + 1 024 weights</text><text x="352" y="105" text-anchor="middle" class="g-s">3 040 + 19 456 MACs</text><text x="352" y="124" text-anchor="middle" class="g-m">step 40 ms</text>
+<rect x="408" y="26" width="92" height="124" rx="5" class="g-e"/>
+<text x="454" y="42" text-anchor="middle" class="g-t">Block 3</text><text x="454" y="55" text-anchor="middle" class="g-m">DW 5×1 s2 + PW 48</text><text x="454" y="71" text-anchor="middle" class="g-s">→ 8 × 1 × 48</text><text x="454" y="92" text-anchor="middle" class="g-s">160 + 1 536 weights</text><text x="454" y="105" text-anchor="middle" class="g-s">1 280 + 12 288 MACs</text><text x="454" y="124" text-anchor="middle" class="g-m">step 80 ms</text>
+<rect x="510" y="26" width="92" height="124" rx="5" class="g-e"/>
+<text x="556" y="42" text-anchor="middle" class="g-t">Block 4</text><text x="556" y="55" text-anchor="middle" class="g-m">DW 3×1 s1 + PW 48</text><text x="556" y="71" text-anchor="middle" class="g-s">→ 6 × 1 × 48</text><text x="556" y="92" text-anchor="middle" class="g-s">144 + 2 304 weights</text><text x="556" y="105" text-anchor="middle" class="g-s">864 + 13 824 MACs</text><text x="556" y="124" text-anchor="middle" class="g-m">step 80 ms</text>
+<rect x="612" y="26" width="104" height="124" rx="5" class="g-v"/>
+<text x="664" y="42" text-anchor="middle" class="g-t">Head</text><text x="664" y="55" text-anchor="middle" class="g-m">reshape → 288</text><text x="664" y="68" text-anchor="middle" class="g-m">dropout 0.25 (train)</text><text x="664" y="84" text-anchor="middle" class="g-s">Dense 1 + sigmoid</text><text x="664" y="98" text-anchor="middle" class="g-s">289 params, 288 MACs</text><text x="664" y="120" text-anchor="middle" class="g-t">p(keyword)</text><text x="664" y="134" text-anchor="middle" class="g-m">int8 out, scale 1/256</text>
+</g>
+<g><path d="M92,88 L100,88" class="g-a" marker-end="url(#ah-md)"/><path d="M194,88 L202,88" class="g-a" marker-end="url(#ah-md)"/><path d="M296,88 L304,88" class="g-a" marker-end="url(#ah-md)"/><path d="M398,88 L406,88" class="g-a" marker-end="url(#ah-md)"/><path d="M500,88 L508,88" class="g-a" marker-end="url(#ah-md)"/><path d="M602,88 L610,88" class="g-a" marker-end="url(#ah-md)"/></g>
+<text x="4" y="166" class="g-m">Every convolution is followed by BatchNorm + ReLU during training; BatchNorm is folded into the convolution at int8 export.</text>
+<text x="4" y="178" class="g-m">"DW" = depthwise conv (one filter per channel); "PW" = pointwise 1×1 conv (mixes channels). All convolutions use "valid" (no) padding,</text>
+<text x="4" y="190" class="g-m">so a later stateful streaming version would stay equivalent (architecture rule X5).</text>
+<!-- MAC share bar -->
+<text x="4" y="208" class="g-t">Where the 212 584 multiply-accumulates per inference go</text>
+<rect x="4" y="214" width="473" height="18" fill="#1f5f8b"/>
+<rect x="477" y="214" width="212" height="18" fill="#6a9dc3"/>
+<rect x="689" y="214" width="27" height="18" fill="#b7cfe3"/>
+<text x="240" y="227" text-anchor="middle" style="font-size:8.6px;fill:#ffffff;font-weight:600">first Conv2D: 141 120 MACs (66 %) — 40 input channels × 3 taps × 24 filters × 49 steps</text>
+<text x="583" y="227" text-anchor="middle" style="font-size:8.4px;fill:#ffffff">4 pointwise convs: 63 232 (30 %)</text>
+<text x="716" y="243" text-anchor="end" style="font-size:8.2px;fill:#5d6b79">depthwise + dense: 8 232 (4 %)</text>
+<text x="4" y="250" class="g-s">Totals (metrics.json): 10 665 parameters = 9 096 convolution weights + 289 dense weights and bias + 1 280 BatchNorm values;</text>
+<text x="4" y="262" class="g-s">28 024-byte int8 .tflite; tensor arena used 13 404 B; ops CONV_2D, DEPTHWISE_CONV_2D, RESHAPE, FULLY_CONNECTED, LOGISTIC.</text>
+</svg>

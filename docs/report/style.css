@@ -1,0 +1,107 @@
+/* PS26172 technical report — print stylesheet (headless Chrome, A4). Local fonts only. */
+:root {
+  --ink: #1f2933; --muted: #5d6b79; --rule: #d5dbe1; --soft: #f3f6f8;
+  --navy: #12344d; --edge: #1f5f8b; --net: #7a5aa6; --srv: #2f7d4f; --warn: #b8591a; --acc: #c2185b;
+}
+@page {
+  size: A4; margin: 19mm 17mm 18mm 17mm;
+  @bottom-left { content: "PS 26172 · Hey Vayro — Technical Reconstruction Report"; font: 7.5pt "Segoe UI"; color: #8a96a3; }
+  @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 7.5pt "Segoe UI"; color: #8a96a3; }
+}
+@page :first { @bottom-left { content: none; } @bottom-right { content: none; } }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: Cambria, Georgia, serif; font-size: 10.2pt; line-height: 1.47; color: var(--ink); margin: 0; }
+p { margin: 0 0 6.5pt; text-align: left; orphans: 3; widows: 3; hyphens: auto; }
+a { color: var(--edge); text-decoration: none; }
+strong { color: #0d2233; }
+code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.6pt; background: #eef2f5; padding: 0 2.5pt; border-radius: 2pt; color: #243b53; }
+pre.code { font-family: Consolas, monospace; font-size: 7.9pt; line-height: 1.35; background: #f5f7f9; border: 0.6pt solid var(--rule);
+  border-left: 2.5pt solid var(--edge); padding: 6pt 8pt; margin: 4pt 0 9pt; white-space: pre-wrap; break-inside: avoid; }
+pre.code code { background: none; padding: 0; font-size: inherit; }
+ul, ol { margin: 0 0 7pt; padding-left: 16pt; }
+li { margin: 0 0 2.5pt; }
+li > ul, li > ol { margin: 2pt 0 2pt; }
+
+/* headings */
+h1, h2, h3, h4 { font-family: "Segoe UI", Arial, sans-serif; color: var(--navy); line-height: 1.22; break-after: avoid; }
+h1 { font-size: 21pt; font-weight: 600; margin: 0 0 12pt; break-before: page; }
+h1 .chapnum { display: block; font-size: 10pt; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--edge); margin-bottom: 3pt; }
+h1.chapter, h1.appendix { border-bottom: 1.2pt solid var(--navy); padding-bottom: 7pt; }
+h2 { font-size: 13.5pt; font-weight: 600; margin: 15pt 0 6pt; }
+h3 { font-size: 11pt; font-weight: 600; margin: 11pt 0 4pt; color: #1d4a6b; }
+h4 { font-size: 10pt; font-weight: 600; margin: 9pt 0 3pt; color: #1d4a6b; }
+.secnum { color: var(--edge); margin-right: 4pt; font-weight: 600; }
+h2 + p, h3 + p { margin-top: 0; }
+
+/* evidence badges */
+.tag { font-family: "Segoe UI", sans-serif; font-size: 6.4pt; font-weight: 700; letter-spacing: 0.04em; padding: 0.4pt 3.2pt 0.6pt;
+  border-radius: 6pt; vertical-align: 1pt; white-space: nowrap; border: 0.6pt solid; }
+.tag-verified { color: #1d6b3f; border-color: #7cc49a; background: #eaf7ef; }
+.tag-documented { color: #1f4f7a; border-color: #88b0d6; background: #eaf2fa; }
+.tag-inferred { color: #6b4b00; border-color: #d9b45a; background: #fbf4e2; }
+.tag-unverified { color: #9b2222; border-color: #e29a9a; background: #fcecec; }
+.tag-planned { color: #5b3f8c; border-color: #b8a3dd; background: #f3eefb; }
+.tagnote { font-family: "Segoe UI", sans-serif; font-size: 7.6pt; color: #6b7785; }
+.tag-future { color: #455463; border-color: #aab5c0; background: #f1f3f5; }
+
+/* tables */
+.tablewrap { margin: 6pt 0 11pt; }
+table.t { width: 100%; border-collapse: collapse; font-family: "Segoe UI", Arial, sans-serif; font-size: 8.1pt; line-height: 1.33; margin: 5pt 0 10pt; }
+.tablewrap table.t { margin: 0; }
+table.t caption { caption-side: top; text-align: left; font-size: 8.4pt; color: var(--muted); padding: 0 0 4pt; font-family: "Segoe UI", sans-serif; }
+table.t th { background: var(--navy); color: #fff; font-weight: 600; padding: 3.5pt 5pt; vertical-align: bottom; border: 0.5pt solid var(--navy); }
+table.t td { padding: 3pt 5pt; border-bottom: 0.5pt solid var(--rule); vertical-align: top; }
+table.t tbody tr:nth-child(even) td { background: #f7f9fb; }
+table.t tr { break-inside: avoid; }
+table.t thead { display: table-header-group; }
+table.dense { font-size: 7.4pt; }
+table.dense td, table.dense th { padding: 2.4pt 3.6pt; }
+table.t code { font-size: 7.3pt; padding: 0 1.5pt; }
+.fignum { font-weight: 700; color: var(--navy); }
+
+/* figures */
+figure { margin: 8pt 0 12pt; text-align: center; break-inside: avoid; }
+figure svg { max-width: 100%; }
+figcaption { font-family: "Segoe UI", sans-serif; font-size: 8.2pt; color: var(--muted); text-align: left; margin-top: 4pt; line-height: 1.35; }
+
+/* callouts */
+.callout { border: 0.7pt solid var(--rule); border-left: 3pt solid var(--edge); background: #f6f9fb; padding: 6pt 9pt 3pt; margin: 7pt 0 10pt; break-inside: avoid; font-size: 9.6pt; }
+.callout .c-head { font-family: "Segoe UI", sans-serif; font-weight: 700; font-size: 7.6pt; letter-spacing: 0.09em; text-transform: uppercase; color: var(--edge); margin-bottom: 3pt; }
+.callout p:last-child, .callout ul:last-child { margin-bottom: 4pt; }
+.c-why { border-left-color: var(--srv); background: #f3f9f5; } .c-why .c-head { color: var(--srv); }
+.c-example { border-left-color: var(--net); background: #f7f4fb; } .c-example .c-head { color: var(--net); }
+.c-simple { border-left-color: #3c8dbc; background: #f2f8fc; } .c-simple .c-head { color: #2c79a7; }
+.c-warn { border-left-color: var(--warn); background: #fdf6f0; } .c-warn .c-head { color: var(--warn); }
+.c-evidence { border-left-color: #6b7785; background: #f5f6f7; } .c-evidence .c-head { color: #4d5965; }
+
+.pagebreak { break-after: page; }
+
+/* title page */
+.titlepage { height: 250mm; display: flex; flex-direction: column; font-family: "Segoe UI", sans-serif; }
+.titlepage .kicker { font-size: 9pt; letter-spacing: 0.16em; text-transform: uppercase; color: var(--edge); font-weight: 600; margin-top: 30mm; }
+.titlepage .ttl { font-size: 30pt; font-weight: 600; color: var(--navy); line-height: 1.12; margin: 8pt 0 10pt; }
+.titlepage .sub { font-size: 13pt; color: #3d5266; line-height: 1.35; max-width: 150mm; }
+.titlepage .rule { height: 2pt; background: var(--navy); width: 40mm; margin: 16pt 0 16pt; }
+.titlepage table.meta { font-size: 9pt; border-collapse: collapse; margin-top: 4pt; }
+.titlepage table.meta td { padding: 2.5pt 12pt 2.5pt 0; vertical-align: top; }
+.titlepage table.meta td:first-child { color: var(--muted); white-space: nowrap; }
+.titlepage .foot { margin-top: auto; font-size: 8pt; color: var(--muted); border-top: 0.6pt solid var(--rule); padding-top: 6pt; line-height: 1.45; }
+
+/* contents */
+nav.toc { break-before: page; font-family: "Segoe UI", sans-serif; }
+nav.toc h1.toc-title { break-before: avoid; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; }
+nav.toc li { margin: 0; }
+nav.toc li a { display: flex; align-items: baseline; color: var(--ink); }
+nav.toc li.l1 { margin-top: 5.5pt; font-weight: 600; font-size: 9.6pt; color: var(--navy); }
+nav.toc li.l1 a { color: var(--navy); }
+nav.toc li.l2 { font-size: 8.4pt; padding-left: 26pt; line-height: 1.38; }
+nav.toc .toc-num { display: inline-block; min-width: 26pt; color: var(--edge); }
+nav.toc li.l2 .toc-num { min-width: 30pt; }
+nav.toc .toc-t { flex: 0 1 auto; }
+nav.toc .toc-dots { flex: 1 1 auto; border-bottom: 0.6pt dotted #b7c0c9; margin: 0 4pt 2.5pt; min-width: 8pt; }
+nav.toc .toc-pg { flex: 0 0 18pt; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* diagram primitives used by hand-written SVG figures */
+svg text { font-family: "Segoe UI", Arial, sans-serif; }
+.bad-ref { color: red; font-weight: 700; }

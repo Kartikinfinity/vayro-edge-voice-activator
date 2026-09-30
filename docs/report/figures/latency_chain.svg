@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270">
+<defs><marker id="ah-lc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:9px;fill:#1f2933}.g-m{font-size:8.4px;fill:#5d6b79}</style>
+<text x="8" y="14" class="g-h">Keyword end → audio at the ASR server (L2), final configuration, T1 medians (n = 12) — scale 4 px per ms</text>
+<!-- x = 40 + ms*4 -->
+<line x1="40" y1="40" x2="40" y2="118" stroke="#1f2933" stroke-width="1.5"/>
+<text x="36" y="34" class="g-t">keyword ends (acoustic)</text>
+<rect x="40" y="58" width="444" height="26" fill="#1f5f8b"/>
+<text x="262" y="75" text-anchor="middle" style="font-size:9.4px;fill:#fff;font-weight:600">keyword end → detection: 111 ms (measured inside the streamed audio)</text>
+<rect x="484" y="58" width="40" height="26" fill="#ffffff" stroke="#6b7785" stroke-dasharray="2 2"/>
+<text x="504" y="75" text-anchor="middle" class="g-m">10 ms</text>
+<rect x="524" y="58" width="72" height="26" fill="#2f7d4f"/>
+<text x="560" y="75" text-anchor="middle" style="font-size:9px;fill:#fff;font-weight:600">18 ms</text>
+<line x1="524" y1="44" x2="524" y2="118" stroke="#c2185b" stroke-width="1.5"/>
+<text x="524" y="40" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#c2185b">detection</text>
+<line x1="594" y1="44" x2="594" y2="118" stroke="#2f7d4f" stroke-width="1.5"/>
+<text x="600" y="40" class="g-t">first audio at server</text>
+<path d="M40,104 L592,104" stroke="#1f2933" stroke-width="1" marker-end="url(#ah-lc)"/>
+<text x="316" y="117" text-anchor="middle" class="g-t">L2 ≈ 138 ms median (p95 196 ms, max 198 ms) — sum per activation, then median</text>
+<text x="480" y="96" text-anchor="end" class="g-m">[EST] capture term 10 ms</text>
+<!-- decomposition -->
+<text x="8" y="146" class="g-t">What the three parts are</text>
+<rect x="8" y="154" width="226" height="74" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="16" y="169" class="g-s">Decision time on the device: the window must</text>
+<text x="16" y="181" class="g-s">contain the keyword end, then 3 consecutive scores</text>
+<text x="16" y="193" class="g-s">(60 ms apart) must average ≥ 0.80. Deliberate:</text>
+<text x="16" y="205" class="g-s">it is the false-trigger defence. Median 111 ms,</text>
+<text x="16" y="217" class="g-s">p95 171 ms; located at 20 ms resolution.</text>
+<rect x="244" y="154" width="226" height="74" rx="4" fill="#ffffff" stroke="#6b7785" stroke-dasharray="3 2"/>
+<text x="252" y="169" class="g-s">Capture term, NOT measured: last sample in the</text>
+<text x="252" y="181" class="g-s">ring → decision (≤ 10 ms DMA hop + ≈ 2–3 ms</text>
+<text x="252" y="193" class="g-s">processing; mic group delay 1.08 ms). Taken as</text>
+<text x="252" y="205" class="g-s">10 ± 7 ms. A GPIO + logic-analyser rig (IN-1/IN-2)</text>
+<text x="252" y="217" class="g-s">would measure it; it was not available.</text>
+<rect x="480" y="154" width="232" height="74" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="488" y="169" class="g-s">Transport: detection → first audio packet read by</text>
+<text x="488" y="181" class="g-s">the server (device and server clocks aligned by</text>
+<text x="488" y="193" class="g-s">ping, ± 1.2–1.8 ms). START message 2.4 ms; audio</text>
+<text x="488" y="205" class="g-s">18 ms median with Vosk running (2.1 ms without</text>
+<text x="488" y="217" class="g-s">ASR load on 27 Sep, E-37).</text>
+<text x="8" y="250" class="g-m">Other measurements of the same quantity: 95 ms median / 136 ms p95 (27 Sep, capture build, no ASR load, n = 22, E-37); 81 / 172 ms (29 Sep, with ASR, keyword + command, n = 9, E-62).</text>
+<text x="8" y="263" class="g-m">Architecture estimate before any build: ≈ 205 ms typical (Track C §10.3, smoothing window 5 at 30 ms cadence). Sources: evidence/server/20260930_085548/latency_report.json.</text>
+</svg>

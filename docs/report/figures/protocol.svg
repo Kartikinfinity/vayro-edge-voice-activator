@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 470">
+<defs><marker id="ah-pr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:9px;fill:#1f2933}.g-m{font-size:8.4px;fill:#5d6b79}.g-a{stroke:#1f2933;stroke-width:1.2;fill:none}.g-d{stroke:#1f2933;stroke-width:1.2;fill:none;stroke-dasharray:4 2}</style>
+<rect x="120" y="8" width="170" height="30" rx="5" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="205" y="27" text-anchor="middle" class="g-t">ESP32-S3 (netstream.c)</text>
+<rect x="470" y="8" width="170" height="30" rx="5" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="555" y="27" text-anchor="middle" class="g-t">PC server (ingest.py)</text>
+<line x1="205" y1="38" x2="205" y2="462" stroke="#1f5f8b" stroke-dasharray="2 3"/>
+<line x1="555" y1="38" x2="555" y2="462" stroke="#2f7d4f" stroke-dasharray="2 3"/>
+<!-- connect -->
+<text x="8" y="60" class="g-t">boot</text>
+<path d="M205,58 L553,58" class="g-a" marker-end="url(#ah-pr)"/>
+<text x="380" y="53" text-anchor="middle" class="g-s">TCP connect (once, after Wi-Fi is up) · TCP_NODELAY</text>
+<!-- clock sync -->
+<text x="8" y="92" class="g-t">clock sync</text>
+<text x="8" y="104" class="g-m">8 pings 0.5 s apart,</text><text x="8" y="115" class="g-m">then every 10 s</text>
+<path d="M205,86 L553,86" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="81" text-anchor="middle" class="g-s">PING {t1}</text>
+<path d="M555,104 L207,104" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="99" text-anchor="middle" class="g-s">PONG {t1, t2 = server receive, t3 = server send}</text>
+<path d="M205,122 L553,122" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="117" text-anchor="middle" class="g-s">INFO {offset, RTT of the lowest-RTT of the last 8 pings}</text>
+<!-- detection -->
+<circle cx="205" cy="150" r="5" fill="#c2185b"/>
+<text x="195" y="154" text-anchor="end" style="font-size:9.5px;font-weight:700;fill:#c2185b">keyword detected (t_detect)</text>
+<text x="8" y="176" class="g-t">stream</text>
+<path d="M205,170 L553,170" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="165" text-anchor="middle" class="g-s">START (32 B) {activation, frame, t_detect, preroll 571 ms, first sample, raw score}</text>
+<text x="565" y="173" class="g-m">L1_start ≈ 2.4 ms (T1)</text>
+<path d="M205,194 L553,194" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="189" text-anchor="middle" class="g-s">CONT seq 1 (1 280 B = 640 samples = 40 ms of the pre-roll)</text>
+<text x="565" y="197" class="g-m">L1_audio0 ≈ 18 ms (T1)</text>
+<path d="M205,210 L553,210" class="g-a" marker-end="url(#ah-pr)"/><path d="M205,222 L553,222" class="g-a" marker-end="url(#ah-pr)"/>
+<text x="380" y="238" text-anchor="middle" class="g-m">… 14 packets empty the 571 ms backlog as fast as TCP allows …</text>
+<path d="M205,258 L553,258" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="253" text-anchor="middle" class="g-s">CONT … live: one packet per 40 ms of new audio (the command)</text>
+<path d="M205,278 L553,278" class="g-a" marker-end="url(#ah-pr)"/>
+<!-- server VAD -->
+<rect x="565" y="262" width="150" height="54" rx="4" fill="#ffffff" stroke="#2f7d4f"/>
+<text x="640" y="277" text-anchor="middle" class="g-s">energy VAD: 0.7 s of trailing</text><text x="640" y="289" text-anchor="middle" class="g-s">quiet (or 1.5 s with no speech),</text><text x="640" y="301" text-anchor="middle" class="g-s">not before 0.8 s; cap 6 s</text>
+<path d="M555,322 L207,322" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="317" text-anchor="middle" class="g-s">END {activation} — server-side endpointing</text>
+<path d="M205,346 L553,346" class="g-a" marker-end="url(#ah-pr)"/><text x="380" y="341" text-anchor="middle" class="g-s">END (16 B) {activation, samples sent, minimum ring slack, reason}</text>
+<rect x="565" y="352" width="150" height="40" rx="4" fill="#ffffff" stroke="#2f7d4f"/>
+<text x="640" y="368" text-anchor="middle" class="g-s">AsrJob finishes Vosk decode;</text><text x="640" y="380" text-anchor="middle" class="g-s">writes WAV / JSON / CSV</text>
+<text x="8" y="410" class="g-t">fallbacks</text>
+<path d="M205,406 L553,406" class="g-d" marker-end="url(#ah-pr)"/><text x="380" y="401" text-anchor="middle" class="g-s">OVERRUN (0 B) then END, if the ring was lapped (reason 3)</text>
+<text x="380" y="424" text-anchor="middle" class="g-s">device hard timeout 10 s after detection (reason 2) · socket error (reason 4)</text>
+<text x="8" y="448" class="g-m">Every packet: 8-byte header {magic 0xA7, flags, codec 0 = PCM16, seq u16, device time u24 in ms}. No length field: the payload size is fixed per packet type.</text>
+<text x="8" y="461" class="g-m">A trigger that arrives while a stream is open is logged but not streamed (streamed=0): one stream at a time.</text>
+</svg>

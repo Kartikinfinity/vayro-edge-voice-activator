@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 232">
+<defs><marker id="ah-rp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:9px;fill:#1f2933}.g-m{font-size:8.4px;fill:#5d6b79}.g-a{stroke:#1f2933;stroke-width:1.2;fill:none}</style>
+<text x="8" y="14" class="g-h">What the 0.75 s ring holds at the moment of a detection (product firmware: RING 750 ms, PREROLL 571 ms)</text>
+<!-- scale: x = 60 + ms*0.8 for ms in [-750, 0]  => -750 at 60, 0 at 660 -->
+<rect x="60" y="40" width="143" height="44" fill="#f1f3f5" stroke="#9aa6b2"/>
+<rect x="203" y="40" width="457" height="44" fill="#fdf1e7" stroke="#b8591a"/>
+<text x="131" y="58" text-anchor="middle" class="g-t">slack 179 ms</text>
+<text x="131" y="72" text-anchor="middle" class="g-m">oldest audio, not sent</text>
+<text x="431" y="56" text-anchor="middle" class="g-t">pre-roll 571 ms = 9 136 samples — sent first, as a burst</text>
+<!-- keyword -->
+<rect x="250" y="62" width="321" height="16" rx="3" fill="#1f5f8b" opacity="0.85"/>
+<text x="410" y="74" text-anchor="middle" style="font-size:8.8px;fill:#fff;font-weight:600">"Hey Vayro" (utterances 0.4–0.8 s; only the tail may fall inside)</text>
+<line x1="571" y1="34" x2="571" y2="96" stroke="#1f5f8b" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="571" y="30" text-anchor="middle" class="g-m">keyword end</text>
+<line x1="660" y1="30" x2="660" y2="100" stroke="#c2185b" stroke-width="2"/>
+<text x="660" y="24" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#c2185b">detection (write index w)</text>
+<path d="M571,106 L658,106" class="g-a" marker-end="url(#ah-rp)"/><path d="M660,106 L573,106" class="g-a" marker-end="url(#ah-rp)"/>
+<text x="615" y="120" text-anchor="middle" class="g-s">lag: median 111 ms</text>
+<text x="615" y="132" text-anchor="middle" class="g-m">(T1, n = 12; max 171 ms)</text>
+<!-- axis -->
+<line x1="60" y1="92" x2="660" y2="92" stroke="#6b7785"/>
+<g class="g-m" text-anchor="middle"><text x="60" y="104">−750 ms</text><text x="203" y="104">−571 ms</text><text x="360" y="104">−375</text><text x="480" y="104">−225</text></g>
+<text x="8" y="66" class="g-m">ring</text>
+<!-- after detection -->
+<text x="60" y="146" class="g-t">After the detection</text>
+<rect x="60" y="152" width="330" height="22" rx="3" fill="#f3eefb" stroke="#7a5aa6"/>
+<text x="225" y="167" text-anchor="middle" class="g-s">streamer: the pre-roll backlog in 1 280-byte packets (≈ 14), as fast as TCP drains</text>
+<rect x="394" y="152" width="266" height="22" rx="3" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="527" y="167" text-anchor="middle" class="g-s">then live: one 40 ms packet per 640 new samples</text>
+<text x="60" y="190" class="g-s">The writer (i2s_reader, core 1) keeps adding 16 samples per ms. If the streamer ever falls 12 000 samples (0.75 s) behind,</text>
+<text x="60" y="203" class="g-s">it sends OVERRUN and stops — a short correct stream instead of a corrupted one. Measured minimum slack: 179 ms in T1 (all 12),</text>
+<text x="60" y="216" class="g-s">169 ms under 31 synthetic streams (E-52/E-53); 3/31 overruns only when the server's ASR blocked its receive loop (E-58, fixed).</text>
+</svg>

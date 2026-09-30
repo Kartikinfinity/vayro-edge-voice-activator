@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+<defs><marker id="ah-hp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.8px;font-weight:600;fill:#12344d}.g-s{font-size:9px;fill:#1f2933}.g-m{font-size:8.4px;fill:#5d6b79}.g-e{fill:#eaf2fa;stroke:#1f5f8b}.g-o{fill:#f5f6f7;stroke:#6b7785}.g-x{fill:#fdf1e7;stroke:#b8591a}.g-n{fill:#f3eefb;stroke:#7a5aa6}.g-a{stroke:#1f2933;stroke-width:1.2;fill:none}</style>
+<text x="8" y="16" class="g-h">One 10 ms hop inside reader_task() (firmware/main/app_main.c) — the always-on work measured as "idle CPU"</text>
+<rect x="8" y="30" width="110" height="70" rx="5" class="g-e"/>
+<text x="63" y="47" text-anchor="middle" class="g-t">① ac_read()</text><text x="63" y="61" text-anchor="middle" class="g-s">160 × int32 words</text><text x="63" y="74" text-anchor="middle" class="g-s">from I2S DMA</text><text x="63" y="88" text-anchor="middle" class="g-m">blocks until a hop is ready</text>
+<rect x="132" y="30" width="110" height="70" rx="5" class="g-e"/>
+<text x="187" y="47" text-anchor="middle" class="g-t">② convert</text><text x="187" y="61" text-anchor="middle" class="g-s">int16 = word >> 16</text><text x="187" y="74" text-anchor="middle" class="g-s">(bits 23:8 of the</text><text x="187" y="88" text-anchor="middle" class="g-s">24-bit sample)</text>
+<rect x="256" y="30" width="110" height="70" rx="5" class="g-x"/>
+<text x="311" y="47" text-anchor="middle" class="g-t">③ ring_write()</text><text x="311" y="61" text-anchor="middle" class="g-s">160 samples into</text><text x="311" y="74" text-anchor="middle" class="g-s">the 0.75 s ring</text><text x="311" y="88" text-anchor="middle" class="g-m">(pre-roll source)</text>
+<rect x="380" y="30" width="160" height="70" rx="5" class="g-e"/>
+<text x="460" y="47" text-anchor="middle" class="g-t">④ ps_fe_process()</text><text x="460" y="61" text-anchor="middle" class="g-s">30 ms Hann window, 512-pt FFT</text><text x="460" y="74" text-anchor="middle" class="g-s">40 mel bands 125–6 500 Hz</text><text x="460" y="88" text-anchor="middle" class="g-s">noise reduction, PCAN, log</text>
+<rect x="554" y="30" width="158" height="70" rx="5" class="g-e"/>
+<text x="633" y="47" text-anchor="middle" class="g-t">⑤ ps_fe_to_int8()</text><text x="633" y="61" text-anchor="middle" class="g-s">40 × uint16 → 40 × int8</text><text x="633" y="74" text-anchor="middle" class="g-s">q = (v·256 + 333)/666 − 128</text><text x="633" y="88" text-anchor="middle" class="g-m">row f mod 100 of s_fring</text>
+<path d="M118,65 L130,65" class="g-a" marker-end="url(#ah-hp)"/><path d="M242,65 L254,65" class="g-a" marker-end="url(#ah-hp)"/><path d="M366,65 L378,65" class="g-a" marker-end="url(#ah-hp)"/><path d="M540,65 L552,65" class="g-a" marker-end="url(#ah-hp)"/>
+<path d="M633,100 L633,122" class="g-a" marker-end="url(#ah-hp)"/>
+<rect x="484" y="124" width="228" height="40" rx="5" class="g-o"/>
+<text x="598" y="140" text-anchor="middle" class="g-t">⑥ every 6th frame (60 ms), from frame 99 on?</text><text x="598" y="155" text-anchor="middle" class="g-s">no → hop ends here (5 of every 6 hops)</text>
+<path d="M484,144 L468,144 L468,176" class="g-a" marker-end="url(#ah-hp)"/>
+<text x="474" y="172" class="g-m">yes</text>
+<rect x="296" y="178" width="200" height="64" rx="5" class="g-e"/>
+<text x="396" y="195" text-anchor="middle" class="g-t">⑦ kws_set_row() × 100 + kws_invoke()</text><text x="396" y="209" text-anchor="middle" class="g-s">input LUT → 100 × 1 × 40 int8 tensor</text><text x="396" y="222" text-anchor="middle" class="g-s">TFLM Invoke(): 212 584 MACs</text><text x="396" y="235" text-anchor="middle" class="g-m">≈ 0.5–0.6 M cycles ≈ 2.3 ms at 240 MHz</text>
+<path d="M296,210 L262,210" class="g-a" marker-end="url(#ah-hp)"/>
+<rect x="96" y="178" width="164" height="64" rx="5" class="g-e"/>
+<text x="178" y="195" text-anchor="middle" class="g-t">⑧ smoothing</text><text x="178" y="209" text-anchor="middle" class="g-s">p = (out + 128) / 256</text><text x="178" y="222" text-anchor="middle" class="g-s">avg = mean of last 3 p</text><text x="178" y="235" text-anchor="middle" class="g-m">(3 scores spanning 120 ms)</text>
+<path d="M178,242 L178,262" class="g-a" marker-end="url(#ah-hp)"/>
+<rect x="8" y="264" width="340" height="56" rx="5" class="g-x"/>
+<text x="178" y="281" text-anchor="middle" class="g-t">⑨ avg ≥ 0.80 and ≥ 2 000 ms since the last trigger?</text>
+<text x="178" y="296" text-anchor="middle" class="g-s">yes → GPIO15 pulse, @KW line, ns_trigger({frame, ring index w, t_detect})</text>
+<text x="178" y="310" text-anchor="middle" class="g-m">the streamer task (core 0) then sends audio from w − 571 ms; this task never waits for it</text>
+<rect x="380" y="258" width="332" height="64" rx="5" fill="#ffffff" stroke="#9aa6b2" stroke-dasharray="3 2"/>
+<text x="546" y="274" text-anchor="middle" class="g-t">Measured cost (final firmware, idle, 240 MHz, E-60)</text>
+<text x="390" y="289" class="g-s">front end ≈ 108 k cycles per hop → ≈ 4.5 % of core 1</text>
+<text x="390" y="302" class="g-s">inference ≈ 555 k cycles × 16.7 per s → ≈ 3.9 % of core 1</text>
+<text x="390" y="315" class="g-s">whole i2s_reader task 9.25 % · core 1 busy 9.32 %</text>
+</svg>

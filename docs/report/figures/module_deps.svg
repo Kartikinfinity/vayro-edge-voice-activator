@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+<defs><marker id="ah-mdp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5d6b79"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.4px;font-weight:600;fill:#12344d}.g-s{font-size:8.5px;fill:#1f2933}.g-m{font-size:8px;fill:#5d6b79}.d{stroke:#5d6b79;stroke-width:1;fill:none}</style>
+<text x="8" y="14" class="g-h">Firmware components (firmware/) and what they depend on</text>
+<rect x="270" y="24" width="180" height="40" rx="5" fill="#eaf2fa" stroke="#1f5f8b" stroke-width="1.4"/>
+<text x="360" y="41" text-anchor="middle" class="g-t">main/app_main.c (670 lines)</text><text x="360" y="55" text-anchor="middle" class="g-s">boot, probes, reader_task, telemetry</text>
+<!-- project components row -->
+<g>
+<rect x="8" y="96" width="92" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="54" y="112" text-anchor="middle" class="g-t">audio_capture</text><text x="54" y="125" text-anchor="middle" class="g-s">I2S0 std RX</text><text x="54" y="136" text-anchor="middle" class="g-m">71 lines</text>
+<rect x="108" y="96" width="92" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="154" y="112" text-anchor="middle" class="g-t">audio_ring</text><text x="154" y="125" text-anchor="middle" class="g-s">lock-free ring</text><text x="154" y="136" text-anchor="middle" class="g-m">43 lines</text>
+<rect x="208" y="96" width="96" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="256" y="112" text-anchor="middle" class="g-t">microfrontend</text><text x="256" y="125" text-anchor="middle" class="g-s">ps_frontend wrapper</text><text x="256" y="136" text-anchor="middle" class="g-m">+ diag + tables</text>
+<rect x="312" y="96" width="92" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="358" y="112" text-anchor="middle" class="g-t">kws_engine</text><text x="358" y="125" text-anchor="middle" class="g-s">TFLM interpreter</text><text x="358" y="136" text-anchor="middle" class="g-m">+ model_data.c</text>
+<rect x="412" y="96" width="92" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="458" y="112" text-anchor="middle" class="g-t">netstream</text><text x="458" y="125" text-anchor="middle" class="g-s">Wi-Fi, TCP, stream</text><text x="458" y="136" text-anchor="middle" class="g-m">333 lines</text>
+<rect x="512" y="96" width="92" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="558" y="112" text-anchor="middle" class="g-t">serial_link</text><text x="558" y="125" text-anchor="middle" class="g-s">CRC-framed USB</text><text x="558" y="136" text-anchor="middle" class="g-m">174 lines</text>
+<rect x="612" y="96" width="100" height="46" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="662" y="112" text-anchor="middle" class="g-t">instrument</text><text x="662" y="125" text-anchor="middle" class="g-s">@BOOT, @MEM</text><text x="662" y="136" text-anchor="middle" class="g-m">72 lines</text>
+</g>
+<g class="d"><path d="M360,64 L54,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L154,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L256,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L358,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L458,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L558,94" marker-end="url(#ah-mdp)"/><path d="M360,64 L662,94" marker-end="url(#ah-mdp)"/></g>
+<!-- third-party row -->
+<rect x="8" y="182" width="192" height="50" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="104" y="198" text-anchor="middle" class="g-t">ESP-IDF 5.5.5 drivers</text><text x="104" y="211" text-anchor="middle" class="g-s">used by every component: i2s_std, gpio,</text><text x="104" y="223" text-anchor="middle" class="g-s">esp_timer, heap, usb_serial_jtag, FreeRTOS</text>
+<rect x="208" y="182" width="96" height="50" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="256" y="198" text-anchor="middle" class="g-t">TFLM micro-</text><text x="256" y="210" text-anchor="middle" class="g-t">frontend + KissFFT</text><text x="256" y="223" text-anchor="middle" class="g-m">vendored, Apache/BSD</text>
+<rect x="312" y="182" width="92" height="50" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="358" y="198" text-anchor="middle" class="g-t">esp-tflite-micro</text><text x="358" y="210" text-anchor="middle" class="g-s">1.4.1 → esp-nn 1.4.1</text><text x="358" y="223" text-anchor="middle" class="g-m">Apache-2.0, pinned</text>
+<rect x="412" y="182" width="92" height="50" rx="4" fill="#fdf1e7" stroke="#b8591a"/><text x="458" y="198" text-anchor="middle" class="g-t">esp_wifi / esp_phy</text><text x="458" y="210" text-anchor="middle" class="g-s">+ lwIP, NVS</text><text x="458" y="223" text-anchor="middle" class="g-m">radio libs CLOSED</text>
+<g class="d"><path d="M54,142 L80,180" marker-end="url(#ah-mdp)"/><path d="M256,142 L256,180" marker-end="url(#ah-mdp)"/><path d="M358,142 L358,180" marker-end="url(#ah-mdp)"/><path d="M458,142 L458,180" marker-end="url(#ah-mdp)"/><path d="M430,142 L430,154 L170,154 L170,144" marker-end="url(#ah-mdp)" stroke-dasharray="3 2"/></g>
+<text x="176" y="166" class="g-m">reads the ring</text>
+<!-- generated -->
+<rect x="524" y="182" width="188" height="92" rx="4" fill="#ffffff" stroke="#b8591a" stroke-dasharray="3 2"/>
+<text x="618" y="198" text-anchor="middle" class="g-t">Generated before each build</text>
+<text x="532" y="213" class="g-s">ps_frontend_config.h ← frontend.json</text>
+<text x="532" y="226" class="g-s">ps_frontend_tables.c ← host twin</text>
+<text x="532" y="239" class="g-s">model_data.c ← model/artifacts/v2b</text>
+<text x="532" y="252" class="g-s">sdkconfig.model ← selection outcome</text>
+<text x="532" y="266" class="g-m">(tools/*.py, model/frontend/*.py)</text>
+<text x="8" y="256" class="g-m">Colour: blue = project code (Apache-2.0) · green = open third-party ML/DSP code · grey = ESP-IDF (open) · orange = closed Wi-Fi/PHY libraries.</text>
+<text x="8" y="269" class="g-m">Line counts are of the .c/.cc source files in the repository at commit time of this report.</text>
+<text x="8" y="282" class="g-m">Build-time gate: tools/forbidden_deps.py fails the build if any vendor wake-word SDK or pre-trained keyword model is referenced.</text>
+</svg>

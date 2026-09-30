@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.4px;font-weight:600;fill:#12344d}.g-s{font-size:8.6px;fill:#1f2933}.g-m{font-size:8.1px;fill:#5d6b79}</style>
+<text x="8" y="14" class="g-h">Development and validation timeline, 26–30 Sep 2026 (from git commit times and run folders)</text>
+<g>
+<rect x="8" y="26" width="100" height="294" rx="5" fill="#f5f6f7" stroke="#9aa6b2"/><text x="58" y="44" text-anchor="middle" class="g-t">26 Sep (eve)</text>
+<rect x="112" y="26" width="150" height="294" rx="5" fill="#f5f6f7" stroke="#9aa6b2"/><text x="187" y="44" text-anchor="middle" class="g-t">27 Sep</text>
+<rect x="266" y="26" width="160" height="294" rx="5" fill="#f5f6f7" stroke="#9aa6b2"/><text x="346" y="44" text-anchor="middle" class="g-t">28 Sep</text>
+<rect x="430" y="26" width="150" height="294" rx="5" fill="#f5f6f7" stroke="#9aa6b2"/><text x="505" y="44" text-anchor="middle" class="g-t">29 Sep</text>
+<rect x="584" y="26" width="128" height="294" rx="5" fill="#f5f6f7" stroke="#9aa6b2"/><text x="648" y="44" text-anchor="middle" class="g-t">30 Sep (morning)</text>
+</g>
+<!-- 26 -->
+<rect x="14" y="54" width="88" height="70" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="20" y="68" class="g-t">M0 toolchain</text><text x="20" y="81" class="g-s">IDF 5.5.5 pinned</text><text x="20" y="93" class="g-s">X25 gate PASS</text><text x="20" y="105" class="g-m">20:50</text>
+<rect x="14" y="130" width="88" height="96" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="20" y="144" class="g-t">M1 audio</text><text x="20" y="157" class="g-s">live INMP441</text><text x="20" y="169" class="g-s">Philips framing</text><text x="20" y="181" class="g-s">1 bit late →</text><text x="20" y="193" class="g-s">MSB framing</text><text x="20" y="205" class="g-m">21:54 · E-18</text>
+<!-- 27 -->
+<rect x="118" y="54" width="138" height="44" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="124" y="68" class="g-t">M1 cold boot, link fixes</text><text x="124" y="81" class="g-s">keyword "Hey Vayro" chosen</text><text x="124" y="93" class="g-m">12:59</text>
+<rect x="118" y="102" width="138" height="56" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="124" y="116" class="g-t">M2 front-end parity</text><text x="124" y="129" class="g-s">5 995/5 998 → libm fix →</text><text x="124" y="141" class="g-s">12 000/12 000 bit-exact</text><text x="124" y="153" class="g-m">13:15–15:03 · E-21</text>
+<rect x="118" y="162" width="138" height="44" rx="4" fill="#f3eefb" stroke="#7a5aa6"/><text x="124" y="176" class="g-t">M3 model on device</text><text x="124" y="189" class="g-s">v0/v1 (TTS) → v2a/v2b</text><text x="124" y="201" class="g-m">15:03–18:55 · E-22</text>
+<rect x="118" y="210" width="138" height="56" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="124" y="224" class="g-t">M5 streaming + test</text><text x="124" y="237" class="g-s">S01 s3: 22/25 (v2b)</text><text x="124" y="249" class="g-s">L2 95 ms, 24/24 streams</text><text x="124" y="261" class="g-m">19:35–19:59 · E-35–E-37</text>
+<rect x="118" y="270" width="138" height="44" rx="4" fill="#fdf1e7" stroke="#b8591a"/><text x="124" y="284" class="g-t">overnight 10 h capture</text><text x="124" y="297" class="g-s">split declared first</text><text x="124" y="309" class="g-m">20:31 → 06:31 · E-39/E-40</text>
+<!-- 28 -->
+<rect x="272" y="54" width="148" height="56" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="278" y="68" class="g-t">EXP-1 / EXP-2 product</text><text x="278" y="81" class="g-s">260.2 KiB → trims → 238.1</text><text x="278" y="93" class="g-s">core 1 ≈ 8.7 %</text><text x="278" y="105" class="g-m">07:53–08:03 · E-42/E-43</text>
+<rect x="272" y="114" width="148" height="56" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="278" y="128" class="g-t">M6 ASR (Vosk)</text><text x="278" y="141" class="g-s">level fix, VAD endpoint,</text><text x="278" y="153" class="g-s">en-in-0.5: 2/10 end-to-end</text><text x="278" y="165" class="g-m">17:50–20:40 · E-45–E-49</text>
+<rect x="272" y="174" width="148" height="44" rx="4" fill="#fdf1e7" stroke="#b8591a"/><text x="278" y="188" class="g-t">household FA 2.5 h</text><text x="278" y="201" class="g-s">v2b 15.8/h, v3 19.9/h</text><text x="278" y="213" class="g-m">19:40–22:18 · E-51</text>
+<rect x="272" y="222" width="148" height="44" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="278" y="236" class="g-t">EXP-1 streaming peak</text><text x="278" y="249" class="g-s">259 255 B → DEC-24 → 249 615</text><text x="278" y="261" class="g-m">22:26–23:02 · E-52/E-53</text>
+<rect x="272" y="270" width="148" height="44" rx="4" fill="#f3eefb" stroke="#7a5aa6"/><text x="278" y="284" class="g-t">v4 trained, rules a–c pass</text><text x="278" y="297" class="g-s">EXP-2 12 min: max 9.04 %</text><text x="278" y="309" class="g-m">22:18–23:14 · E-54–E-56</text>
+<!-- 29 -->
+<rect x="436" y="54" width="138" height="44" rx="4" fill="#f3eefb" stroke="#7a5aa6"/><text x="442" y="68" class="g-t">v4 rule (d) passes</text><text x="442" y="81" class="g-s">v4 @ 0.70 ships</text><text x="442" y="93" class="g-m">19:26 · E-57</text>
+<rect x="436" y="102" width="138" height="56" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="442" y="116" class="g-t">3/31 overruns</text><text x="442" y="129" class="g-s">ASR blocked receive loop</text><text x="442" y="141" class="g-s">→ AsrJob thread fix</text><text x="442" y="153" class="g-m">19:46–19:56 · E-58</text>
+<rect x="436" y="162" width="138" height="56" rx="4" fill="#fdf1e7" stroke="#b8591a"/><text x="442" y="176" class="g-t">new speaker S02</text><text x="442" y="189" class="g-s">v4 14/25, v2b 20/25</text><text x="442" y="201" class="g-s">→ DEC-26: ship v2b</text><text x="442" y="213" class="g-m">20:12–20:20 · E-59</text>
+<rect x="436" y="222" width="138" height="44" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="442" y="236" class="g-t">final firmware confirmed</text><text x="442" y="249" class="g-s">245.0 KiB, 30/30 streams</text><text x="442" y="261" class="g-m">20:23–20:32 · E-60</text>
+<rect x="436" y="270" width="138" height="44" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="442" y="284" class="g-t">demonstration run</text><text x="442" y="297" class="g-s">4/4 keywords, 3/4 exact</text><text x="442" y="309" class="g-m">22:13 · E-61</text>
+<!-- 30 -->
+<rect x="590" y="54" width="116" height="56" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="596" y="68" class="g-t">latency with ASR</text><text x="596" y="81" class="g-s">re-analysis; report</text><text x="596" y="93" class="g-s">script bug fixed</text><text x="596" y="105" class="g-m">08:43 · E-62</text>
+<rect x="590" y="114" width="116" height="56" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="596" y="128" class="g-t">consistency audit</text><text x="596" y="141" class="g-s">58 claims checked,</text><text x="596" y="153" class="g-s">14 contradictions</text><text x="596" y="165" class="g-m">08:45</text>
+<rect x="590" y="174" width="116" height="56" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/><text x="596" y="188" class="g-t">T1 final latency</text><text x="596" y="201" class="g-s">12/12 detected,</text><text x="596" y="213" class="g-s">L2 138 / 196 ms</text><text x="596" y="225" class="g-m">08:55 · E-63</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300">
+<defs><marker id="ah-pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:8.8px;fill:#1f2933}.g-m{font-size:8.2px;fill:#5d6b79}.g-a{stroke:#1f2933;stroke-width:1.1;fill:none}</style>
+<text x="8" y="14" class="g-h">One definition of the front end, one set of C sources, three hash checks</text>
+<rect x="250" y="26" width="220" height="48" rx="6" fill="#fdf1e7" stroke="#b8591a" stroke-width="1.4"/>
+<text x="360" y="44" text-anchor="middle" class="g-t">model/frontend.json</text><text x="360" y="58" text-anchor="middle" class="g-s">every parameter set explicitly</text><text x="360" y="69" text-anchor="middle" class="g-m">SHA-256 5bd00bc673ecb2b3…</text>
+<!-- device branch -->
+<rect x="8" y="104" width="220" height="44" rx="5" fill="#f5f6f7" stroke="#6b7785"/>
+<text x="118" y="121" text-anchor="middle" class="g-t">tools/gen_frontend_config.py</text><text x="118" y="135" text-anchor="middle" class="g-s">→ ps_frontend_config.h (+ #define SHA)</text>
+<rect x="8" y="166" width="220" height="52" rx="5" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="118" y="183" text-anchor="middle" class="g-t">firmware: ps_frontend.c</text><text x="118" y="197" text-anchor="middle" class="g-s">+ vendored TFLM microfrontend</text><text x="118" y="209" text-anchor="middle" class="g-s">+ KissFFT (int16) — Xtensa gcc</text>
+<rect x="8" y="236" width="220" height="30" rx="5" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="118" y="255" text-anchor="middle" class="g-t">device features (40 × uint16 / 10 ms)</text>
+<!-- host branch -->
+<rect x="492" y="104" width="220" height="44" rx="5" fill="#f5f6f7" stroke="#6b7785"/>
+<text x="602" y="121" text-anchor="middle" class="g-t">model/frontend/psfe.py (ctypes)</text><text x="602" y="135" text-anchor="middle" class="g-s">reads the JSON at run time, checks SHA</text>
+<rect x="492" y="166" width="220" height="52" rx="5" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="602" y="183" text-anchor="middle" class="g-t">libpsfe.so (build_twin.sh)</text><text x="602" y="197" text-anchor="middle" class="g-s">the SAME C files, host gcc in WSL</text><text x="602" y="209" text-anchor="middle" class="g-s">= the "host twin"</text>
+<rect x="492" y="236" width="220" height="30" rx="5" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="602" y="255" text-anchor="middle" class="g-t">training + evaluation features</text>
+<!-- arrows -->
+<path d="M250,56 L118,56 L118,102" class="g-a" marker-end="url(#ah-pa)"/>
+<path d="M470,56 L602,56 L602,102" class="g-a" marker-end="url(#ah-pa)"/>
+<path d="M118,148 L118,164" class="g-a" marker-end="url(#ah-pa)"/><path d="M118,218 L118,234" class="g-a" marker-end="url(#ah-pa)"/>
+<path d="M602,148 L602,164" class="g-a" marker-end="url(#ah-pa)"/><path d="M602,218 L602,234" class="g-a" marker-end="url(#ah-pa)"/>
+<!-- canonical tables -->
+<rect x="250" y="160" width="220" height="64" rx="5" fill="#ffffff" stroke="#b8591a" stroke-dasharray="3 2"/>
+<text x="360" y="176" text-anchor="middle" class="g-t">export_tables.py (M2 fix, DEC-16)</text><text x="360" y="190" text-anchor="middle" class="g-s">host libm tables (filterbank weights,</text><text x="360" y="202" text-anchor="middle" class="g-s">PCAN gain LUT) → ps_frontend_tables.c,</text><text x="360" y="214" text-anchor="middle" class="g-s">copied into the device state at boot</text>
+<path d="M490,192 L472,192" class="g-a" marker-end="url(#ah-pa)"/><path d="M250,192 L230,192" class="g-a" marker-end="url(#ah-pa)"/>
+<!-- compare -->
+<path d="M228,251 L490,251" stroke="#c2185b" stroke-width="1.2" stroke-dasharray="4 2"/>
+<text x="360" y="246" text-anchor="middle" style="font-size:9px;font-weight:700;fill:#c2185b">compared bit by bit (parity_test.py)</text>
+<text x="8" y="286" class="g-m">Hash checks: (1) the device prints the JSON SHA at boot (@CFG fe_sha256); (2) the canonical tables are applied only if their recorded SHA matches;</text>
+<text x="8" y="298" class="g-m">(3) model_data.c records the SHA the model's training features used, and kws_init() refuses to start with a different front end.</text>
+</svg>

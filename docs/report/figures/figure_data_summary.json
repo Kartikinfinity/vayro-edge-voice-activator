@@ -1,0 +1,156 @@
+{
+  "psd_m1": null,
+  "posterior_s01s3": null,
+  "night_fa_per_hour": [
+    16,
+    11,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+  ],
+  "cpu_final": {
+    "idle_windows": 18,
+    "core1_idle_mean": 9.32,
+    "core1_idle_max": 9.51,
+    "core0_idle_mean": 1.74,
+    "c3_idle_mean": 5.53,
+    "stream_windows": 31,
+    "core1_stream_mean": 10.51,
+    "core1_stream_max": 10.83,
+    "core0_stream_mean": 5.18
+  },
+  "latency_t1": {
+    "L1_start_ms": {
+      "n": 12,
+      "mean": 3.7,
+      "p50": 2.38,
+      "p95": 9.9,
+      "max": 17.95
+    },
+    "L1_audio0_ms": {
+      "n": 12,
+      "mean": 18.98,
+      "p50": 17.99,
+      "p95": 29.78,
+      "max": 36.61
+    },
+    "lag_audio_ms": {
+      "n": 12,
+      "mean": 114.33,
+      "p50": 111.0,
+      "p95": 171.0,
+      "max": 171.0
+    },
+    "L2_est_ms": {
+      "n": 12,
+      "mean": 143.31,
+      "p50": 138.4,
+      "p95": 195.58,
+      "max": 198.0
+    },
+    "clock_unc_ms": {
+      "n": 12,
+      "mean": 1.38,
+      "p50": 1.23,
+      "p95": 1.81,
+      "max": 1.81
+    }
+  },
+  "memory_progress": [
+    {
+      "label": "E-42",
+      "static": 139123,
+      "heap_peak": 104644,
+      "S4": 243767
+    },
+    {
+      "label": "E-52",
+      "static": 141047,
+      "heap_peak": 118208,
+      "S4": 259255
+    },
+    {
+      "label": "E-53",
+      "static": 139695,
+      "heap_peak": 109920,
+      "S4": 249615
+    },
+    {
+      "label": "E-58",
+      "static": 139695,
+      "heap_peak": 111800,
+      "S4": 251495
+    },
+    {
+      "label": "E-60",
+      "static": 139695,
+      "heap_peak": 111204,
+      "S4": 250899
+    }
+  ],
+  "accuracy_compare": [
+    [
+      [
+        "S01 session 3\n(held-out session)",
+        [
+          22,
+          25
+        ],
+        [
+          21,
+          25
+        ]
+      ],
+      [
+        "S02 \u2014 new speaker\n(never trained on)",
+        [
+          20,
+          25
+        ],
+        [
+          14,
+          25
+        ]
+      ],
+      [
+        "M6 v3 commands\n(S01, fresh)",
+        [
+          10,
+          10
+        ],
+        [
+          10,
+          10
+        ]
+      ],
+      [
+        "M6 v2 commands\n(S01, TV on)",
+        [
+          6,
+          10
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    ],
+    [
+      [
+        "household\nheld-out 0.86 h",
+        13,
+        9
+      ],
+      [
+        "quiet night\nheld-out 5 h",
+        1,
+        0
+      ]
+    ]
+  ]
+}

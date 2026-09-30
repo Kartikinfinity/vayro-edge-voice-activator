@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360">
+<defs><marker id="ah-tp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:8.8px;fill:#1f2933}.g-m{font-size:8.2px;fill:#5d6b79}.g-a{stroke:#1f2933;stroke-width:1.1;fill:none}</style>
+<text x="8" y="14" class="g-h">How a keyword model is made (all scripted; runs in WSL Ubuntu with TensorFlow 2.21 CPU)</text>
+<text x="8" y="34" class="g-t">Data sources</text>
+<rect x="8" y="42" width="196" height="46" rx="4" fill="#f5f6f7" stroke="#6b7785"/>
+<text x="16" y="57" class="g-t">Piper TTS, 4 voices (gen_tts.py)</text><text x="16" y="70" class="g-s">"Hey Vyro" / "हे वाइरो" + confusables</text><text x="16" y="82" class="g-m">v2: 5 352 clips, split by synthetic speaker</text>
+<rect x="8" y="94" width="196" height="38" rx="4" fill="#f5f6f7" stroke="#6b7785"/>
+<text x="16" y="109" class="g-t">LibriSpeech dev-clean</text><text x="16" y="122" class="g-s">read speech: negatives (+ v4 continuations)</text>
+<rect x="8" y="138" width="196" height="50" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="16" y="153" class="g-t">Device-recorded beds (INMP441)</text><text x="16" y="166" class="g-s">room/day audio; night c000–c004 (v3);</text><text x="16" y="178" class="g-s">household TV/talk training part (v4)</text>
+<rect x="8" y="194" width="196" height="38" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="16" y="209" class="g-t">Real speaker S01, session 1</text><text x="16" y="222" class="g-s">23 keywords + 6 noisy copies (v2 on)</text>
+<rect x="8" y="238" width="196" height="50" rx="4" fill="#fdf1e7" stroke="#b8591a"/>
+<text x="16" y="253" class="g-t">Hard negatives (v3, v4)</text><text x="16" y="266" class="g-s">moments where the deployed model's live</text><text x="16" y="278" class="g-s">score was ≥ 0.30, ±3 frames, repeated ×3</text>
+<!-- builder -->
+<rect x="232" y="42" width="214" height="246" rx="6" fill="#ffffff" stroke="#1f5f8b" stroke-width="1.4"/>
+<text x="339" y="60" text-anchor="middle" class="g-t">build_dataset.py</text>
+<text x="242" y="80" class="g-s">• every example = a continuous stream:</text><text x="252" y="92" class="g-s">2.5 s of device bed, then the clip mixed</text><text x="252" y="104" class="g-s">in at 0–25 dB SNR (bed gain −10…+4 dB)</text>
+<text x="242" y="122" class="g-s">• features by the HOST TWIN of the device</text><text x="252" y="134" class="g-s">front end (same C code, bit-exact)</text>
+<text x="242" y="152" class="g-s">• 100-frame (1 s) int8 windows, exactly as</text><text x="252" y="164" class="g-s">the device feeds the model</text>
+<text x="242" y="182" class="g-s">• labels by keyword END: windows ending</text><text x="252" y="194" class="g-s">0–160 ms after it = positive; windows</text><text x="252" y="206" class="g-s">ending 200/350 ms before it = negative</text><text x="252" y="218" class="g-s">("Hey Vy…" prefix); in between = unused</text>
+<text x="242" y="236" class="g-s">• v2b data: 203 625 train windows,</text><text x="252" y="248" class="g-s">12 315 positive; 45 569 validation</text>
+<text x="242" y="266" class="g-m">splits by recording / time block / speaker,</text><text x="242" y="278" class="g-m">never by random window (model/data/sources.json)</text>
+<path d="M204,65 L230,65" class="g-a" marker-end="url(#ah-tp)"/><path d="M204,113 L230,113" class="g-a" marker-end="url(#ah-tp)"/><path d="M204,163 L230,163" class="g-a" marker-end="url(#ah-tp)"/><path d="M204,213 L230,213" class="g-a" marker-end="url(#ah-tp)"/><path d="M204,263 L230,263" class="g-a" marker-end="url(#ah-tp)"/>
+<!-- chain -->
+<rect x="474" y="42" width="238" height="50" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="482" y="57" class="g-t">train.py — Keras, random initialisation</text><text x="482" y="70" class="g-s">Adam + cosine LR 1e-3, batch 256, ≤ 30 epochs,</text><text x="482" y="82" class="g-s">early stop on val PR-AUC; positive weight 4</text>
+<rect x="474" y="100" width="238" height="38" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/>
+<text x="482" y="115" class="g-t">export.py — full-int8 post-training quantisation</text><text x="482" y="128" class="g-s">static batch-1 graph, 500 calibration windows</text>
+<rect x="474" y="146" width="238" height="50" rx="4" fill="#eaf7ef" stroke="#2f7d4f"/>
+<text x="482" y="161" class="g-t">eval_stream.py / prompt_hits.py</text><text x="482" y="174" class="g-s">replay real recordings exactly as the device</text><text x="482" y="186" class="g-s">would (stride 6, mean of 3, 2 s refractory)</text>
+<rect x="474" y="204" width="238" height="38" rx="4" fill="#fdf1e7" stroke="#b8591a"/>
+<text x="482" y="219" class="g-t">selection rule, written BEFORE the test</text><text x="482" y="232" class="g-s">selection_rule_v*.json → *_outcome.json</text>
+<rect x="474" y="250" width="238" height="50" rx="4" fill="#f5f6f7" stroke="#6b7785"/>
+<text x="482" y="265" class="g-t">tools/gen_model_source.py</text><text x="482" y="278" class="g-s">model_data.c (+ front-end SHA, input LUT) and</text><text x="482" y="290" class="g-s">sdkconfig.model (threshold, N, stride, refractory)</text>
+<path d="M446,165 L472,67" class="g-a" marker-end="url(#ah-tp)"/>
+<path d="M593,92 L593,98" class="g-a" marker-end="url(#ah-tp)"/><path d="M593,138 L593,144" class="g-a" marker-end="url(#ah-tp)"/><path d="M593,196 L593,202" class="g-a" marker-end="url(#ah-tp)"/><path d="M593,242 L593,248" class="g-a" marker-end="url(#ah-tp)"/>
+<path d="M593,300 L593,318" class="g-a" marker-end="url(#ah-tp)"/>
+<text x="593" y="332" text-anchor="middle" class="g-t">firmware build (tools/idf.ps1) → flash → device</text>
+<text x="8" y="316" class="g-m">Six models were trained this way: v0, v1 (TTS only) · v2a, v2b (+ S01 session 1; class weight balanced vs 4) ·</text>
+<text x="8" y="328" class="g-m">v3 (+ night hard negatives) · v4 (+ keyword-then-speech positives and household negatives).</text>
+<text x="8" y="340" class="g-m">All share the same architecture (10 665 parameters); only data and weighting differ. v2b ships.</text>
+</svg>

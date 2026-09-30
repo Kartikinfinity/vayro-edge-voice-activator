@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 404">
+<defs><marker id="ah-br" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<style>text{font-family:'Segoe UI',Arial,sans-serif}.g-h{font-size:11px;font-weight:700;fill:#12344d}.g-t{font-size:9.6px;font-weight:600;fill:#12344d}.g-s{font-size:8.9px;fill:#1f2933}.g-m{font-size:8.3px;fill:#5d6b79}.g-a{stroke:#1f2933;stroke-width:1.1;fill:none}</style>
+<text x="8" y="14" class="g-h">Boot sequence (app_main, core 0)</text>
+<g>
+<rect x="8" y="24" width="330" height="26" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="16" y="41" class="g-s"><tspan class="g-t">1 · link_init()</tspan> — USB-Serial-JTAG driver; all logs become framed TEXT</text>
+<rect x="8" y="54" width="330" height="26" rx="4" fill="#fdf1e7" stroke="#b8591a"/><text x="16" y="71" class="g-s"><tspan class="g-t">2 · link_wait_host(30 s)</tspan> — waits for the PC's start byte</text>
+<rect x="8" y="84" width="330" height="26" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="16" y="101" class="g-s"><tspan class="g-t">3 · @BOOT @SYNC @CFG @MEM</tspan> — identity, pins, heap at boot</text>
+<rect x="8" y="114" width="330" height="38" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="16" y="130" class="g-s"><tspan class="g-t">4 · I2S probes</tspan> — stereo (MIC_SETTLE 300 ms + 1 s), alignment</text><text x="16" y="143" class="g-s">sweep (4 framings × 0.3 s), mono (0.55 s) → pick the mic slot</text>
+<rect x="8" y="156" width="330" height="26" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="16" y="173" class="g-s"><tspan class="g-t">5 · ps_fe_init()</tspan> + canonical tables if the JSON SHA matches</text>
+<rect x="8" y="186" width="330" height="26" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="16" y="203" class="g-s"><tspan class="g-t">6 · kws_init()</tspan> — refuses a model from another front end; arena</text>
+<rect x="8" y="216" width="330" height="26" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="16" y="233" class="g-s"><tspan class="g-t">7 · ring_init()</tspan> — zero the 0.75 s audio ring</text>
+<rect x="8" y="246" width="330" height="26" rx="4" fill="#f3eefb" stroke="#7a5aa6"/><text x="16" y="263" class="g-s"><tspan class="g-t">8 · ns_start()</tspan> — NVS, Wi-Fi STA; netlink + streamer on core 0</text>
+<rect x="8" y="276" width="330" height="26" rx="4" fill="#eaf2fa" stroke="#1f5f8b"/><text x="16" y="293" class="g-s"><tspan class="g-t">9 · reader_task</tspan> created on core 1, priority 20</text>
+<rect x="8" y="306" width="330" height="38" rx="4" fill="#f5f6f7" stroke="#6b7785"/><text x="16" y="322" class="g-s"><tspan class="g-t">10 · main loop</tspan> — every 1 s @STATS + @PERF; every 10 s @CPU;</text><text x="16" y="335" class="g-s">host byte 'T' = synthetic trigger (test hook, never a detection)</text>
+</g>
+<text x="8" y="362" class="g-m">Step 2 matters outside the lab: with no PC reading the USB port,</text>
+<text x="8" y="374" class="g-m">boot waits the full 30 s before listening (link_wait_host returns −1</text>
+<text x="8" y="386" class="g-m">and boot continues). Step 4 is M1 diagnostics that still run at</text>
+<text x="8" y="398" class="g-m">every boot (≈ 3 s).</text>
+<!-- runtime -->
+<text x="370" y="14" class="g-h">Runtime behaviour (after boot)</text>
+<rect x="400" y="34" width="150" height="56" rx="26" fill="#eaf2fa" stroke="#1f5f8b" stroke-width="1.5"/>
+<text x="475" y="57" text-anchor="middle" class="g-t">IDLE LISTENING</text><text x="475" y="71" text-anchor="middle" class="g-m">core 1 busy ≈ 9 %</text>
+<rect x="400" y="150" width="150" height="56" rx="26" fill="#f3eefb" stroke="#7a5aa6" stroke-width="1.5"/>
+<text x="475" y="173" text-anchor="middle" class="g-t">STREAMING</text><text x="475" y="187" text-anchor="middle" class="g-m">one stream at a time</text>
+<path d="M455,90 L455,148" class="g-a" marker-end="url(#ah-br)"/>
+<text x="449" y="116" text-anchor="end" class="g-s">detection and</text><text x="449" y="128" text-anchor="end" class="g-s">TCP connected</text>
+<path d="M500,150 L500,92" class="g-a" marker-end="url(#ah-br)"/>
+<text x="508" y="112" class="g-s">server END, 10 s timeout,</text><text x="508" y="124" class="g-s">OVERRUN or socket error</text>
+<rect x="590" y="150" width="122" height="56" rx="6" fill="#ffffff" stroke="#6b7785" stroke-dasharray="3 2"/>
+<text x="651" y="168" text-anchor="middle" class="g-s">detection while</text><text x="651" y="180" text-anchor="middle" class="g-s">streaming or offline:</text><text x="651" y="193" text-anchor="middle" class="g-m">logged, streamed=0</text>
+<path d="M550,178 L588,178" class="g-a" stroke-dasharray="3 2"/>
+<text x="370" y="240" class="g-t">Network, independent of listening (netlink task)</text>
+<rect x="380" y="252" width="130" height="44" rx="6" fill="#f3eefb" stroke="#7a5aa6"/>
+<text x="445" y="270" text-anchor="middle" class="g-t">NOT CONNECTED</text><text x="445" y="284" text-anchor="middle" class="g-m">retry, 2 s pause</text>
+<rect x="582" y="252" width="130" height="44" rx="6" fill="#f3eefb" stroke="#7a5aa6"/>
+<text x="647" y="270" text-anchor="middle" class="g-t">CONNECTED</text><text x="647" y="284" text-anchor="middle" class="g-m">ping every 10 s</text>
+<path d="M510,266 L580,266" class="g-a" marker-end="url(#ah-br)"/><text x="545" y="261" text-anchor="middle" class="g-m">connect ok</text>
+<path d="M582,284 L512,284" class="g-a" marker-end="url(#ah-br)"/><text x="547" y="298" text-anchor="middle" class="g-m">recv/send fails</text>
+<text x="370" y="322" class="g-s">Wi-Fi rejoins automatically after a disconnect (event handler calls</text>
+<text x="370" y="335" class="g-s">esp_wifi_connect). Keyword detection keeps running when the network is</text>
+<text x="370" y="348" class="g-s">down: in the overnight run the router outage lasted 5.4 h and every</text>
+<text x="370" y="361" class="g-s">trigger was still logged (E-41). The server address is compiled in,</text>
+<text x="370" y="374" class="g-s">so a new subnet needs a rebuild.</text>
+</svg>
