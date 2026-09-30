@@ -64,3 +64,4 @@ device connected from 192.168.1.9:52352
 [2026-09-28T23:00:49.134] activation 29: 3.6 s audio, L1_start 2.217 ms, L1_audio0 2.948 ms (±2.483 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c225553_act0029.wav
 [2026-09-28T23:00:59.155] activation 30: 3.6 s audio, L1_start 1.024 ms, L1_audio0 1.972 ms (±2.483 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c225553_act0030.wav
 [2026-09-28T23:01:08.186] activation 31: 3.6 s audio, L1_start 3.383 ms, L1_audio0 4.077 ms (±2.271 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c225553_act0031.wav
+device connected from 192.168.1.9:59457

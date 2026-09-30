@@ -1,0 +1,72 @@
+{
+  "activation": 5,
+  "kw_frame": 3357,
+  "t_detect_device_us": 37301411,
+  "preroll_ms": 624,
+  "first_sample": 527616,
+  "raw_posterior": 126,
+  "t_start_rx_us": 16545072166,
+  "t_audio0_rx_us": 16545078698,
+  "offset_us": 16507769558,
+  "rtt_us": 2736,
+  "pings": 10,
+  "packets": 56,
+  "seq_gaps": 0,
+  "last_seq": 56,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-29T21:47:14.069",
+  "asr_endpoint_at_s": 1.616,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 16546695663,
+  "device_samples_sent": 35840,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 16546701264,
+  "audio_seconds": 2.24,
+  "L1_start_ms": 1.197,
+  "L1_audio0_ms": 7.729,
+  "clock_uncertainty_ms_half_rtt": 1.368,
+  "asr_transcript": "add over time is it",
+  "asr_after_trigger": "time is it",
+  "asr_words": [
+    {
+      "conf": 0.210072,
+      "end": 0.324579,
+      "start": 0.000204,
+      "word": "add"
+    },
+    {
+      "conf": 0.398313,
+      "end": 0.75,
+      "start": 0.324579,
+      "word": "over"
+    },
+    {
+      "conf": 0.980804,
+      "end": 1.08,
+      "start": 0.797118,
+      "word": "time"
+    },
+    {
+      "conf": 0.999534,
+      "end": 1.289994,
+      "start": 1.08,
+      "word": "is"
+    },
+    {
+      "conf": 1.0,
+      "end": 1.56,
+      "start": 1.289994,
+      "word": "it"
+    }
+  ],
+  "asr_ready_after_end_ms": 86.97,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -32.9,
+  "vad_thr_dbfs": -52.9,
+  "asr_preroll_speech_dbfs": -32.9,
+  "asr_gain_db": 12.9,
+  "asr_grammar": false,
+  "file_stem": "c214641_act0005"
+}

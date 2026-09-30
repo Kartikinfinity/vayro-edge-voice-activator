@@ -1,0 +1,72 @@
+{
+  "activation": 3,
+  "kw_frame": 1407,
+  "t_detect_device_us": 17801525,
+  "preroll_ms": 624,
+  "first_sample": 215616,
+  "raw_posterior": 124,
+  "t_start_rx_us": 16525573136,
+  "t_audio0_rx_us": 16525578021,
+  "offset_us": 16507769765,
+  "rtt_us": 2782,
+  "pings": 8,
+  "packets": 70,
+  "seq_gaps": 0,
+  "last_seq": 70,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-29T21:46:54.570",
+  "asr_endpoint_at_s": 2.176,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 16527754388,
+  "device_samples_sent": 44800,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 16527763187,
+  "audio_seconds": 2.8,
+  "L1_start_ms": 1.846,
+  "L1_audio0_ms": 6.731,
+  "clock_uncertainty_ms_half_rtt": 1.391,
+  "asr_transcript": "byron turn on the light",
+  "asr_after_trigger": "turn on the light",
+  "asr_words": [
+    {
+      "conf": 0.268121,
+      "end": 0.69,
+      "start": 0.0,
+      "word": "byron"
+    },
+    {
+      "conf": 0.909982,
+      "end": 1.139048,
+      "start": 0.87,
+      "word": "turn"
+    },
+    {
+      "conf": 0.99504,
+      "end": 1.348749,
+      "start": 1.139048,
+      "word": "on"
+    },
+    {
+      "conf": 0.972338,
+      "end": 1.469995,
+      "start": 1.349995,
+      "word": "the"
+    },
+    {
+      "conf": 0.970146,
+      "end": 2.16,
+      "start": 1.470003,
+      "word": "light"
+    }
+  ],
+  "asr_ready_after_end_ms": 290.13,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -32.2,
+  "vad_thr_dbfs": -52.2,
+  "asr_preroll_speech_dbfs": -32.2,
+  "asr_gain_db": 12.2,
+  "asr_grammar": false,
+  "file_stem": "c214641_act0003"
+}

@@ -5,6 +5,7 @@ visible prompt window (host/prompter.py, script host/scripts/t1_latency.txt). Af
 Usage (host venv): python host/t1_session.py
 """
 import datetime as dt
+import os
 import pathlib
 import re
 import subprocess
@@ -13,7 +14,7 @@ import time
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PY = str(ROOT / ".venv-host" / "Scripts" / "python.exe")
-ASR_MODEL = r"D:\ps26172_ext\vosk\vosk-model-en-in-0.5"
+ASR_MODEL = os.environ.get("PS26172_VOSK_MODEL", r"D:\ps26172_ext\vosk\vosk-model-en-in-0.5")  # unpacked Vosk model dir
 
 
 def listening(port=5005):

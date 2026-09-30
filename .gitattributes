@@ -1,1 +1,4 @@
 *.sh text eol=lf
+# The firmware embeds the SHA-256 of this file's bytes and refuses a model trained with a different one,
+# so it must check out byte-identical on every platform.
+model/frontend.json text eol=lf

@@ -1,0 +1,17 @@
+Hey Vayro - low-latency edge voice activator (SIH 2026, PS 26172)
+Copyright 2026 Team DATA_Edgepulse
+
+SPDX-License-Identifier: Apache-2.0
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Scope: the project's own firmware, server, host tools, training/evaluation code and the trained model weights.
+Third-party components keep their own licences (docs/SBOM.md): e.g. the vendored TFLM microfrontend (Apache-2.0),
+KissFFT (BSD-3-Clause), ESP-IDF (Apache-2.0) and the Espressif Wi-Fi binary libraries (Espressif licence).
+The model weights were trained partly on synthetic audio from TTS voices built on CC BY-NC datasets (see SBOM section 4).
+
+Third-party source code vendored in this repository:
+  - firmware/components/microfrontend/tensorflow/...  TensorFlow Lite Micro microfrontend, Apache-2.0
+    (firmware/components/microfrontend/LICENSE.tflite-micro, PROVENANCE.md)
+  - firmware/components/microfrontend/kissfft/...      KissFFT, BSD-3-Clause (kissfft/COPYING)
+The complete component list with versions and licences is docs/SBOM.md.

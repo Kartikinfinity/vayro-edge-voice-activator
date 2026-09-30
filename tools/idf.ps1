@@ -2,6 +2,11 @@
   Build/flash wrapper for the PS26172 firmware. Pins the toolchain (ESP-IDF v5.5.5 at D:\esp),
   runs the X25 forbidden-dependency gate, and keeps one build directory per console variant.
 
+  Locations can be overridden with environment variables (defaults in brackets):
+    PS26172_IDF_PATH        ESP-IDF v5.5.5 checkout            [D:\esp\esp-idf-v5.5.5]
+    PS26172_IDF_TOOLS_PATH  ESP-IDF tools directory            [D:\esp\.espressif]
+    PS26172_PY312           folder of a CPython 3.12 install   [found with "py -3.12"]
+
   Usage (from any directory):
     powershell -ExecutionPolicy Bypass -File D:\ps26172\tools\idf.ps1 -Console uart build
     powershell -ExecutionPolicy Bypass -File D:\ps26172\tools\idf.ps1 -Console uart -Port COM5 flash
@@ -18,10 +23,14 @@ param(
 )
 if (-not $IdfArgs) { Write-Error "No idf.py action given (e.g. build, flash, size)."; exit 2 }
 $Repo = Split-Path -Parent $PSScriptRoot
-$py312 = "C:\Users\user\AppData\Local\Programs\Python\Python312"
-$env:PATH = "$py312;$py312\Scripts;" + $env:PATH
-$env:IDF_TOOLS_PATH = "D:\esp\.espressif"
-$env:IDF_PATH = "D:\esp\esp-idf-v5.5.5"
+# ESP-IDF's export script needs CPython 3.12 first on PATH (a newer default Python broke it).
+$py312 = $env:PS26172_PY312
+if (-not $py312) {
+    try { $py312 = Split-Path -Parent (& py -3.12 -c "import sys; print(sys.executable)") } catch { $py312 = "" }
+}
+if ($py312) { $env:PATH = "$py312;$py312\Scripts;" + $env:PATH }
+$env:IDF_TOOLS_PATH = if ($env:PS26172_IDF_TOOLS_PATH) { $env:PS26172_IDF_TOOLS_PATH } else { "D:\esp\.espressif" }
+$env:IDF_PATH = if ($env:PS26172_IDF_PATH) { $env:PS26172_IDF_PATH } else { "D:\esp\esp-idf-v5.5.5" }
 # Dot-source with redirection, not a pipeline: piping a dot-sourced script drops what it defines.
 . "$env:IDF_PATH\export.ps1" *> $null
 $IdfPython = (Get-Command python).Source  # the IDF virtualenv python after export

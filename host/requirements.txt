@@ -1,0 +1,6 @@
+# Host tools and ASR server (Windows venv ".venv-host", CPython 3.12). Versions used for the recorded evidence.
+numpy==2.5.3
+scipy==1.18.1
+matplotlib==3.11.2
+pyserial==3.5
+vosk==0.3.45

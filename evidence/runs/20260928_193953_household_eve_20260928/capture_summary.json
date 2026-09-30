@@ -1,0 +1,700 @@
+{
+  "label": "household_eve_20260928",
+  "note": "Household evening 28 Sep: TV/people/prayer, no keyword intended; capture firmware v2b thr0.80; server ASR streaming on",
+  "host_start_local": "2026-09-28T19:39:54",
+  "port": "COM7",
+  "port_kind": "user-specified",
+  "baud": 921600,
+  "boot": "warm (RTS reset)",
+  "port_losses": 0,
+  "reset_retries": 0,
+  "auto_resets_on_stall": 4,
+  "fs_hz": 16000,
+  "sessions": [
+    {
+      "files": [
+        "audio_24bit_c000.wav",
+        "audio_24bit_c001.wav"
+      ],
+      "samples": 32716640,
+      "seconds": 2044.79,
+      "audio_frames": 203870,
+      "host_gap_count": 11,
+      "host_gap_samples": 97440,
+      "host_gaps_first50": [
+        [
+          32415680,
+          160
+        ],
+        [
+          32420480,
+          11200
+        ],
+        [
+          32431840,
+          1440
+        ],
+        [
+          32538240,
+          4480
+        ],
+        [
+          32581600,
+          160
+        ],
+        [
+          32586400,
+          11200
+        ],
+        [
+          32597760,
+          160
+        ],
+        [
+          32620800,
+          7200
+        ],
+        [
+          32644160,
+          480
+        ],
+        [
+          32648960,
+          11200
+        ],
+        [
+          32660320,
+          49760
+        ]
+      ]
+    },
+    {
+      "files": [
+        "audio_24bit_s2_c000.wav"
+      ],
+      "samples": 631360,
+      "seconds": 39.46,
+      "audio_frames": 3909,
+      "host_gap_count": 3,
+      "host_gap_samples": 5920,
+      "host_gaps_first50": [
+        [
+          5600,
+          160
+        ],
+        [
+          12960,
+          640
+        ],
+        [
+          578400,
+          5120
+        ]
+      ]
+    },
+    {
+      "files": [
+        "audio_24bit_s3_c000.wav"
+      ],
+      "samples": 2574400,
+      "seconds": 160.9,
+      "audio_frames": 15738,
+      "host_gap_count": 6,
+      "host_gap_samples": 56320,
+      "host_gaps_first50": [
+        [
+          2433280,
+          5600
+        ],
+        [
+          2493280,
+          960
+        ],
+        [
+          2495520,
+          320
+        ],
+        [
+          2500320,
+          11360
+        ],
+        [
+          2511840,
+          31840
+        ],
+        [
+          2543840,
+          6240
+        ]
+      ]
+    },
+    {
+      "files": [
+        "audio_24bit_s4_c000.wav"
+      ],
+      "samples": 798400,
+      "seconds": 49.9,
+      "audio_frames": 4614,
+      "host_gap_count": 2,
+      "host_gap_samples": 60160,
+      "host_gaps_first50": [
+        [
+          732000,
+          320
+        ],
+        [
+          736800,
+          59840
+        ]
+      ]
+    },
+    {
+      "files": [
+        "audio_24bit_s5_c000.wav",
+        "audio_24bit_s5_c001.wav",
+        "audio_24bit_s5_c002.wav",
+        "audio_24bit_s5_c003.wav"
+      ],
+      "samples": 107279520,
+      "seconds": 6704.97,
+      "audio_frames": 670491,
+      "host_gap_count": 1,
+      "host_gap_samples": 960,
+      "host_gaps_first50": [
+        [
+          30585760,
+          960
+        ]
+      ]
+    }
+  ],
+  "settle_s": null,
+  "script_file": null,
+  "script_segments": [],
+  "script_timing_note": "boundaries are when the prompt was printed (audio-sample clock, ~50 ms resolution); speaker reaction lag is not compensated \u2014 analysis trims segment starts",
+  "device_feature_frames": 898625,
+  "device_posterior_frames": 149693,
+  "device_kw_triggers": [
+    {
+      "type": "KW",
+      "frame": 9261,
+      "t_ms": 92640,
+      "p": 0.984,
+      "avg": 0.954,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 95.894
+    },
+    {
+      "type": "KW",
+      "frame": 16149,
+      "t_ms": 161520,
+      "p": 0.961,
+      "avg": 0.904,
+      "raw": 118,
+      "streamed": 1,
+      "host_t": 164.768
+    },
+    {
+      "type": "KW",
+      "frame": 30927,
+      "t_ms": 309300,
+      "p": 0.707,
+      "avg": 0.835,
+      "raw": 53,
+      "streamed": 1,
+      "host_t": 312.54
+    },
+    {
+      "type": "KW",
+      "frame": 82383,
+      "t_ms": 823860,
+      "p": 0.969,
+      "avg": 0.806,
+      "raw": 120,
+      "streamed": 1,
+      "host_t": 827.096
+    },
+    {
+      "type": "KW",
+      "frame": 124221,
+      "t_ms": 1242240,
+      "p": 0.984,
+      "avg": 0.822,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 1245.438
+    },
+    {
+      "type": "KW",
+      "frame": 127071,
+      "t_ms": 1270740,
+      "p": 0.91,
+      "avg": 0.906,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 1273.987
+    },
+    {
+      "type": "KW",
+      "frame": 132297,
+      "t_ms": 1323000,
+      "p": 0.988,
+      "avg": 0.923,
+      "raw": 125,
+      "streamed": 1,
+      "host_t": 1326.218
+    },
+    {
+      "type": "KW",
+      "frame": 178665,
+      "t_ms": 1786680,
+      "p": 0.855,
+      "avg": 0.801,
+      "raw": 91,
+      "streamed": 1,
+      "host_t": 1789.898
+    },
+    {
+      "type": "KW",
+      "frame": 181005,
+      "t_ms": 1810080,
+      "p": 0.934,
+      "avg": 0.816,
+      "raw": 111,
+      "streamed": 1,
+      "host_t": 1813.312
+    },
+    {
+      "type": "KW",
+      "frame": 19653,
+      "t_ms": 196560,
+      "p": 0.945,
+      "avg": 0.945,
+      "raw": 114,
+      "streamed": 1,
+      "host_t": 2516.766
+    },
+    {
+      "type": "KW",
+      "frame": 31899,
+      "t_ms": 319020,
+      "p": 0.895,
+      "avg": 0.922,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 2639.235
+    },
+    {
+      "type": "KW",
+      "frame": 45135,
+      "t_ms": 451380,
+      "p": 0.996,
+      "avg": 0.984,
+      "raw": 127,
+      "streamed": 1,
+      "host_t": 2771.586
+    },
+    {
+      "type": "KW",
+      "frame": 45417,
+      "t_ms": 454200,
+      "p": 0.996,
+      "avg": 0.857,
+      "raw": 127,
+      "streamed": 0,
+      "host_t": 2774.39
+    },
+    {
+      "type": "KW",
+      "frame": 46587,
+      "t_ms": 465900,
+      "p": 0.922,
+      "avg": 0.902,
+      "raw": 108,
+      "streamed": 1,
+      "host_t": 2786.097
+    },
+    {
+      "type": "KW",
+      "frame": 48915,
+      "t_ms": 489180,
+      "p": 0.984,
+      "avg": 0.962,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 2809.348
+    },
+    {
+      "type": "KW",
+      "frame": 50757,
+      "t_ms": 507600,
+      "p": 0.91,
+      "avg": 0.926,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 2827.788
+    },
+    {
+      "type": "KW",
+      "frame": 52419,
+      "t_ms": 524220,
+      "p": 0.996,
+      "avg": 0.935,
+      "raw": 127,
+      "streamed": 1,
+      "host_t": 2844.38
+    },
+    {
+      "type": "KW",
+      "frame": 53403,
+      "t_ms": 534060,
+      "p": 0.988,
+      "avg": 0.892,
+      "raw": 125,
+      "streamed": 1,
+      "host_t": 2854.267
+    },
+    {
+      "type": "KW",
+      "frame": 83925,
+      "t_ms": 839280,
+      "p": 0.953,
+      "avg": 0.878,
+      "raw": 116,
+      "streamed": 1,
+      "host_t": 3159.433
+    },
+    {
+      "type": "KW",
+      "frame": 113619,
+      "t_ms": 1136220,
+      "p": 0.973,
+      "avg": 0.858,
+      "raw": 121,
+      "streamed": 1,
+      "host_t": 3456.36
+    },
+    {
+      "type": "KW",
+      "frame": 116943,
+      "t_ms": 1169460,
+      "p": 0.996,
+      "avg": 0.893,
+      "raw": 127,
+      "streamed": 1,
+      "host_t": 3489.653
+    },
+    {
+      "type": "KW",
+      "frame": 195369,
+      "t_ms": 1953720,
+      "p": 0.875,
+      "avg": 0.88,
+      "raw": 96,
+      "streamed": 1,
+      "host_t": 4273.859
+    },
+    {
+      "type": "KW",
+      "frame": 271227,
+      "t_ms": 2712300,
+      "p": 0.984,
+      "avg": 0.802,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 5032.421
+    },
+    {
+      "type": "KW",
+      "frame": 278835,
+      "t_ms": 2788380,
+      "p": 0.945,
+      "avg": 0.81,
+      "raw": 114,
+      "streamed": 1,
+      "host_t": 5108.504
+    },
+    {
+      "type": "KW",
+      "frame": 303207,
+      "t_ms": 3032100,
+      "p": 0.922,
+      "avg": 0.815,
+      "raw": 108,
+      "streamed": 1,
+      "host_t": 5352.239
+    },
+    {
+      "type": "KW",
+      "frame": 312831,
+      "t_ms": 3128340,
+      "p": 0.805,
+      "avg": 0.823,
+      "raw": 78,
+      "streamed": 1,
+      "host_t": 5448.434
+    },
+    {
+      "type": "KW",
+      "frame": 325383,
+      "t_ms": 3253860,
+      "p": 0.984,
+      "avg": 0.911,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 5573.986
+    },
+    {
+      "type": "KW",
+      "frame": 325695,
+      "t_ms": 3256980,
+      "p": 0.969,
+      "avg": 0.876,
+      "raw": 120,
+      "streamed": 0,
+      "host_t": 5577.097
+    },
+    {
+      "type": "KW",
+      "frame": 331341,
+      "t_ms": 3313440,
+      "p": 0.996,
+      "avg": 0.914,
+      "raw": 127,
+      "streamed": 1,
+      "host_t": 5633.52
+    },
+    {
+      "type": "KW",
+      "frame": 337563,
+      "t_ms": 3375660,
+      "p": 0.961,
+      "avg": 0.874,
+      "raw": 118,
+      "streamed": 1,
+      "host_t": 5695.793
+    },
+    {
+      "type": "KW",
+      "frame": 342429,
+      "t_ms": 3424320,
+      "p": 0.91,
+      "avg": 0.824,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 5744.425
+    },
+    {
+      "type": "KW",
+      "frame": 343911,
+      "t_ms": 3439140,
+      "p": 0.922,
+      "avg": 0.891,
+      "raw": 108,
+      "streamed": 1,
+      "host_t": 5759.27
+    },
+    {
+      "type": "KW",
+      "frame": 347823,
+      "t_ms": 3478260,
+      "p": 0.945,
+      "avg": 0.866,
+      "raw": 114,
+      "streamed": 1,
+      "host_t": 5798.355
+    },
+    {
+      "type": "KW",
+      "frame": 378597,
+      "t_ms": 3786000,
+      "p": 0.945,
+      "avg": 0.874,
+      "raw": 114,
+      "streamed": 1,
+      "host_t": 6106.078
+    },
+    {
+      "type": "KW",
+      "frame": 428565,
+      "t_ms": 4285680,
+      "p": 0.922,
+      "avg": 0.861,
+      "raw": 108,
+      "streamed": 1,
+      "host_t": 6605.756
+    },
+    {
+      "type": "KW",
+      "frame": 442719,
+      "t_ms": 4427220,
+      "p": 0.969,
+      "avg": 0.885,
+      "raw": 120,
+      "streamed": 1,
+      "host_t": 6747.307
+    },
+    {
+      "type": "KW",
+      "frame": 476127,
+      "t_ms": 4761300,
+      "p": 0.895,
+      "avg": 0.874,
+      "raw": 101,
+      "streamed": 1,
+      "host_t": 7081.354
+    },
+    {
+      "type": "KW",
+      "frame": 487149,
+      "t_ms": 4871520,
+      "p": 0.977,
+      "avg": 0.96,
+      "raw": 122,
+      "streamed": 1,
+      "host_t": 7191.585
+    },
+    {
+      "type": "KW",
+      "frame": 501573,
+      "t_ms": 5015760,
+      "p": 0.777,
+      "avg": 0.812,
+      "raw": 71,
+      "streamed": 1,
+      "host_t": 7335.812
+    },
+    {
+      "type": "KW",
+      "frame": 546495,
+      "t_ms": 5464980,
+      "p": 0.98,
+      "avg": 0.842,
+      "raw": 123,
+      "streamed": 1,
+      "host_t": 7785.054
+    },
+    {
+      "type": "KW",
+      "frame": 583101,
+      "t_ms": 5831040,
+      "p": 0.992,
+      "avg": 0.966,
+      "raw": 126,
+      "streamed": 1,
+      "host_t": 8151.059
+    },
+    {
+      "type": "KW",
+      "frame": 584769,
+      "t_ms": 5847720,
+      "p": 0.91,
+      "avg": 0.833,
+      "raw": 105,
+      "streamed": 1,
+      "host_t": 8167.758
+    },
+    {
+      "type": "KW",
+      "frame": 586839,
+      "t_ms": 5868420,
+      "p": 0.984,
+      "avg": 0.938,
+      "raw": 124,
+      "streamed": 1,
+      "host_t": 8188.458
+    },
+    {
+      "type": "KW",
+      "frame": 595593,
+      "t_ms": 5955960,
+      "p": 0.961,
+      "avg": 0.822,
+      "raw": 118,
+      "streamed": 1,
+      "host_t": 8276.023
+    },
+    {
+      "type": "KW",
+      "frame": 605589,
+      "t_ms": 6055920,
+      "p": 0.832,
+      "avg": 0.896,
+      "raw": 85,
+      "streamed": 1,
+      "host_t": 8375.954
+    },
+    {
+      "type": "KW",
+      "frame": 617235,
+      "t_ms": 6172380,
+      "p": 0.953,
+      "avg": 0.906,
+      "raw": 116,
+      "streamed": 1,
+      "host_t": 8492.39
+    }
+  ],
+  "crc_errors": 2,
+  "bad_length_frames": 0,
+  "device_last_stats": {
+    "type": "STATS",
+    "t_ms": 6708293,
+    "samples": 107273440,
+    "pool_drops": 13,
+    "link_drops": 0,
+    "i2s_ovf": 0,
+    "short_reads": 0,
+    "level_dbfs": -39.6,
+    "peak16": 642,
+    "heap_free": 49608,
+    "heap_min": 30444,
+    "host_t": 9024.591
+  },
+  "device_last_perf": {
+    "type": "PERF",
+    "t_ms": 6708293,
+    "hwm_reader": 1336,
+    "hwm_tx": 3200,
+    "hwm_main": 1004,
+    "fe_frames": 670398,
+    "fe_cyc_mean": 115959,
+    "fe_cyc_max": 143034,
+    "inf_count": 111727,
+    "inf_cyc_mean": 525156,
+    "inf_cyc_max": 629720,
+    "kw_triggers": 37,
+    "host_t": 9024.591
+  },
+  "device_boot": {
+    "type": "BOOT",
+    "idf": "v5.5.5",
+    "elf_sha": "4d7276af0",
+    "built": "Sep-28-2026_18:03:48",
+    "cores": 2,
+    "rev": 0.2,
+    "emb_psram": 0,
+    "flash_bytes": 4194304,
+    "cpu_mhz": 240,
+    "reset": "USB",
+    "host_t": 0.061
+  },
+  "device_cfg": {
+    "type": "CFG",
+    "fs": 16000,
+    "hop": 160,
+    "bck": 6,
+    "ws": 5,
+    "sd": 4,
+    "fmt": "MSB",
+    "bclk_inv": 0,
+    "settle_ms": 300,
+    "dma_desc": 4,
+    "dma_frames": 160,
+    "slot_bits": 32,
+    "i16_shift": 16,
+    "host_t": 0.091
+  },
+  "int16_derivation": "int16 = int24 >> 8 (arithmetic) == I2S 32-bit word >> 16"
+}

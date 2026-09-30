@@ -55,3 +55,25 @@ device connected from 192.168.1.9:54543
 [2026-09-28T19:37:32.390] activation 8: 5.4 s audio, L1_start 1.715 ms, L1_audio0 19.875 ms (±1.528 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0008.wav
     ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
 [2026-09-28T19:39:06.708] activation 9: 5.4 s audio, L1_start 1.365 ms, L1_audio0 59.157 ms (±1.565 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c192732_act0009.wav
+device connected from 192.168.1.9:58171
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:41:29.979] activation 1: 5.4 s audio, L1_start 3.69 ms, L1_audio0 63.014 ms (±1.595 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0001.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:42:38.856] activation 2: 5.4 s audio, L1_start 1.236 ms, L1_audio0 15.762 ms (±1.68 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0002.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:45:06.631] activation 3: 5.4 s audio, L1_start 2.051 ms, L1_audio0 4.235 ms (±2.025 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0003.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T19:53:41.178] activation 4: 5.4 s audio, L1_start 1.017 ms, L1_audio0 21.196 ms (±1.665 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0004.wav
+    ASR: "[withheld: ambient audio]"  | after trigger: "[withheld: ambient audio]"  (endpoint at 4.296 s after trigger)
+[2026-09-28T20:00:39.547] activation 5: 4.96 s audio, L1_start 2.301 ms, L1_audio0 5.576 ms (±1.574 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0005.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T20:01:08.071] activation 6: 5.4 s audio, L1_start 26.006 ms, L1_audio0 86.063 ms (±1.574 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0006.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T20:02:00.306] activation 7: 5.4 s audio, L1_start 1.576 ms, L1_audio0 12.533 ms (±2.051 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0007.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T20:09:43.989] activation 8: 5.4 s audio, L1_start 16.432 ms, L1_audio0 16.432 ms (±1.96 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0008.wav
+    ASR: ""  | after trigger: ""  (endpoint at 4.776 s after trigger)
+[2026-09-28T20:10:07.372] activation 9: 5.4 s audio, L1_start 1.595 ms, L1_audio0 11.135 ms (±2.386 ms clock), end=server_end, overrun=False, seq_gaps=0 -> c193959_act0009.wav
+device connected from 192.168.1.9:53061
+device connected from 192.168.1.9:65513
+device connected from 192.168.1.9:65175

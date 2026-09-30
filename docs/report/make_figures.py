@@ -259,8 +259,15 @@ def accuracy_compare():
 
 
 if __name__ == "__main__":
-    summary = {"psd_m1": psd_m1(), "posterior_s01s3": posterior_s01s3(), "night_fa_per_hour": night_fa(),
-               "cpu_final": cpu_final(), "latency_t1": latency_t1(), "memory_progress": memory_progress(),
-               "accuracy_compare": accuracy_compare()}
+    summary = {}
+    for key, fn in (("psd_m1", psd_m1), ("posterior_s01s3", posterior_s01s3), ("night_fa_per_hour", night_fa),
+                    ("cpu_final", cpu_final), ("latency_t1", latency_t1), ("memory_progress", memory_progress),
+                    ("accuracy_compare", accuracy_compare)):
+        try:
+            summary[key] = fn()
+        except FileNotFoundError as e:
+            # psd_m1 reads a raw microphone recording, which is withheld from the public repository
+            # (evidence/README.md); the committed SVG is kept as it is.
+            print(f"skipped {key}: input not available ({pathlib.Path(e.filename).name})")
     (OUT / "figure_data_summary.json").write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items() if k in ("cpu_final", "memory_progress", "night_fa_per_hour")}, indent=1))

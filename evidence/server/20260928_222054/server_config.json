@@ -1,0 +1,9 @@
+{
+  "port": 5005,
+  "stream_s": 3.0,
+  "asr": "",
+  "min_after_s": 0.5,
+  "stream_s_max": 6.0,
+  "grammar": "",
+  "endpoint": "vad"
+}

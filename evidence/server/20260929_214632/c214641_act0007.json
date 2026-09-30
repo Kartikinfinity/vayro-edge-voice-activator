@@ -1,0 +1,66 @@
+{
+  "activation": 7,
+  "kw_frame": 4911,
+  "t_detect_device_us": 52841517,
+  "preroll_ms": 624,
+  "first_sample": 776256,
+  "raw_posterior": 127,
+  "t_start_rx_us": 16560613413,
+  "t_audio0_rx_us": 16560631470,
+  "offset_us": 16507769558,
+  "rtt_us": 2736,
+  "pings": 12,
+  "packets": 62,
+  "seq_gaps": 0,
+  "last_seq": 62,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-29T21:47:29.611",
+  "asr_endpoint_at_s": 1.856,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 16562477275,
+  "device_samples_sent": 39680,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 16562483685,
+  "audio_seconds": 2.48,
+  "L1_start_ms": 2.338,
+  "L1_audio0_ms": 20.395,
+  "clock_uncertainty_ms_half_rtt": 1.368,
+  "asr_transcript": "panel open the door",
+  "asr_after_trigger": "open the door",
+  "asr_words": [
+    {
+      "conf": 0.26295,
+      "end": 0.54,
+      "start": 0.0,
+      "word": "panel"
+    },
+    {
+      "conf": 0.545885,
+      "end": 1.23,
+      "start": 0.840048,
+      "word": "open"
+    },
+    {
+      "conf": 1.0,
+      "end": 1.35,
+      "start": 1.23,
+      "word": "the"
+    },
+    {
+      "conf": 0.993995,
+      "end": 1.8,
+      "start": 1.35,
+      "word": "door"
+    }
+  ],
+  "asr_ready_after_end_ms": 295.19,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -30.6,
+  "vad_thr_dbfs": -50.6,
+  "asr_preroll_speech_dbfs": -30.6,
+  "asr_gain_db": 10.6,
+  "asr_grammar": false,
+  "file_stem": "c214641_act0007"
+}

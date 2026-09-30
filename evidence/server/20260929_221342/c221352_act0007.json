@@ -1,0 +1,66 @@
+{
+  "activation": 7,
+  "kw_frame": 10653,
+  "t_detect_device_us": 110267962,
+  "preroll_ms": 624,
+  "first_sample": 1694976,
+  "raw_posterior": 121,
+  "t_start_rx_us": 18249133736,
+  "t_audio0_rx_us": 18249139517,
+  "offset_us": 18138864001,
+  "rtt_us": 2799,
+  "pings": 18,
+  "packets": 73,
+  "seq_gaps": 0,
+  "last_seq": 73,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-29T22:15:37.942",
+  "asr_endpoint_at_s": 2.296,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 18251435313,
+  "device_samples_sent": 46720,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 18251439251,
+  "audio_seconds": 2.92,
+  "L1_start_ms": 1.773,
+  "L1_audio0_ms": 7.554,
+  "clock_uncertainty_ms_half_rtt": 1.399,
+  "asr_transcript": "what do you hear",
+  "asr_after_trigger": "what do you hear",
+  "asr_words": [
+    {
+      "conf": 0.329255,
+      "end": 1.523176,
+      "start": 1.2,
+      "word": "what"
+    },
+    {
+      "conf": 0.285775,
+      "end": 1.591564,
+      "start": 1.523176,
+      "word": "do"
+    },
+    {
+      "conf": 0.562854,
+      "end": 1.769261,
+      "start": 1.591564,
+      "word": "you"
+    },
+    {
+      "conf": 0.386531,
+      "end": 2.34,
+      "start": 1.77,
+      "word": "hear"
+    }
+  ],
+  "asr_ready_after_end_ms": 231.31,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -31.8,
+  "vad_thr_dbfs": -51.8,
+  "asr_preroll_speech_dbfs": -31.8,
+  "asr_gain_db": 11.8,
+  "asr_grammar": false,
+  "file_stem": "c221352_act0007"
+}

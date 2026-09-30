@@ -1,0 +1,66 @@
+{
+  "activation": 2,
+  "kw_frame": 759,
+  "t_detect_device_us": 11321406,
+  "preroll_ms": 624,
+  "first_sample": 111936,
+  "raw_posterior": 127,
+  "t_start_rx_us": 16519093079,
+  "t_audio0_rx_us": 16519098520,
+  "offset_us": 16507769765,
+  "rtt_us": 2782,
+  "pings": 8,
+  "packets": 63,
+  "seq_gaps": 0,
+  "last_seq": 63,
+  "end_sent": true,
+  "overrun": false,
+  "wall_time": "2026-09-29T21:46:48.090",
+  "asr_endpoint_at_s": 1.896,
+  "endpoint_by": "vad_trailing_silence",
+  "t_end_sent_us": 16520994209,
+  "device_samples_sent": 40320,
+  "device_min_slack_ms": 376.0,
+  "device_end_reason": "server_end",
+  "t_end_rx_us": 16520998311,
+  "audio_seconds": 2.52,
+  "L1_start_ms": 1.908,
+  "L1_audio0_ms": 7.349,
+  "clock_uncertainty_ms_half_rtt": 1.391,
+  "asr_transcript": "turn on the light",
+  "asr_after_trigger": "turn on the light",
+  "asr_words": [
+    {
+      "conf": 0.98121,
+      "end": 1.080001,
+      "start": 0.84,
+      "word": "turn"
+    },
+    {
+      "conf": 0.999949,
+      "end": 1.290005,
+      "start": 1.080525,
+      "word": "on"
+    },
+    {
+      "conf": 0.999419,
+      "end": 1.380057,
+      "start": 1.290005,
+      "word": "the"
+    },
+    {
+      "conf": 0.839832,
+      "end": 1.92,
+      "start": 1.380057,
+      "word": "light"
+    }
+  ],
+  "asr_ready_after_end_ms": 106.15,
+  "asr_conditioning": "8th-order 150 Hz high-pass + fixed keyword-referenced gain (pre-roll speech -> -20 dBFS)",
+  "vad_kw_dbfs": -31.7,
+  "vad_thr_dbfs": -51.7,
+  "asr_preroll_speech_dbfs": -31.7,
+  "asr_gain_db": 11.7,
+  "asr_grammar": false,
+  "file_stem": "c214641_act0002"
+}

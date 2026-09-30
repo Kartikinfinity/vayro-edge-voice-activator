@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Forbidden-dependency gate (no vendor wake-word kit, no pre-trained keyword model)
+        run: python tools/forbidden_deps.py .
+      - name: Integrity checks (front-end hash, embedded model, operating point, pinned components)
+        run: python tools/ci_checks.py
+      - name: Python sources compile
+        run: python -m compileall -q host server tools model docs/report docs/submission

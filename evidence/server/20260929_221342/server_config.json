@@ -1,0 +1,11 @@
+{
+  "port": 5005,
+  "stream_s": 3.0,
+  "asr": "D:\\ps26172_ext\\vosk\\vosk-model-en-in-0.5",
+  "min_after_s": 0.8,
+  "stream_s_max": 6.0,
+  "grammar": "",
+  "print_style": "compact",
+  "status_file": "D:\\ps26172\\evidence\\demo\\20260929_221334_demo_term\\status.txt",
+  "endpoint": "vad"
+}
