@@ -98,11 +98,14 @@ def redact_transcripts(path, data):
 
 
 def git(*args, stdin=None, env=None, text=True):
-    r = subprocess.run(["git", "-C", str(ROOT), *args], input=stdin, capture_output=True, env=env,
-                       **({"text": True, "encoding": "utf-8"} if text else {}))
+    # Pipes are always binary: in text mode Python on Windows would turn "\n" into "\r\n" on the way to git,
+    # which put carriage returns into commit messages.
+    if isinstance(stdin, str):
+        stdin = stdin.encode("utf-8")
+    r = subprocess.run(["git", "-C", str(ROOT), *args], input=stdin, capture_output=True, env=env)
     if r.returncode:
-        sys.exit(f"git {' '.join(args[:3])} failed: {r.stderr if text else r.stderr.decode('utf-8', 'replace')}")
-    return r.stdout
+        sys.exit(f"git {' '.join(args[:3])} failed: {r.stderr.decode('utf-8', 'replace')}")
+    return r.stdout.decode("utf-8").replace("\r\n", "\n") if text else r.stdout
 
 
 def wifi_ssid():
@@ -258,6 +261,9 @@ def main():
     log = git("log", "--format=%ae%n%ce%n%B", PUBLIC_REF)
     if ssid.decode() in log or password.decode() in log:
         problems.append("network name or password in a commit message")
+    if any(b"\r" in subprocess.run(["git", "-C", str(ROOT), "cat-file", "commit", c], capture_output=True).stdout
+           for c in set(mapping.values())):
+        problems.append("carriage return in a commit object")
     mails = {m for m in git("log", "--format=%ae%n%ce", PUBLIC_REF).split() if m}
     if mails != {NOREPLY}:
         problems.append(f"unexpected commit e-mail(s): {len(mails - {NOREPLY})}")
